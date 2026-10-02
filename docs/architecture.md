@@ -20,19 +20,20 @@ Browser ──HTTPS──> Cloudflare ──tunnel──> cloudflared ──HTTP
 
 ```
 src/
-  hooks.server.ts         startup (migrations, secret check, maintenance), sessions, origin check,
+  hooks.server.ts         startup (migrations, BS date repair, secret check, maintenance), sessions, origin check,
                           rate limit, write-lock wait, security headers, graceful shutdown
   routes/                 pages (+page.svelte / +page.server.ts) and /api/* endpoints (+server.ts)
   lib/
     server/               services: auth, accounts, trees, persons, relations, graph, claims, codes,
-                          history, notifications, search, media, storage, permissions, route-policies
+                          history, notifications, search, media, storage, permissions, route-policies,
+                          combined (My families: joined trees, sharing, same-person matches)
     server/workers/       plain ESM worker entry points
     shared/               plain ESM shared by the app, workers and tests (dates, privacy, gedcom, fuzzy)
     db/                   schema, migrations, pragmas, full-text index rebuild
     components/           feature components (tree, person, claim, join, media, history, shared)
     components/ui/        generated shadcn-svelte components
     schemas/              Zod request schemas
-    utils/                client-safe helpers (dates, formatting, contrast)
+    utils/                client-safe helpers (dates, formatting, contrast, implied family links)
 scripts/                  migrate, backup, restore, sweep-orphans, bench, traceability
 tests/                    Vitest (unit, service and live-server) and tests/e2e (Playwright)
 ```
@@ -45,6 +46,7 @@ tests/                    Vitest (unit, service and live-server) and tests/e2e (
 - **History:** every change writes a history row with a batch id. Revert and undo replay through the same service and refuse stale reverts.
 - **Privacy filter** (`shared/privacy.mjs`) is applied to public reads and filtered exports alike.
 - **Full-text search:** an FTS5 table kept in sync by triggers (name parts, birth year, places), checked and rebuilt at startup when it drifts.
+- **Combined view** (`server/combined.ts`, D-035): built from each tree's normal view, only for trees the viewer is a member of; the owner's copies (and confirmed matches) are drawn as one node. Nothing is copied between trees.
 - **Large trees** open in focus mode: bounded traversals from one person, with whole-tree scans memoised per tree until it changes.
 
 ## Front end

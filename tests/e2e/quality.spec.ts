@@ -122,6 +122,7 @@ const signedInPages = (s: Seed): Array<[string, string]> => [
 
 for (const scheme of ['light', 'dark'] as const) {
 	test(`AT-30: no CSP violations and no axe violations on signed-in pages (${scheme})`, async ({ browser }) => {
+		test.setTimeout(120_000); // 12 pages, each with an axe scan
 		const context = await signedIn(browser);
 		await context.addInitScript((s) => {
 			try {

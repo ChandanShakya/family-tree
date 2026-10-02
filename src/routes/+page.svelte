@@ -9,6 +9,13 @@
 	import { Check, Plus, Server, ShieldCheck, TreePine, Users } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 
+	const GITHUB = 'https://github.com/ChandanShakya/family-tree';
+	const STEPS = [
+		['Start a tree', 'Name it, add yourself and your closest family.'],
+		['Add family', 'Pick a relationship; spouses, parents and siblings are linked for you.'],
+		['Invite relatives', 'Share one family code on WhatsApp or email. You approve each request.'],
+		['They claim themselves', 'Relatives claim their own profile and keep their branch up to date.']
+	] as const;
 	const FEATURES = [
 		{ icon: Users, title: 'Built together', text: 'Relatives join with a code, add their own branch and claim their profile. Owners approve, and every edit can be undone.' },
 		{ icon: ShieldCheck, title: 'Private by default', text: 'Public trees and exports show living people only as “Living”. Photos are never cached by shared caches.' },
@@ -65,12 +72,15 @@
 			<div class="mt-8 flex flex-wrap gap-3">
 				<Button size="lg" href={resolve('/register')}>Create an account</Button>
 				<Button size="lg" variant="outline" href={resolve('/login')}>Log in</Button>
+				<Button size="lg" variant="ghost" href={GITHUB} target="_blank" rel="external noopener"><svg viewBox="0 0 16 16" class="size-4" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg> GitHub</Button>
 			</div>
 			<ul class="mt-8 grid gap-2 text-sm text-muted-foreground sm:grid-cols-2">
 				<li class="flex items-center gap-2"><Check size={16} class="text-primary" /> AD and Bikram Sambat dates</li>
 				<li class="flex items-center gap-2"><Check size={16} class="text-primary" /> “How are we related?”</li>
 				<li class="flex items-center gap-2"><Check size={16} class="text-primary" /> Invite family with a code</li>
 				<li class="flex items-center gap-2"><Check size={16} class="text-primary" /> GEDCOM import and export</li>
+				<li class="flex items-center gap-2"><Check size={16} class="text-primary" /> Links fill themselves</li>
+				<li class="flex items-center gap-2"><Check size={16} class="text-primary" /> Both families, joined at you</li>
 			</ul>
 		</div>
 		<figure class="overflow-hidden rounded-2xl border bg-card shadow-xl">
@@ -87,8 +97,21 @@
 				class="block aspect-video w-full bg-[#0f172a]"
 				aria-describedby="demo-caption"
 			></video>
-			<figcaption id="demo-caption" class="px-4 py-3 text-sm text-muted-foreground">A 20-second tour: the tree, adding a person, “How are we related?” and privacy.</figcaption>
+			<figcaption id="demo-caption" class="px-4 py-3 text-sm text-muted-foreground">A one-minute tour: start a tree, add family, invite with a code, claim your profile, “How are we related?”, both families joined, privacy and mobile.</figcaption>
 		</figure>
+	</section>
+
+	<section class="mt-12">
+		<h2 class="mt-0 text-center">How it works</h2>
+		<ol class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+			{#each STEPS as [title, text], i (title)}
+				<li class="section">
+					<span class="mb-3 grid size-9 place-items-center rounded-lg bg-primary font-bold text-primary-foreground">{i + 1}</span>
+					<h3 class="mt-0">{title}</h3>
+					<p class="muted text-sm">{text}</p>
+				</li>
+			{/each}
+		</ol>
 	</section>
 
 	<section class="mt-10 grid gap-4 md:grid-cols-3">

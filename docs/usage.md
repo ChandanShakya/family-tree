@@ -12,7 +12,7 @@ Choose **New tree** on *Your trees*. You become the owner. Each tree has:
 - **Members:** roles, join requests and removals.
 - **Claims:** requests from members who say a profile is them.
 - **Activity:** every change, newest first.
-- **Photos**, **Import & export** and **Settings** (name, description, public visibility, cover image, family code, deletion).
+- **Photos**, **Import & export** and **Settings** (name, description, public visibility, cover image, family code, combined family views and deletion). Editors and owners see the general settings; only the owner sees deletion and the combined-view switch.
 
 ### Roles
 
@@ -21,7 +21,7 @@ Choose **New tree** on *Your trees*. You become the owner. Each tree has:
 | Owner | Everything, including settings, roles, transfer and deletion. |
 | Editor | Add, edit and delete people; approve joins and claims; full exports. |
 | Contributor | Add people and edit or revert their own changes. |
-| Viewer | Read, and export the privacy-filtered tree. |
+| Viewer | Read, and export the privacy-filtered tree. Viewers see no add, edit, delete or upload controls. |
 
 ## People
 
@@ -40,6 +40,11 @@ On a person's page you can:
 
 Every change shows an **Undo** button for 10 seconds.
 
+### Linking relatives quickly
+
+- **Add relative** (select a person on the chart first) offers the links that follow from the one you chose, already ticked under **Also link**: add a child to a father and his spouse is offered as the other parent; add a spouse to someone with children and the new spouse is offered as their parent; a new sibling gets the same parents; a second parent is offered as the first parent's spouse. Untick any that do not apply.
+- **Link with…** links two people already in the tree: select one, choose **Link with…**, tap the second, pick spouse, parent, child or sibling, and the same implied links are offered.
+
 ## Inviting family
 
 - **Family code** (Settings): one shared, unlimited code. Each person who uses it fills in their own details, and an owner or editor approves the request.
@@ -49,13 +54,25 @@ Every change shows an **Undo** button for 10 seconds.
 
 If someone already added you, open your person and choose **Is this you?**. You can answer the verification questions (immediate), describe yourself for an owner or editor to review, or simply ask to be linked. Tree owners just choose **This is me**. After a claim, your avatar becomes the person's photo if you had none.
 
+## My families
+
+If your profile is claimed in a tree, **My families** (sidebar, profile menu or bottom bar) shows it. Claim yourself in more trees, for example your birth family's and your spouse's, and they are drawn as one read-only tree joined at you, with a colour per tree (up to three trees). From there you can:
+
+- choose how many **generations** to show (all recorded by default) and set a limit for everyone;
+- decide **who else** may open the page: only you, members of at least two of the trees, or people you pick from your trees' members. Others see a tree only if they are a member of it; chosen people get a notification;
+- confirm when the **same relative** appears in two trees (suggested when both have the same link to you, the same name and birth years within two). Confirmed people are drawn once; neither tree changes, and **Separate** undoes it;
+- ask **How are we related?** across the joined trees;
+- read your **sharing history**.
+
+Owners can turn off "Allow members to join this tree with their other family trees" in Settings.
+
 ## Privacy and public trees
 
 Trees are private by default. An owner with a verified email can make a tree **public**: anyone with the link can view it, but living people, and people of unknown status born recently, appear as "Living" with no dates, places, notes or photos. Exports by viewers and contributors apply the same filter. Photos of living people are never shown publicly.
 
 ## Search
 
-Use the search box on a tree (Ctrl/Cmd + K). It matches names, including middle and maiden names and Devanagari, falls back to typo-tolerant matching, and **Filters** narrows by birth year or place. The surname explorer and the duplicate finder sit below the chart.
+Use the search box on a tree (Ctrl/Cmd + K on a keyboard). It matches names, including middle and maiden names and Devanagari, falls back to typo-tolerant matching, and **Filters** narrows by birth year or place. The surname explorer and the duplicate finder sit below the chart; tapping a surname fills and focuses the search box.
 
 ## Import and export
 
@@ -65,4 +82,4 @@ Use the search box on a tree (Ctrl/Cmd + K). It matches names, including middle 
 
 ## Notifications
 
-The bell shows unread notifications for join requests, claims, review results and edits to your own profile. Choose which kinds you receive in your profile.
+The bell shows unread notifications for join requests, claims, review results, edits to your own profile and combined family views shared with you. Choose which kinds you receive in your profile.

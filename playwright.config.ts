@@ -4,7 +4,7 @@ const DIR = './.test-tmp-e2e';
 
 export default defineConfig({
 	testDir: './tests/e2e',
-	globalTimeout: 240_000,
+	globalTimeout: 480_000,
 	workers: 1,
 	use: { baseURL: 'http://localhost:4173' },
 	webServer: {

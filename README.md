@@ -5,17 +5,25 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 <p align="center">
-  <a href="docs/media/demo.mp4"><img src="docs/media/demo.gif" alt="Family Tree, a 20-second tour: the tree view, adding a person, “How are we related?”, and privacy features" width="860"></a>
+  <a href="docs/media/demo.mp4"><img src="docs/media/demo.gif" alt="Family Tree, a one-minute tour: start a tree, add family (links fill themselves), invite with a family code, relatives claim their profile, “How are we related?”, both families joined in My families, AD and Bikram Sambat dates, undo, privacy and mobile" width="860"></a>
   <br><sub>Plays automatically. <a href="docs/media/demo.mp4">Full-quality video (MP4)</a></sub>
 </p>
 
 Self-hosted, collaborative genealogy. Build a family tree together with relatives, keep every change in history, and stay in control of your data. It runs on a Raspberry Pi 4 or a small VPS behind a Cloudflare Tunnel, with SQLite as the only database.
+
+## How it works
+
+1. **Start a tree.** Name it and add yourself and your closest family.
+2. **Add family.** Pick a relationship and the implied links are offered for you: add a child to a father and his wife is suggested as the other parent.
+3. **Invite relatives.** Share one family code on WhatsApp or email; you approve each request.
+4. **They claim themselves.** Relatives claim their own profile and keep their branch up to date. Married into another family? **My families** shows both trees joined at you.
 
 ## Features
 
 - **Trees and people:** first, middle, last and maiden names, gender, birth and death dates in **AD or Bikram Sambat (BS)**, places, biography, events and photos.
 - **Relationships:** parents, spouses, siblings and guardians. Grandparents, cousins and in-laws are derived, and "How are we related?" names the relation and shows the path.
 - **Tree view:** zoom and pan, top-down or left-to-right layout, and a focus mode for large trees (tested up to 50 000 people).
+- **Combined family view:** a person claimed in several trees (for example after a marriage) sees them joined at themselves, decides who else may see it, and can mark the same relative in both trees as one person.
 - **Collaboration:** family and direct join codes, owner/editor/contributor/viewer roles, profile claims (with verification questions or owner review), notifications, and a full change history with one-click revert and undo.
 - **Search:** full-text search (Latin and Devanagari), typo-tolerant fuzzy search, filters by birth year and place, a duplicate finder and a surname explorer.
 - **Privacy:** private by default. Public trees and member exports hide living people. Photos are never cacheable by shared caches.

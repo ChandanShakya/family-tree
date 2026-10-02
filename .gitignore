@@ -22,3 +22,5 @@ coverage/
 session.json
 brag-output/work/
 brag-output/
+brag-output-*/
+.brag-demo/

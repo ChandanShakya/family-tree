@@ -18,6 +18,9 @@ Bikram Sambat, the official calendar of Nepal. Enter a date and choose BS: it is
 **Who can see living people?**
 Members of the tree. Public viewers and filtered exports see "Living" without any details.
 
+**Can I join two family trees, for example after a marriage?**
+Trees are not merged. Instead, a person claimed in both trees gets **My families**, which draws them joined at that person and lets them choose who else can see it. Each tree keeps its own members and data. See [usage.md](usage.md#my-families).
+
 **Can I import from another genealogy program?**
 Yes, through GEDCOM 5.5.1 (most programs export it). Import adds people and merges nothing, so import into an empty tree or check the duplicate finder afterwards.
 

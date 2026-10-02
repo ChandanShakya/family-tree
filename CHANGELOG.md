@@ -4,6 +4,20 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- **My families:** a person claimed in several trees sees them joined at themselves, with generation limits, sharing (only me, members of two trees, chosen people), same-person matches across trees, a cross-tree "How are we related?", sharing history and a share notification. Owners can opt a tree out. Migrations 0006 and 0007.
+- **Implied links:** adding a relative offers the links that follow (the spouse as other parent, the new spouse as parent of existing children, siblings' parents, a second parent as spouse); **Link with…** links two existing people the same way.
+- Tree setting changes appear in the tree's activity.
+- "How it works" on the landing page and README, a GitHub link, a new one-minute demo video, and a new favicon and app icons.
+
+### Fixed
+
+- Bikram Sambat dates were not converted in the production build (CommonJS import); existing dates are repaired at startup.
+- Viewers no longer see add, edit, delete or upload controls; only the owner sees tree deletion.
+- Mobile: duplicate bottom-bar button, cramped profile header, wrapping toolbar and truncated placeholders; surname chips now fill and focus the search, also on a second tap.
+- CI: route folders named `photos` and `data` were ignored by git.
+
 ## [0.1.0] - 2026-10-02
 
 First public release.
