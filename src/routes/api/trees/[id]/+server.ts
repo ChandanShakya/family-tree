@@ -41,13 +41,17 @@ export const PUT: RequestHandler = async (event) => {
 		const body = await event.request.json().catch(() => null);
 		const parsed = TreeUpdateSchema.safeParse(body);
 		if (!parsed.success) return badInput(parsed.error.issues[0]?.message ?? 'Invalid input');
+		if (parsed.data.allowCrossTree !== undefined && g.role !== 'owner') {
+			return json({ error: { code: 'FORBIDDEN', message: 'Only the owner can change cross-tree views' } }, { status: 403 });
+		}
 		if (parsed.data.isPublic && !isEmailVerified(gate.db, gate.userId)) {
 			return json({ error: { code: 'FORBIDDEN', message: 'Verify your email before making a tree public' } }, { status: 403 });
 		}
 		const res = updateTree(gate.db, treeId, {
 			name: parsed.data.name,
 			description: parsed.data.description,
-			isPublic: parsed.data.isPublic
+			isPublic: parsed.data.isPublic,
+			allowCrossTree: parsed.data.allowCrossTree
 		});
 		if ('error' in res) {
 			return json({ error: { code: 'NOT_FOUND', message: 'Not found' } }, { status: 404 });

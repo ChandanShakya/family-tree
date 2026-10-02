@@ -35,6 +35,7 @@ export const trees = sqliteTable('trees', {
 	ownerId: text('ownerId').references(() => users.id),
 	coverImage: text('coverImage'),
 	isPublic: integer('isPublic').notNull().default(0),
+	allowCrossTree: integer('allowCrossTree').notNull().default(1),
 	createdAt: text('createdAt').notNull(),
 	updatedAt: text('updatedAt').notNull()
 });
@@ -333,3 +334,25 @@ export const emailVerificationTokens = sqliteTable('emailVerificationTokens', {
 	usedAt: text('usedAt'),
 	createdAt: text('createdAt').notNull()
 });
+
+export const combinedViews = sqliteTable('combinedViews', {
+	userId: text('userId')
+		.primaryKey()
+		.references(() => users.id, { onDelete: 'cascade' }),
+	share: text('share').notNull().default('me'),
+	depth: integer('depth'),
+	updatedAt: text('updatedAt').notNull()
+});
+
+export const combinedViewViewers = sqliteTable(
+	'combinedViewViewers',
+	{
+		ownerId: text('ownerId')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' }),
+		viewerId: text('viewerId')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' })
+	},
+	(t) => [primaryKey({ columns: [t.ownerId, t.viewerId] })]
+);

@@ -214,6 +214,35 @@ test('relationship mapping: implied links and linking two people', async ({ brow
 	await c.close();
 });
 
+test('combined family view joins two trees at the claimed person (D-035)', async ({ browser }) => {
+	const c = await ctx(browser);
+	const tree = async (name: string, first: string, other: string, type: string) => {
+		const treeId = (await (await c.request.post('/api/trees', { data: { name } })).json()).data.tree.id as string;
+		const me = (await (await c.request.post('/api/persons', { data: { treeId, firstName: first } })).json()).data.id as string;
+		const rel = (await (await c.request.post('/api/persons', { data: { treeId, firstName: other } })).json()).data.id as string;
+		await c.request.post('/api/relationships', { data: { treeId, person1Id: rel, person2Id: me, type } });
+		return me;
+	};
+	const a = await tree('Shakya Family', 'Maya', 'Husband Shakya', 'spouse');
+	const b = await tree('Tuladhar Family', 'Maya', 'Father Tuladhar', 'parent');
+	const raw = new Database(DB);
+	raw.prepare('UPDATE persons SET userId = ?, claimedAt = ? WHERE id IN (?, ?)').run(userId, new Date().toISOString(), a, b);
+	raw.close();
+	const page = await c.newPage();
+	await page.goto('/families');
+	await expect(page.getByRole('heading', { name: 'My families' })).toBeVisible();
+	await expect(page.getByRole('link', { name: 'Shakya Family' })).toBeVisible();
+	await expect(page.getByRole('link', { name: 'Tuladhar Family' })).toBeVisible();
+	for (const n of ['Maya', 'Husband Shakya', 'Father Tuladhar']) await expect(page.locator(`svg g[role=button][aria-label="${n}"]`)).toHaveCount(1);
+	if (process.env.SHOT) await page.screenshot({ path: process.env.SHOT, fullPage: true });
+	await page.getByLabel('People I choose').check();
+	await page.getByRole('button', { name: 'Save', exact: true }).click();
+	await expect(page.getByText('Sharing saved')).toBeVisible();
+	await page.goto(`/persons/${a}`);
+	await expect(page.getByRole('link', { name: /See all their family trees/ })).toBeVisible();
+	await c.close();
+});
+
 test('members, activity, media and settings pages load', async ({ browser }) => {
 	const { treeId } = await seedTree(browser, 3);
 	const page = await (await ctx(browser)).newPage();

@@ -6,6 +6,7 @@ import { getQuestions } from '$lib/server/claims.js';
 import { listDirectCodes } from '$lib/server/codes.js';
 import { relatives } from '$lib/server/graph.js';
 import { canDo } from '$lib/server/permissions.js';
+import { canOpen } from '$lib/server/combined.js';
 import { getPerson, personHistory } from '$lib/server/persons.js';
 import { publicPerson } from '$lib/server/public-access.js';
 import { withPublicEntity } from '$lib/server/page-load.js';
@@ -70,6 +71,7 @@ export const load: PageServerLoad = ({ locals, params, url }) =>
 			links: links.filter((l) => names[l.person1Id === params.id ? l.person2Id : l.person1Id]),
 			canEdit: canDo(role, 'add'),
 			canDelete: canDo(role, 'delete'),
+			combinedFor: person.userId && canOpen(c, person.userId as string, c.userId) ? (person.userId as string) : null,
 			publicView: false as const,
 			history: personHistory(c, params.id).data,
 			role,

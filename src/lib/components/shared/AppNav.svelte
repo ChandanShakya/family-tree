@@ -46,6 +46,7 @@
 	<aside class="side" aria-label="Sidebar">
 		<p class="side-heading">Menu</p>
 		<a href={resolve('/')} aria-current={here === '/' ? 'page' : undefined}><House size={18} /> Your trees</a>
+		<a href={resolve('/families')} aria-current={here.startsWith('/families') ? 'page' : undefined}><Network size={18} /> My families</a>
 		<a href={resolve('/profile')} aria-current={here === '/profile' ? 'page' : undefined}><User size={18} /> Profile</a>
 		{#if treeLinks.length}
 			<p class="side-heading">This tree</p>

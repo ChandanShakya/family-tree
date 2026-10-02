@@ -29,6 +29,12 @@
 			await invalidateAll();
 		}
 	}
+	async function toggleCross(allowCrossTree: boolean) {
+		if ((await api('PUT', `/api/trees/${treeId}`, { allowCrossTree })).ok) {
+			toast('Saved');
+			await invalidateAll();
+		}
+	}
 	async function uploadCover(file: File) {
 		const f = new FormData();
 		f.set('file', file);
@@ -105,6 +111,10 @@
 	{/if}
 
 	{#if data.isOwner}
+	<section class="section">
+		<h2>Combined family views</h2>
+		<label class="flex items-start gap-3 rounded-lg border p-3 font-normal"><input type="checkbox" checked={data.tree.allowCrossTree} class="mt-0.5" onchange={(e) => toggleCross(e.currentTarget.checked)} /> <span><strong class="font-semibold">Allow members to join this tree with their other family trees</strong><br /><span class="muted text-sm">A member whose profile is claimed in several trees (for example after a marriage) can see them on one page and share it. Others see this tree there only if they are members of it.</span></span></label>
+	</section>
 	<section class="section border-destructive/40">
 		<h2 class="text-destructive">Delete tree</h2>
 		<p class="muted text-sm">Permanently deletes the tree, its people and photos. This cannot be undone.</p>

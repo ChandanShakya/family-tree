@@ -9,7 +9,7 @@
 	import Avatar from '$lib/components/media/Avatar.svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { Bell as BellIcon, LogOut, Moon, Sun, TreePine, UserRound } from '@lucide/svelte';
+	import { Bell as BellIcon, LogOut, Moon, Network, Sun, TreePine, UserRound } from '@lucide/svelte';
 	import { api } from '$lib/api.js';
 	import { applyTheme } from '$lib/theme.js';
 
@@ -58,6 +58,7 @@
 					<DropdownMenu.Label class="truncate">{data.me.displayName}</DropdownMenu.Label>
 					<DropdownMenu.Separator />
 					<DropdownMenu.Item onSelect={() => goto(resolve('/profile'))}><UserRound /> Profile</DropdownMenu.Item>
+					<DropdownMenu.Item onSelect={() => goto(resolve('/families'))}><Network /> My families</DropdownMenu.Item>
 					<DropdownMenu.Item onSelect={() => goto(resolve('/notifications'))}><BellIcon /> Notifications</DropdownMenu.Item>
 					<DropdownMenu.Separator />
 					<DropdownMenu.Item onSelect={logout}><LogOut /> Log out</DropdownMenu.Item>

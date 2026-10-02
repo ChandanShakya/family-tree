@@ -9,7 +9,8 @@ export const TreeUpdateSchema = z
 	.object({
 		name: z.string().trim().min(1).max(200).optional(),
 		description: z.string().trim().max(2000).nullable().optional(),
-		isPublic: z.boolean().optional()
+		isPublic: z.boolean().optional(),
+		allowCrossTree: z.boolean().optional()
 	})
 	.refine((v) => Object.values(v).some((x) => x !== undefined), {
 		error: 'At least one field is required'

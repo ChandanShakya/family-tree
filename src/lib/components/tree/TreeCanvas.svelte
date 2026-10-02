@@ -18,7 +18,8 @@
 		highlightId = null,
 		depth,
 		ondepth,
-		onselect
+		onselect,
+		colorOf
 	}: {
 		persons: P[];
 		relationships: R[];
@@ -26,6 +27,8 @@
 		depth?: number;
 		ondepth?: (d: number) => void;
 		onselect: (id: string) => void;
+		/** Side-bar colour per person (combined view: which tree they come from). */
+		colorOf?: (id: string) => string | undefined;
 	} = $props();
 	let orientation = $state<Orientation>('TB');
 
@@ -140,6 +143,7 @@
 						name={nameOf(p)}
 						years={years(p)}
 						highlighted={id === highlightId}
+						color={colorOf?.(id)}
 						onselect={() => onselect(id)}
 					/>
 				{/if}

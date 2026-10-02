@@ -17,7 +17,7 @@ export const load: PageServerLoad = ({ locals, params }) => {
 		treeId: params.id,
 		canManage,
 		isOwner,
-		tree: { name: tree.name, description: tree.description, isPublic: !!tree.isPublic, coverImage: tree.coverImage },
+		tree: { name: tree.name, description: tree.description, isPublic: !!tree.isPublic, allowCrossTree: !!tree.allowCrossTree, coverImage: tree.coverImage },
 		familyCode: code ? { code: code.code, maxUses: code.maxUses, currentUses: code.currentUses, expiresAt: code.expiresAt } : null
 	};
 };

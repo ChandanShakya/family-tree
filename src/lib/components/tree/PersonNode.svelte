@@ -7,6 +7,7 @@
 		name,
 		years,
 		highlighted = false,
+		color,
 		onselect
 	}: {
 		x: number;
@@ -14,6 +15,7 @@
 		name: string;
 		years: string;
 		highlighted?: boolean;
+		color?: string;
 		onselect: () => void;
 	} = $props();
 </script>
@@ -29,7 +31,7 @@
 	onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && onselect()}
 >
 	<rect width={NODE_W} height={NODE_H} rx="12" class="box" stroke-width={highlighted ? 3 : 1} />
-	<line x1="2" y1="14" x2="2" y2={NODE_H - 14} class="bar" />
+	<line x1="2" y1="14" x2="2" y2={NODE_H - 14} class="bar" style:stroke={color} style:opacity={color ? 1 : undefined} />
 	<text x="16" y="30" class="name">{name.length > 19 ? `${name.slice(0, 18)}…` : name}</text>
 	<text x="16" y="52" class="years">{years || '—'}</text>
 	<title>{name}</title>

@@ -129,12 +129,12 @@ export interface TreeView {
 export function getTreeView(
 	h: Handles,
 	treeId: string,
-	opts?: { focus?: string; depth?: number; userId?: string }
+	opts?: { focus?: string; depth?: number; userId?: string; forceFocus?: boolean }
 ): TreeView | null {
 	const tree = getTreeRow(h.db, treeId);
 	if (!tree) return null;
 	const totalPersons = countVisible(h.raw, treeId);
-	if (totalPersons <= TREE_FOCUS_MODE_THRESHOLD) {
+	if (totalPersons <= TREE_FOCUS_MODE_THRESHOLD && !opts?.forceFocus) {
 		const persons = h.raw
 			.prepare(`SELECT * FROM visible_persons WHERE treeId = ? LIMIT ${MAX_TRAVERSAL_NODES + 1}`)
 			.all(treeId) as PersonRow[];
@@ -225,7 +225,7 @@ export function getTreeView(
 export function updateTree(
 	db: Db,
 	treeId: string,
-	patch: { name?: string; description?: string | null; isPublic?: boolean }
+	patch: { name?: string; description?: string | null; isPublic?: boolean; allowCrossTree?: boolean }
 ): { updated: true } | { error: 'NOT_FOUND' } {
 	const row = getTreeRow(db, treeId);
 	if (!row) return { error: 'NOT_FOUND' };
@@ -236,6 +236,7 @@ export function updateTree(
 				...(patch.name !== undefined ? { name: patch.name } : {}),
 				...(patch.description !== undefined ? { description: patch.description } : {}),
 				...(patch.isPublic !== undefined ? { isPublic: patch.isPublic ? 1 : 0 } : {}),
+				...(patch.allowCrossTree !== undefined ? { allowCrossTree: patch.allowCrossTree ? 1 : 0 } : {}),
 				updatedAt: now
 			})
 			.where(eq(trees.id, treeId))

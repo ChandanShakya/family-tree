@@ -86,6 +86,7 @@
 			{#if born}<span>Born {born}{extra.birthPlace ? ` · ${extra.birthPlace}` : ''}</span>{/if}
 			{#if died}<span>· Died {died}</span>{/if}
 			{#if person.userId}<Badge variant="secondary">Claimed profile</Badge>{/if}
+			{#if !data.publicView && data.combinedFor}<a href={resolve(`/families/${data.combinedFor}` as '/')} class="text-sm">See all their family trees →</a>{/if}
 			{#if extra.isLiving === 0}<Badge variant="outline">Deceased</Badge>{:else if extra.isLiving === 1}<Badge variant="outline">Living</Badge>{/if}
 		</div>
 	</div>

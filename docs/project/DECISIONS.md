@@ -258,3 +258,9 @@ Per §§0.1.10, 2, 5, 5.2, 6.3, 7.2, 8, 12 (AT-35), 13 (Phase 1a), 14:
 - **Reason:**
 - **Status:**
 ```
+
+## D-035: Combined family view instead of merging trees
+
+- **Decision:** A user whose profile is claimed in two or more trees (up to 3) gets `/families/:userId`, a read-only page that draws those trees joined at their own person, with a colour per tree. They choose who may open it: only themselves (default), members of at least two of the trees, or people they pick from their co-members. They also set a generation limit (default: everything recorded); viewers can narrow it further. A viewer sees a tree's side only if they are a member of that tree. Tree owners can opt their tree out (`trees.allowCrossTree`).
+- **Reason:** Marriages connect families, but a merge (non-goal, §1) would mix members, permissions, claims and history. Joining at a verified claimed person shows both families without copying data or widening anyone's access.
+- **Status:** Implemented (migration 0006, `src/lib/server/combined.ts`, `tests/combined.test.ts`, e2e in `tests/e2e/tree.spec.ts`).

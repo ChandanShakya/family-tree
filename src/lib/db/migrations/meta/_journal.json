@@ -43,6 +43,13 @@
       "when": 1790913435346,
       "tag": "0005_family_code_unlimited",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1790930000000,
+      "tag": "0006_combined_view",
+      "breakpoints": true
     }
   ]
 }
