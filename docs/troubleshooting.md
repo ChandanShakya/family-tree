@@ -31,3 +31,12 @@
 ## Getting help
 
 Search the [issues](https://github.com/chandanshakya/family-tree/issues), then open a bug report with the server log lines (each error has a request id) and the steps to reproduce. Do not post real people's personal data.
+
+## `docker compose up --build` hangs at `npm ci`
+
+The build container cannot resolve the npm registry. This happens when the host uses a DNS server that build containers cannot reach, such as Tailscale's `100.100.100.100`. Build with the host's network, then start without rebuilding:
+
+```sh
+docker build --network host -t family-tree:latest .
+docker compose up -d --no-build
+```
