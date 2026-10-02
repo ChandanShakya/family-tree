@@ -88,8 +88,7 @@
 	<section class="section">
 		<h2>Not available yet</h2>
 		<p class="muted">
-			This page appears when your profile is claimed in two or more trees, for example your birth family's tree and your spouse's family tree.
-			{#if data.profiles.length === 1}You are in <strong>{data.profiles[0]?.treeName}</strong> so far.{/if}
+			This page shows your family once your profile is claimed in a tree: open a tree, find yourself and use “Is this you?”. Claim yourself in more trees, for example your birth family's and your spouse's, and they are joined here.
 		</p>
 	</section>
 {:else}
@@ -106,6 +105,9 @@
 			</li>
 		{/each}
 	</ul>
+	{#if data.own && view.sides.length === 1}
+		<p class="muted mb-3 text-sm">Claim your profile in another family's tree (for example your spouse's) and it is joined here.</p>
+	{/if}
 	{#if selected}
 		<div class="mb-3 flex flex-wrap items-center gap-2 rounded-lg border bg-accent px-3 py-2 text-sm text-accent-foreground">
 			Selected: <strong>{personName(selected)}</strong>
@@ -117,7 +119,7 @@
 		<Canvas
 			persons={view.persons}
 			relationships={view.relationships}
-			highlightId={highlight ?? view.centerId}
+			highlightId={highlight}
 			colorOf={(id: string) => (view.treesOf[id] ?? []).map((t) => colorOfTree[t]!)}
 			onselect={(id: string) => (highlight = id)}
 		/>

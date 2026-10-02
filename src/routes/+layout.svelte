@@ -38,7 +38,7 @@
 	<nav aria-label="Main" class="mx-auto flex h-16 items-center gap-2 px-4 lg:pl-6">
 		<a href={resolve('/')} class="flex items-center gap-2 font-bold text-foreground no-underline hover:no-underline">
 			<span class="grid size-9 place-items-center rounded-lg bg-primary text-primary-foreground"><TreePine size={20} /></span>
-			<span class="text-[17px] tracking-tight">Family Tree</span>
+			<span class="text-[17px] tracking-tight whitespace-nowrap">Family Tree</span>
 		</a>
 		<span class="flex-1"></span>
 		<Button variant="ghost" size="icon" onclick={toggleTheme} aria-label="Toggle dark mode">

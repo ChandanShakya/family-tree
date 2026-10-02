@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { Activity, Database, House, Image, Network, Plus, Search, Settings, ShieldCheck, TreePine, User, Users } from '@lucide/svelte';
+	import { Activity, Database, House, Image, Network, Plus, Search, Settings, ShieldCheck, User, Users } from '@lucide/svelte';
 
 	let { signedIn }: { signedIn: boolean } = $props();
 
@@ -37,7 +37,7 @@
 	<!-- Mobile (<640): bottom nav. -->
 	<nav class="bottom" aria-label="Primary">
 		<a href={resolve('/')} aria-label="Home" aria-current={here === '/' ? 'page' : undefined}><House size={22} /></a>
-		<a href={resolve('/')} aria-label="Trees"><TreePine size={22} /></a>
+		<a href={resolve('/families')} aria-label="My families" aria-current={here.startsWith('/families') ? 'page' : undefined}><Network size={22} /></a>
 		<a href={resolve('/?create=1')} aria-label="Add tree" class="fab"><Plus size={26} /></a>
 		<button type="button" class="link" onclick={search} aria-label="Search"><Search size={22} /></button>
 		<a href={resolve('/profile')} aria-label="Me" aria-current={here === '/profile' ? 'page' : undefined}><User size={22} /></a>

@@ -21,7 +21,8 @@
 	let Canvas = $state<typeof import('$lib/components/tree/TreeCanvas.svelte').default | null>(null);
 	let highlight = $state<string | null>(null);
 	let adding = $state(false);
-	let searchSeed = $state('');
+	// A new object per surname click, so clicking the same surname again re-runs the search.
+	let searchSeed = $state<{ q: string } | null>(null);
 	// Linking two people already in the tree: pick a second person, choose how they relate.
 	let linking = $state(false);
 	let secondId = $state<string | null>(null);
@@ -166,7 +167,7 @@
 {/if}
 {#if !data.publicView}
 <div class="mt-6 grid gap-4 md:grid-cols-2">
-	<SurnamePanel {treeId} onsearch={(q) => (searchSeed = q)} />
+	<SurnamePanel {treeId} onsearch={(q) => (searchSeed = { q })} />
 	<DuplicatesPanel {treeId} />
 </div>
 {#if data.canEdit}<AddPersonSheet

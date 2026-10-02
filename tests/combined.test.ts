@@ -100,7 +100,7 @@ describe('D-035 combined family view', () => {
 	test('depth limits generations; an owner opt-out drops the tree', () => {
 		saveSettings(h, ids.bride!, { share: 'me', depth: null, viewers: [] });
 		raw.prepare(`UPDATE trees SET allowCrossTree = 0 WHERE id = ?`).run(ids.tuladhar);
-		expect(buildCombined(h, ids.bride!, ids.bride!)).toBeNull();
+		expect(buildCombined(h, ids.bride!, ids.bride!)!.sides.map((x) => x.treeId)).toEqual([ids.shakya]);
 		raw.prepare(`UPDATE trees SET allowCrossTree = 1 WHERE id = ?`).run(ids.tuladhar);
 		expect(buildCombined(h, ids.bride!, ids.bride!, 1)?.persons.length).toBe(5);
 	});

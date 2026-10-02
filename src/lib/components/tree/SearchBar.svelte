@@ -10,14 +10,14 @@
 	let {
 		treeId,
 		onpick,
-		seed = '',
+		seed = null,
 		label = 'Search people',
 		hotkey = true,
 		filters = true
 	}: {
 		treeId: string;
 		onpick: (id: string, name: string) => void;
-		seed?: string;
+		seed?: { q: string } | null;
 		label?: string;
 		hotkey?: boolean;
 		filters?: boolean;
@@ -34,8 +34,10 @@
 	// A surname chosen elsewhere seeds the box and runs the search.
 	$effect(() => {
 		if (seed) {
-			q = seed;
+			q = seed.q;
 			search();
+			input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			input.focus({ preventScroll: true });
 		}
 	});
 
@@ -86,11 +88,12 @@
 				}
 			}}
 			type="search"
-			placeholder={hotkey ? `${label} (Ctrl/Cmd+K)` : label}
+			placeholder={label}
+			title={hotkey ? `${label} (Ctrl/Cmd+K)` : undefined}
 			aria-label={label}
 		/>
 		{#if filters}
-			<button type="button" class="secondary" aria-expanded={showFilters} onclick={() => (showFilters = !showFilters)}><SlidersHorizontal size={16} /> Filters</button>
+			<button type="button" class="secondary" aria-expanded={showFilters} aria-label="Filters" onclick={() => (showFilters = !showFilters)}><SlidersHorizontal size={16} /> <span class="hidden sm:inline">Filters</span></button>
 		{/if}
 	</div>
 	{#if filters && showFilters}

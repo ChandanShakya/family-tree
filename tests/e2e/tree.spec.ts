@@ -248,6 +248,21 @@ test('combined family view joins two trees at the claimed person (D-035)', async
 	await c.close();
 });
 
+test('surname chips fill and focus the search box, also when clicked again', async ({ browser }) => {
+	const { treeId } = await seedTree(browser, 14);
+	const page = await (await ctx(browser)).newPage();
+	await page.goto(`/trees/${treeId}`);
+	await page.getByRole('button', { name: 'Surnames' }).click();
+	const box = page.getByLabel('Search people', { exact: true });
+	await page.getByRole('button', { name: /^Fam1 / }).click();
+	await expect(box).toHaveValue('Fam1');
+	await expect(box).toBeFocused();
+	await box.fill('');
+	await page.getByRole('button', { name: /^Fam1 / }).click();
+	await expect(box).toHaveValue('Fam1');
+	await expect(page.getByRole('list', { name: 'Search results' })).toBeVisible();
+});
+
 test('members, activity, media and settings pages load', async ({ browser }) => {
 	const { treeId } = await seedTree(browser, 3);
 	const page = await (await ctx(browser)).newPage();

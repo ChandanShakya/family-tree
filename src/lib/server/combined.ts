@@ -106,9 +106,9 @@ export function settingsLog(h: Handles, userId: string): { summary: string; crea
 
 const isMember = (h: Handles, userId: string, treeId: string) => requireTreeAccess(h.db, userId, treeId, 'view').ok;
 
-/** May `viewerId` open `ownerId`'s combined view? Needs two or more profiles either way. */
+/** May `viewerId` open `ownerId`'s combined view? Needs at least one claimed profile. */
 export function canOpen(h: Handles, ownerId: string, viewerId: string, profiles = profilesOf(h, ownerId)): boolean {
-	if (profiles.length < 2) return false;
+	if (profiles.length === 0) return false;
 	if (ownerId === viewerId) return true;
 	const s = getSettings(h, ownerId);
 	const memberOf = profiles.filter((p) => isMember(h, viewerId, p.treeId)).length;

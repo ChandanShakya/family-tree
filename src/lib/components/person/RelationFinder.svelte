@@ -35,7 +35,7 @@
 	}
 </script>
 
-<SearchBar {treeId} label="How are we related? Pick a person" hotkey={false} filters={false} onpick={find} />
+<SearchBar {treeId} label="Pick a person" hotkey={false} filters={false} onpick={find} />
 <div aria-live="polite">
 	{#if busy}
 		<p class="muted">Searching…</p>

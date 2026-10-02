@@ -26,9 +26,9 @@
 		<Button variant="ghost" size="icon" class="rounded-none" onclick={onzoomin} aria-label="Zoom in"><Plus /></Button>
 		<Button variant="ghost" size="icon" class="rounded-none border-l" onclick={onzoomout} aria-label="Zoom out"><Minus /></Button>
 	</div>
-	<Button variant="outline" onclick={onreset} title="Fit the tree to the view"><Maximize2 /> Reset</Button>
-	<Button variant="outline" onclick={() => (orientation = orientation === 'TB' ? 'LR' : 'TB')} aria-pressed={orientation === 'LR'}>
-		{#if orientation === 'TB'}<ArrowRightLeft /> Left to right{:else}<ArrowDownUp /> Top to bottom{/if}
+	<Button variant="outline" onclick={onreset} title="Fit the tree to the view" aria-label="Reset"><Maximize2 /> <span class="hidden sm:inline">Reset</span></Button>
+	<Button variant="outline" onclick={() => (orientation = orientation === 'TB' ? 'LR' : 'TB')} aria-pressed={orientation === 'LR'} aria-label={orientation === 'TB' ? 'Left to right' : 'Top to bottom'}>
+		{#if orientation === 'TB'}<ArrowRightLeft /> <span class="hidden sm:inline">Left to right</span>{:else}<ArrowDownUp /> <span class="hidden sm:inline">Top to bottom</span>{/if}
 	</Button>
 	{#if depth !== undefined && ondepth}
 		<span class="ml-1 text-sm text-muted-foreground">Generations shown: <strong class="text-foreground">{depth}</strong></span>

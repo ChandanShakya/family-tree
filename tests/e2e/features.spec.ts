@@ -187,7 +187,7 @@ test('"How are we related?" names the relation and the path', async ({ browser }
 	const context = await signedIn(browser);
 	const page = await context.newPage();
 	await page.goto(`/persons/${ids.me}`);
-	await page.getByLabel('How are we related? Pick a person').fill('Krishna');
+	await page.getByLabel('Pick a person').fill('Krishna');
 	await page.getByRole('list', { name: 'Search results' }).getByRole('button', { name: 'Krishna Shakya' }).click();
 	await expect(page.getByText(/Krishna Shakya is Ramesh Shakya's grandparent/)).toBeVisible();
 	await expect(page.getByText('→ parent → Hari Shakya')).toBeVisible();

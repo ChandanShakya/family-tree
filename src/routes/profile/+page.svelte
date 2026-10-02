@@ -128,12 +128,12 @@
 			<Avatar src={data.me?.avatarUrl} name={data.profile.displayName} size={72} />
 			<div class="min-w-0 flex-1">
 				<p class="text-lg font-semibold">{data.profile.displayName}</p>
-				<p class="muted flex flex-wrap items-center gap-2 text-sm">
+				<p class="muted flex flex-wrap items-center gap-2 text-sm break-all">
 					{data.profile.email}
 					<span class="inline-flex rounded-full px-2 py-0.5 text-xs font-semibold {data.profile.emailVerified ? 'bg-accent text-accent-foreground' : 'bg-warning/15 text-warning'}">{data.profile.emailVerified ? 'verified' : 'unverified'}</span>
 				</p>
 			</div>
-			<div class="flex flex-wrap gap-2">
+			<div class="flex w-full flex-wrap gap-2 sm:w-auto">
 				<UploadButton label="Change avatar" onfile={uploadAvatar} />
 				{#if !data.profile.emailVerified}
 					<button onclick={resendVerification} type="button" class="secondary">Resend verification email</button>
