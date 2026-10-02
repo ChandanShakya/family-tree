@@ -3,7 +3,7 @@
 # Compilers are installed only if a native module (better-sqlite3, sharp) has no prebuilt binary for the
 # target architecture, and they never reach the runtime image.
 
-FROM node:22-bookworm-slim AS build
+FROM node:26-bookworm-slim AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund \
@@ -12,13 +12,13 @@ COPY . .
 RUN npm run build
 
 # Production dependencies (tsx included: operators run backup / rebuild-fts / sweep-orphans with `docker compose exec`).
-FROM node:22-bookworm-slim AS deps
+FROM node:26-bookworm-slim AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --no-audit --no-fund \
  || (apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/* && npm ci --omit=dev --no-audit --no-fund)
 
-FROM node:22-bookworm-slim AS runtime
+FROM node:26-bookworm-slim AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 RUN useradd -m app
