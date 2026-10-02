@@ -394,22 +394,26 @@ export function placeUnit(
 	const w = unitWidth(unit);
 	let childX = x;
 	let childRights: number[] = [];
-	const childCenters: number[] = [];
+	const childCentres: number[] = [];
 	for (const c of unit.childUnitIds) {
 		const child = units.get(c) as LayoutUnit;
-		const cw = subtreeWidth(child, units);
 		const placed = placeUnit(child, units, positions, childX, childX);
-		childCenters.push(childX + cw / 2);
+		// Centre of the child couple itself, not of its subtree span.
+		childCentres.push(placed.x + unitWidth(child) / 2);
 		childRights.push(placed.right);
 		childX = placed.right + H_GAP;
 	}
 	let ux = x;
-	if (childCenters.length > 0) {
-		const mid = (childCenters[0] as number) + ((childCenters[childCenters.length - 1] as number) - (childCenters[0] as number)) / 2;
-		ux = Math.max(minX, mid - w / 2);
-		const shift = ux - x;
+	if (childCentres.length > 0) {
+		const span = (childRights[childRights.length - 1] as number) - x;
+		// A couple wider than its children's span: centre the children under it.
+		const inset = w > span ? (w - span) / 2 : 0;
+		const mid = ((childCentres[0] as number) + (childCentres[childCentres.length - 1] as number)) / 2 + inset;
+		ux = mid - w / 2;
+		// Move the subtree only when the centred parent would cross the left neighbour.
+		const shift = inset + Math.max(0, minX - ux);
+		ux = Math.max(minX, ux);
 		if (shift !== 0) {
-			// Shift the whole subtree right so the centred parent clears the neighbour.
 			shiftSubtree(unit, units, positions, shift);
 			childRights = childRights.map((r) => r + shift);
 		}

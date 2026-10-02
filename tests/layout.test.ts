@@ -65,6 +65,23 @@ function expectDeterministic(persons: LayoutPerson[], links: LayoutLink[]): void
 }
 
 describe('AT-37: layout fixtures', () => {
+	test('parents are centred over their children, also when one child has a wide family', () => {
+		// gp -> (a, b); b and spouse have three children, a has none.
+		const persons = ['gp', 'a', 'b', 'bs', 'k1', 'k2', 'k3'].map((id, i) => p(id, `${1940 + i * 10}-01-01`));
+		const links = [parent('gp', 'a'), parent('gp', 'b'), spouse('b', 'bs'), ...['k1', 'k2', 'k3'].flatMap((k) => [parent('b', k), parent('bs', k)])];
+		const r = layoutTree(persons, links);
+		const cx = (id: string) => r.nodes.get(id)!.x + NODE_W / 2;
+		const couple = (cx('b') + cx('bs')) / 2;
+		expect(cx('gp')).toBeCloseTo((cx('a') + couple) / 2, 5);
+		expect(couple).toBeCloseTo((cx('k1') + cx('k3')) / 2, 5);
+		// A couple wider than its one child keeps the child centred under it.
+		const r2 = layoutTree([p('m'), p('f'), p('c')], [spouse('m', 'f'), parent('m', 'c'), parent('f', 'c')]);
+		const c2 = (id: string) => r2.nodes.get(id)!.x + NODE_W / 2;
+		expect(c2('c')).toBeCloseTo((c2('m') + c2('f')) / 2, 5);
+		expectNoOverlap(r);
+	});
+
+
 	test('AT-37: single parent with children', () => {
 		const persons = [p('pa', '1970-01-01'), p('c1', '2000-01-01'), p('c2', '2002-01-01')];
 		const links = [parent('pa', 'c1'), parent('pa', 'c2')];
