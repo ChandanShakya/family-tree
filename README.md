@@ -5,8 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 <p align="center">
-  <a href="docs/media/demo.mp4"><img src="docs/media/demo.jpg" alt="Family Tree, a 20-second tour: the tree view, adding a person, “How are we related?”, and privacy features" width="860"></a>
-  <br><sub>▶ <a href="docs/media/demo.mp4">Watch the 20-second tour</a></sub>
+  <a href="docs/media/demo.mp4"><img src="docs/media/demo.gif" alt="Family Tree, a 20-second tour: the tree view, adding a person, “How are we related?”, and privacy features" width="860"></a>
+  <br><sub>Plays automatically. <a href="docs/media/demo.mp4">Full-quality video (MP4)</a></sub>
 </p>
 
 Self-hosted, collaborative genealogy. Build a family tree together with relatives, keep every change in history, and stay in control of your data. It runs on a Raspberry Pi 4 or a small VPS behind a Cloudflare Tunnel, with SQLite as the only database.
