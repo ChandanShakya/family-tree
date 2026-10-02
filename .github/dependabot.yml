@@ -8,6 +8,12 @@ updates:
     # Versions are pinned exactly; keep them pinned.
     versioning-strategy: increase
     labels: [dependencies]
+    ignore:
+      # TypeScript majors wait for @sveltejs/kit peer support; @types/node follows the Node runtime (22).
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       svelte:
         patterns: ['svelte', 'svelte-check', '@sveltejs/*', 'bits-ui', 'eslint-plugin-svelte']
@@ -25,3 +31,7 @@ updates:
     schedule:
       interval: weekly
     labels: [dependencies]
+    ignore:
+      # Stay on the Node LTS line; move majors by hand together with @types/node and engines.
+      - dependency-name: node
+        update-types: ['version-update:semver-major']
