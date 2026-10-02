@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-02
+
 ### Added
 
 - **My families:** a person claimed in several trees sees them joined at themselves, with generation limits, sharing (only me, members of two trees, chosen people), same-person matches across trees, a cross-tree "How are we related?", sharing history and a share notification. Owners can opt a tree out. Migrations 0006 and 0007.
@@ -34,4 +36,5 @@ First public release.
 - Docker deployment behind a Cloudflare Tunnel, Raspberry Pi 4 tuning, a maintenance worker, and benchmarks.
 
 [Unreleased]: https://github.com/chandanshakya/family-tree/compare/v0.1.0...HEAD
+[0.2.0]: https://github.com/chandanshakya/family-tree/releases/tag/v0.2.0
 [0.1.0]: https://github.com/chandanshakya/family-tree/releases/tag/v0.1.0

@@ -14,7 +14,7 @@ export const GET: RequestHandler = async () => {
 		data: {
 			status: 'ok',
 			uptime: Math.floor((Date.now() - startedAt) / 1000),
-			version: '0.1.0',
+			version: '0.2.0',
 			eventLoopDelayP99Ms: p99
 		}
 	});
