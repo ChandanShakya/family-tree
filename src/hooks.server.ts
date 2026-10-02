@@ -8,6 +8,7 @@ import { validateSession } from '$lib/server/auth.js';
 import { RATE_LIMITS } from '$lib/config.js';
 import { startMaintenance } from '$lib/server/maintenance.js';
 import { checkRateLimit } from '$lib/server/rate-limit.js';
+import { parseDate } from '$lib/utils/dates.js';
 
 function clientIp(request: Request): string {
 	const header = env.ADDRESS_HEADER;
@@ -20,12 +21,37 @@ function clientIp(request: Request): string {
 
 const dbPath = (): string => env.DATABASE_PATH ?? './data/family.db';
 
+// BS dates saved while the production build could not convert them have a NULL norm; fill them in.
+function backfillBsNorms(): void {
+	const db = new Database(dbPath());
+	try {
+		let n = 0;
+		for (const [table, text, norm] of [
+			['persons', 'birthDate', 'birthDateNorm'],
+			['persons', 'deathDate', 'deathDateNorm'],
+			['events', 'date', 'dateNorm']
+		] as const) {
+			const cal = text === 'date' ? 'dateCal' : `${text}Cal`;
+			const rows = db.prepare(`SELECT id, ${text} AS t FROM ${table} WHERE ${cal} = 'BS' AND ${norm} IS NULL AND ${text} <> ''`).all() as { id: string; t: string }[];
+			const upd = db.prepare(`UPDATE ${table} SET ${norm} = ? WHERE id = ?`);
+			for (const r of rows) {
+				const v = parseDate(r.t, 'BS').norm;
+				if (v) n += upd.run(v, r.id).changes;
+			}
+		}
+		if (n) console.warn(`backfilled ${n} Bikram Sambat date norms`);
+	} finally {
+		db.close();
+	}
+}
+
 // Runs once before the server accepts requests (§5 migration mechanics, §3 shutdown).
 export const init: ServerInit = async () => {
 	mkdirSync(dirname(dbPath()), { recursive: true });
 	// The migrations folder is passed explicitly: a path relative to the bundled output breaks in production.
 	const { rebuilt } = migrateAndCheck(dbPath(), env.MIGRATIONS_PATH ?? './src/lib/db/migrations');
 	if (rebuilt) console.warn('persons_fts was rebuilt at startup');
+	backfillBsNorms();
 
 	// Production refuses to start without real secrets (§11).
 	if (env.NODE_ENV === 'production') {

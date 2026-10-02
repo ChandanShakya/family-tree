@@ -158,6 +158,62 @@ test('person flow: add, edit, event, photo upload, delete', async ({ browser }) 
 	await expect(page).toHaveURL(/\/trees\/[0-9a-f-]+$/);
 });
 
+test('relationship mapping: implied links and linking two people', async ({ browser }) => {
+	const c = await ctx(browser);
+	const created = await c.request.post('/api/trees', { data: { name: 'Links' } });
+	const treeId = (await created.json()).data.tree.id as string;
+	const page = await c.newPage();
+	await page.goto(`/trees/${treeId}`);
+	const node = (n: string) => page.locator(`svg g[role=button][aria-label="${n}"]`);
+	const select = async (n: string) => {
+		await node(n).click();
+		await expect(page.getByText(`Selected: ${n}`)).toBeVisible();
+	};
+	const add = async (first: string, rel?: string) => {
+		await page.getByRole('button', { name: rel ? 'Add relative' : 'Add person', exact: true }).click();
+		const dlg = page.getByRole('dialog', { name: /Add person/ });
+		await dlg.getByLabel('First name').fill(first);
+		if (rel) await dlg.getByLabel(/Relationship to/).selectOption(rel);
+		return {
+			dlg,
+			// Saving selects the new person; wait so the next click is not overridden.
+			save: async () => {
+				await dlg.getByRole('button', { name: 'Add', exact: true }).click();
+				await expect(page.locator('strong', { hasText: new RegExp(`^${first}$`) })).toBeVisible();
+			}
+		};
+	};
+	await (await add('Ram')).save();
+	await select('Ram');
+	// Kid added to Ram before Ram has a spouse; Sita added as spouse is offered as Kid's parent.
+	await (await add('Kid', 'child')).save();
+	await select('Ram');
+	const sita = await add('Sita', 'spouse');
+	await expect(sita.dlg.getByLabel('Sita is also parent of Kid')).toBeChecked();
+	await sita.save();
+	// A second child of Ram is offered as Sita's child too.
+	await select('Ram');
+	const gita = await add('Gita', 'child');
+	await expect(gita.dlg.getByLabel('Sita is also parent of Gita')).toBeChecked();
+	await gita.save();
+	// Link two existing people.
+	await (await add('Hari')).save();
+	await select('Hari');
+	await page.getByRole('button', { name: 'Link with…' }).click();
+	await node('Kid').click();
+	await page.getByLabel('Relationship', { exact: true }).selectOption('sibling');
+	await expect(page.getByLabel('Ram is also parent of Hari')).toBeChecked();
+	await page.getByRole('button', { name: 'Link', exact: true }).click();
+	await expect(page.getByText('Linked')).toBeVisible();
+	const view = (await (await c.request.get(`/api/trees/${treeId}`)).json()).data;
+	const id = (n: string) => view.persons.find((p: { firstName: string }) => p.firstName === n).id;
+	const has = (a: string, b: string, t: string) => view.relationships.some((r: { person1Id: string; person2Id: string; type: string }) => r.type === t && ((r.person1Id === id(a) && r.person2Id === id(b)) || (t !== 'parent' && r.person1Id === id(b) && r.person2Id === id(a))));
+	for (const [a, b, t] of [['Ram', 'Kid', 'parent'], ['Sita', 'Kid', 'parent'], ['Sita', 'Gita', 'parent'], ['Ram', 'Sita', 'spouse'], ['Hari', 'Kid', 'sibling'], ['Ram', 'Hari', 'parent']]) {
+		expect(has(a!, b!, t!), `${a} ${t} ${b}`).toBe(true);
+	}
+	await c.close();
+});
+
 test('members, activity, media and settings pages load', async ({ browser }) => {
 	const { treeId } = await seedTree(browser, 3);
 	const page = await (await ctx(browser)).newPage();

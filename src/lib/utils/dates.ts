@@ -1,4 +1,9 @@
-import NepaliDate from 'nepali-date-converter';
+import NepaliDateModule from 'nepali-date-converter';
+
+// The package is CommonJS: under plain Node ESM (the production server) the default import is the
+// exports object, while Vite/Vitest unwrap it to the class.
+const NepaliDate: typeof NepaliDateModule =
+	(NepaliDateModule as unknown as { default?: typeof NepaliDateModule }).default ?? NepaliDateModule;
 import { pad, parseAdDate } from '$lib/shared/dates-ad.mjs';
 
 export type DateCal = 'AD' | 'BS';

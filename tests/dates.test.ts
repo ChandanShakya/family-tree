@@ -66,3 +66,15 @@ describe('AT-25: display', () => {
 		expect(displayDate(parseDate('1985', 'AD'), 'AD')).toBe('1985');
 	});
 });
+
+describe("production bundle", () => {
+	test('converts BS dates under plain Node ESM (CommonJS default-import interop)', async () => {
+		const { execFileSync } = await import('node:child_process');
+		const { existsSync, readdirSync } = await import('node:fs');
+		const dir = 'build/server/chunks/chunks';
+		if (!existsSync(dir)) return; // runs after `npm run build` (CI does)
+		const file = readdirSync(dir).find((f) => f.startsWith('dates') && f.endsWith('.js'));
+		const out = execFileSync(process.execPath, ['--input-type=module', '-e', `const m = await import('./${dir}/${file}'); console.log(m.p('2059', 'BS').norm)`], { encoding: 'utf8' });
+		expect(out.trim()).toBe('2002-04-14');
+	});
+});

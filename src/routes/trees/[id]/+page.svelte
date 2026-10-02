@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
@@ -10,7 +10,9 @@
 	import SurnamePanel from '$lib/components/tree/SurnamePanel.svelte';
 	import DuplicatesPanel from '$lib/components/tree/DuplicatesPanel.svelte';
 	import AddPersonSheet from '$lib/components/person/AddPersonSheet.svelte';
-	import { personName } from '$lib/api.js';
+	import { api, personName } from '$lib/api.js';
+	import { toast } from '$lib/toast.svelte.js';
+	import { impliedLinks, linkLabel, type Link, type RelKind } from '$lib/utils/family-links.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { UserPlus } from '@lucide/svelte';
 
@@ -20,10 +22,46 @@
 	let highlight = $state<string | null>(null);
 	let adding = $state(false);
 	let searchSeed = $state('');
+	// Linking two people already in the tree: pick a second person, choose how they relate.
+	let linking = $state(false);
+	let secondId = $state<string | null>(null);
+	let pairRel = $state<RelKind>('spouse');
+	let pairSkipped = $state<string[]>([]);
 
 	const view = $derived(data.view);
 	const treeId = $derived(data.treeId);
 	const selected = $derived(view.persons.find((p) => p.id === highlight) ?? null);
+	const second = $derived(view.persons.find((p) => p.id === secondId) ?? null);
+	const nameOf = (id: string) => {
+		const p = view.persons.find((x) => x.id === id);
+		return p ? personName(p) : '…';
+	};
+	const linkKey = (l: Link) => `${l.type}:${l.person1Id}:${l.person2Id}`;
+	const pairImplied = $derived(selected && second ? impliedLinks(view.relationships, pairRel, selected.id, second.id) : []);
+
+	function choose(id: string) {
+		if (linking && highlight && id !== highlight) {
+			secondId = id;
+			linking = false;
+			pairSkipped = [];
+			return;
+		}
+		secondId = null;
+		linking = false;
+		highlight = id;
+	}
+
+	async function linkPair() {
+		if (!selected || !second) return;
+		// "A is parent/child/spouse/sibling of B"; parent links are stored parent first.
+		const [p1, p2] = pairRel === 'child' ? [second.id, selected.id] : [selected.id, second.id];
+		const links = [{ person1Id: p1, person2Id: p2, type: pairRel === 'child' ? 'parent' : pairRel }, ...pairImplied.filter((l) => !pairSkipped.includes(linkKey(l)))];
+		let ok = true;
+		for (const l of links) ok = (await api('POST', '/api/relationships', { treeId, ...l })).ok && ok;
+		if (ok) toast('Linked');
+		secondId = null;
+		await invalidateAll();
+	}
 	const depth = $derived(Number(page.url.searchParams.get('depth')) || DEFAULT_FOCUS_DEPTH);
 
 	onMount(async () => {
@@ -79,8 +117,40 @@
 		Selected: <strong>{personName(selected)}</strong>
 		<span class="flex-1"></span>
 		<Button size="sm" variant="outline" href={resolve(`/persons/${selected.id}` as '/')}>Open</Button>
-		{#if data.canEdit}<Button size="sm" onclick={() => (adding = true)}>Add relative</Button>{/if}
+		{#if data.canEdit}
+			<Button size="sm" variant="outline" onclick={() => ((linking = !linking), (secondId = null))}>{linking ? 'Cancel linking' : 'Link with…'}</Button>
+			<Button size="sm" onclick={() => (adding = true)}>Add relative</Button>
+		{/if}
 	</div>
+	{#if linking}<p class="mb-3 text-sm text-muted-foreground" role="status">Now select the second person in the tree.</p>{/if}
+	{#if second && data.canEdit}
+		<div class="section mb-3 flex flex-col gap-3">
+			<div class="flex flex-wrap items-center gap-2 text-sm">
+				<strong>{personName(selected)}</strong> is
+				<select bind:value={pairRel} class="w-auto!" aria-label="Relationship" onchange={() => (pairSkipped = [])}>
+					<option value="spouse">spouse of</option>
+					<option value="parent">parent of</option>
+					<option value="child">child of</option>
+					<option value="sibling">sibling of</option>
+				</select>
+				<strong>{personName(second)}</strong>
+			</div>
+			{#each pairImplied as l (linkKey(l))}
+				<label class="flex items-center gap-2 text-sm font-normal">
+					<input
+						type="checkbox"
+						checked={!pairSkipped.includes(linkKey(l))}
+						onchange={(e) => (pairSkipped = e.currentTarget.checked ? pairSkipped.filter((k) => k !== linkKey(l)) : [...pairSkipped, linkKey(l)])}
+					/>
+					{linkLabel(l, nameOf)}
+				</label>
+			{/each}
+			<div class="flex justify-end gap-2">
+				<Button size="sm" variant="outline" onclick={() => (secondId = null)}>Cancel</Button>
+				<Button size="sm" onclick={linkPair}>Link</Button>
+			</div>
+		</div>
+	{/if}
 {/if}
 {#if Canvas}
 	<Canvas
@@ -89,7 +159,7 @@
 		highlightId={highlight}
 		depth={view.truncated ? depth : undefined}
 		ondepth={(d: number) => refocus(highlight, d)}
-		onselect={(id: string) => (view.truncated ? refocus(id).then(() => (highlight = id)) : (highlight = id))}
+		onselect={(id: string) => (view.truncated && !linking ? refocus(id).then(() => choose(id)) : choose(id))}
 	/>
 {:else}
 	<div class="flex flex-col gap-2" role="status" aria-label="Loading tree"><Skeleton /><Skeleton /><Skeleton /></div>
@@ -103,6 +173,8 @@
 	{treeId}
 	anchor={selected ? { id: selected.id, name: personName(selected) } : null}
 	bind:open={adding}
+	relationships={view.relationships}
+	{nameOf}
 	oncreated={(id) => {
 		highlight = id;
 	}}

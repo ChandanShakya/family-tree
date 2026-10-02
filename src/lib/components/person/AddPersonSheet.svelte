@@ -7,16 +7,22 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { X } from '@lucide/svelte';
 	import { draftToBody, emptyDraft, type PersonDraft } from './draft.js';
+	import { impliedLinks, linkLabel, type Link } from '$lib/utils/family-links.js';
 
 	type Rel = 'parent' | 'child' | 'spouse' | 'sibling' | 'none';
 	let {
 		treeId,
 		anchor = null,
 		open = $bindable(false),
-		oncreated
+		oncreated,
+		relationships = [],
+		nameOf = () => '…'
 	}: {
 		treeId: string;
 		anchor?: { id: string; name: string } | null;
+		/** Existing links in the tree, used to offer the implied ones (e.g. the spouse as other parent). */
+		relationships?: { person1Id: string; person2Id: string; type: string }[];
+		nameOf?: (id: string) => string;
 		open: boolean;
 		oncreated: (id: string) => void;
 	} = $props();
@@ -26,6 +32,11 @@
 	let photo = $state<File | null>(null);
 	let photoInput = $state<HTMLInputElement>();
 	let dialog: HTMLDialogElement;
+	const NEW = '__new__';
+	const implied = $derived(anchor && rel !== 'none' ? impliedLinks(relationships, rel, NEW, anchor.id) : []);
+	let skipped = $state<string[]>([]);
+	const key = (l: Link) => `${l.type}:${l.person1Id}:${l.person2Id}`;
+	const label = (id: string) => (id === NEW ? draft.firstName.trim() || 'New person' : nameOf(id));
 
 	$effect(() => {
 		if (open && !dialog.open) dialog.showModal();
@@ -40,7 +51,13 @@
 				rel === 'parent' ? [r.data.id, anchor.id] : rel === 'child' ? [anchor.id, r.data.id] : [anchor.id, r.data.id];
 			const type = rel === 'child' ? 'parent' : rel;
 			const l = await api('POST', '/api/relationships', { treeId, person1Id: p1, person2Id: p2, type });
-			if (!l.ok) toast('Person added, but the relationship was not', 'error');
+			let ok = l.ok;
+			for (const x of implied.filter((x) => !skipped.includes(key(x)))) {
+				const swap = (id: string) => (id === NEW ? r.data.id : id);
+				const e = await api('POST', '/api/relationships', { treeId, person1Id: swap(x.person1Id), person2Id: swap(x.person2Id), type: x.type }, { quiet: true });
+				ok &&= e.ok;
+			}
+			if (!ok) toast('Person added, but not every relationship was', 'error');
 		}
 		if (photo) {
 			const f = new FormData();
@@ -56,6 +73,7 @@
 		photo = null;
 		if (photoInput) photoInput.value = '';
 		rel = 'none';
+		skipped = [];
 		open = false;
 		await invalidateAll();
 		oncreated(r.data.id);
@@ -81,6 +99,21 @@
 				<option value="sibling">Sibling of</option>
 			</select>
 		</label>
+		{#if implied.length}
+			<fieldset class="mb-4 flex flex-col gap-2">
+				<legend>Also link</legend>
+				{#each implied as l (key(l))}
+					<label class="flex items-center gap-2 font-normal">
+						<input
+							type="checkbox"
+							checked={!skipped.includes(key(l))}
+							onchange={(e) => (skipped = e.currentTarget.checked ? skipped.filter((k) => k !== key(l)) : [...skipped, key(l)])}
+						/>
+						{linkLabel(l, label)}
+					</label>
+				{/each}
+			</fieldset>
+		{/if}
 	{/if}
 	<PersonForm bind:draft submitLabel="Add" onsubmit={save} oncancel={() => (open = false)}>
 		{#snippet extra()}
