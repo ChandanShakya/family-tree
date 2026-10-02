@@ -225,7 +225,8 @@ export function getTreeView(
 export function updateTree(
 	db: Db,
 	treeId: string,
-	patch: { name?: string; description?: string | null; isPublic?: boolean; allowCrossTree?: boolean }
+	patch: { name?: string; description?: string | null; isPublic?: boolean; allowCrossTree?: boolean },
+	actorId?: string
 ): { updated: true } | { error: 'NOT_FOUND' } {
 	const row = getTreeRow(db, treeId);
 	if (!row) return { error: 'NOT_FOUND' };
@@ -241,6 +242,14 @@ export function updateTree(
 			})
 			.where(eq(trees.id, treeId))
 			.run();
+		// Settings changes show in the tree's activity (not revertible, like other tree rows).
+		if (actorId) {
+			const before: Record<string, unknown> = { ...row, isPublic: !!row.isPublic, allowCrossTree: !!row.allowCrossTree };
+			for (const [field, value] of Object.entries(patch)) {
+				if (value === undefined || before[field] === value) continue;
+				writeHistory(tx, { treeId, entityType: 'tree', entityId: treeId, changedBy: actorId, action: 'update', field, oldValue: before[field], newValue: value });
+			}
+		}
 	});
 	return { updated: true };
 }

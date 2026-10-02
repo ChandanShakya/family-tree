@@ -356,3 +356,35 @@ export const combinedViewViewers = sqliteTable(
 	},
 	(t) => [primaryKey({ columns: [t.ownerId, t.viewerId] })]
 );
+
+export const combinedViewLog = sqliteTable(
+	'combinedViewLog',
+	{
+		id: text('id').primaryKey(),
+		userId: text('userId')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' }),
+		summary: text('summary').notNull(),
+		createdAt: text('createdAt').notNull()
+	},
+	(t) => [index('ix_cvlog_user').on(t.userId, t.createdAt)]
+);
+
+/** A combined-view owner's verdict that two people in different trees are (not) the same. */
+export const personMatches = sqliteTable(
+	'personMatches',
+	{
+		ownerId: text('ownerId')
+			.notNull()
+			.references(() => users.id, { onDelete: 'cascade' }),
+		personAId: text('personAId')
+			.notNull()
+			.references(() => persons.id, { onDelete: 'cascade' }),
+		personBId: text('personBId')
+			.notNull()
+			.references(() => persons.id, { onDelete: 'cascade' }),
+		same: integer('same').notNull(),
+		createdAt: text('createdAt').notNull()
+	},
+	(t) => [primaryKey({ columns: [t.ownerId, t.personAId, t.personBId] })]
+);

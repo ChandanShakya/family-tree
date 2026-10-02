@@ -308,7 +308,7 @@ export function relationPath(
 	return { path: [], label: 'not connected within the search limit', truncated: true };
 }
 
-function describePath(path: RelationStep[]): string {
+export function describePath(path: RelationStep[]): string {
 	return kinshipLabel(path.map((s) => s.link));
 }
 

@@ -4,7 +4,7 @@ import { EDIT_NOTIFY_COALESCE_MINUTES } from '$lib/config.js';
 import { notifications, persons, treeMembers, users } from '$lib/db/schema.js';
 import type { Db } from './tx.js';
 
-export type NotificationType = 'join' | 'join_approval' | 'claim' | 'claim_review' | 'edit';
+export type NotificationType = 'join' | 'join_approval' | 'claim' | 'claim_review' | 'edit' | 'share';
 
 export interface NewNotification {
 	userId: string;

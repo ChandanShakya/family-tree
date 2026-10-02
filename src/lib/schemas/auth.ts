@@ -53,7 +53,8 @@ export const AccountUpdateSchema = z
 				join_approval: z.boolean().optional(),
 				claim: z.boolean().optional(),
 				claim_review: z.boolean().optional(),
-				edit: z.boolean().optional()
+				edit: z.boolean().optional(),
+				share: z.boolean().optional()
 			})
 			.optional()
 	})

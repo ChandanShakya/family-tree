@@ -52,7 +52,7 @@ export const PUT: RequestHandler = async (event) => {
 			description: parsed.data.description,
 			isPublic: parsed.data.isPublic,
 			allowCrossTree: parsed.data.allowCrossTree
-		});
+		}, gate.userId);
 		if ('error' in res) {
 			return json({ error: { code: 'NOT_FOUND', message: 'Not found' } }, { status: 404 });
 		}

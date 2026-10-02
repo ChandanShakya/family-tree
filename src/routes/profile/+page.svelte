@@ -13,7 +13,8 @@
 		['join_approval', 'A join request needs my approval'],
 		['claim', 'A profile claim needs my review'],
 		['claim_review', 'My claim was approved or rejected'],
-		['edit', 'Someone edits my profile']
+		['edit', 'Someone edits my profile'],
+		['share', 'Someone shares their combined family view with me']
 	] as const;
 
 	let { data } = $props();

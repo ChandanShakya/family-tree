@@ -45,6 +45,7 @@ export const ROUTE_POLICIES: RoutePolicy[] = [
 	{ route: '/api/auth/google/callback', method: 'GET', access: 'public' },
 	{ route: '/api/account', method: 'PUT', access: 'session' },
 	{ route: '/api/combined-view', method: 'PUT', access: 'session' },
+	{ route: '/api/combined-view/matches', method: 'POST', access: 'session' },
 	{ route: '/api/account', method: 'DELETE', access: 'session' },
 	{ route: '/api/account/avatar', method: 'POST', access: 'session' },
 	// Authorised per row inside the handler (media/cover/avatar ownership), probed by AT-17.

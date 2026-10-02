@@ -38,6 +38,22 @@
 		maxDepth = data.settings.depth ? String(data.settings.depth) : '';
 		viewers = [...data.settings.viewers];
 	});
+	async function verdict(a: string, b: string, same: boolean) {
+		if ((await api('POST', '/api/combined-view/matches', { personAId: a, personBId: b, same })).ok) {
+			toast(same ? 'Joined as one person' : 'Saved');
+			await invalidateAll();
+		}
+	}
+	// "How are we related?" across the trees: computed by the page load from ?from=&to=.
+	let from = $state(page.url.searchParams.get('from') ?? '');
+	let to = $state(page.url.searchParams.get('to') ?? '');
+	const sorted = $derived([...(view?.persons ?? [])].sort((a, b) => personName(a).localeCompare(personName(b))));
+	function relate(e: SubmitEvent) {
+		e.preventDefault();
+		const depth = page.url.searchParams.get('depth');
+		const q = `from=${from}&to=${to}${depth ? `&depth=${depth}` : ''}`;
+		void goto(resolve(`/families/${page.params.userId}?${q}` as '/'), { keepFocus: true, noScroll: true });
+	}
 	async function save(e: SubmitEvent) {
 		e.preventDefault();
 		const body = { share, depth: maxDepth ? Number(maxDepth) : null, viewers: share === 'chosen' ? viewers : [] };
@@ -102,12 +118,58 @@
 			persons={view.persons}
 			relationships={view.relationships}
 			highlightId={highlight ?? view.centerId}
-			colorOf={(id: string) => colorOfTree[view.treeOf[id] ?? '']}
+			colorOf={(id: string) => (view.treesOf[id] ?? []).map((t) => colorOfTree[t]!)}
 			onselect={(id: string) => (highlight = id)}
 		/>
 	{:else}
 		<div class="flex flex-col gap-2" role="status" aria-label="Loading tree"><Skeleton /><Skeleton /><Skeleton /></div>
 	{/if}
+{/if}
+
+{#if view}
+	<div class="mt-6 grid gap-6 lg:grid-cols-2">
+		<section class="section">
+			<h2>How are we related?</h2>
+			<p class="muted text-sm">Across all the trees shown above.</p>
+			<form onsubmit={relate} class="mt-3 grid gap-3">
+				<label>From <select bind:value={from} required aria-label="Related from"><option value="">Choose a person</option>{#each sorted as p (p.id)}<option value={p.id}>{personName(p)}</option>{/each}</select></label>
+				<label>To <select bind:value={to} required aria-label="Related to"><option value="">Choose a person</option>{#each sorted as p (p.id)}<option value={p.id}>{personName(p)}</option>{/each}</select></label>
+				<div><button type="submit">Find</button></div>
+			</form>
+			{#if page.url.searchParams.get('from') && page.url.searchParams.get('to')}
+				<p class="mt-3" role="status">
+					{#if data.relation}
+						<strong>{data.relation.label}</strong>
+						{#if data.relation.path.length}<span class="muted text-sm"> · {data.relation.path.length} step{data.relation.path.length === 1 ? '' : 's'}</span>{/if}
+					{:else}Not connected in these trees.{/if}
+				</p>
+			{/if}
+		</section>
+		{#if data.own}
+			<section class="section">
+				<h2>Same person in two trees?</h2>
+				<p class="muted text-sm">Joined people are drawn once. Nothing changes in either tree.</p>
+				{#each view.suggestions as m (m.a.id + m.b.id)}
+					<div class="mt-3 flex flex-wrap items-center gap-2 rounded-lg border p-3 text-sm">
+						<span class="flex-1"><strong>{m.a.name}</strong> ({m.a.treeName}) and <strong>{m.b.name}</strong> ({m.b.treeName}) are both your {m.kind}</span>
+						<Button size="sm" variant="outline" onclick={() => verdict(m.a.id, m.b.id, false)}>Not the same</Button>
+						<Button size="sm" onclick={() => verdict(m.a.id, m.b.id, true)}>Same person</Button>
+					</div>
+				{:else}
+					<p class="muted mt-3 text-sm">No likely matches right now.</p>
+				{/each}
+				{#if view.matches.length}
+					<h3>Joined</h3>
+					{#each view.matches as m (m.a.id + m.b.id)}
+						<div class="mt-2 flex flex-wrap items-center gap-2 text-sm">
+							<span class="flex-1">{m.a.name} ({m.a.treeName}) = {m.b.name} ({m.b.treeName})</span>
+							<Button size="sm" variant="outline" onclick={() => verdict(m.a.id, m.b.id, false)}>Separate</Button>
+						</div>
+					{/each}
+				{/if}
+			</section>
+		{/if}
+	</div>
 {/if}
 
 {#if data.own && data.settings}
@@ -139,5 +201,11 @@
 			</label>
 			<div><button type="submit">Save</button></div>
 		</form>
+		{#if data.log.length}
+			<h3>Sharing history</h3>
+			<ul class="flex flex-col gap-1 text-sm">
+				{#each data.log as l (l.createdAt)}<li><span class="muted">{new Date(l.createdAt).toLocaleString()}</span> · {l.summary}</li>{/each}
+			</ul>
+		{/if}
 	</section>
 {/if}

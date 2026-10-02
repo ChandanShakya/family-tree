@@ -28,7 +28,7 @@
 		ondepth?: (d: number) => void;
 		onselect: (id: string) => void;
 		/** Side-bar colour per person (combined view: which tree they come from). */
-		colorOf?: (id: string) => string | undefined;
+		colorOf?: (id: string) => string[] | undefined;
 	} = $props();
 	let orientation = $state<Orientation>('TB');
 
@@ -143,7 +143,7 @@
 						name={nameOf(p)}
 						years={years(p)}
 						highlighted={id === highlightId}
-						color={colorOf?.(id)}
+						colors={colorOf?.(id)}
 						onselect={() => onselect(id)}
 					/>
 				{/if}

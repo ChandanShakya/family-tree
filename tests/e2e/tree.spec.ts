@@ -238,6 +238,11 @@ test('combined family view joins two trees at the claimed person (D-035)', async
 	await page.getByLabel('People I choose').check();
 	await page.getByRole('button', { name: 'Save', exact: true }).click();
 	await expect(page.getByText('Sharing saved')).toBeVisible();
+	await expect(page.getByText('Visible to: people I choose')).toBeVisible();
+	await page.getByLabel('Related from').selectOption({ label: 'Husband Shakya' });
+	await page.getByLabel('Related to').selectOption({ label: 'Father Tuladhar' });
+	await page.getByRole('button', { name: 'Find' }).click();
+	await expect(page.getByRole('status').filter({ hasText: /in-law/ })).toBeVisible();
 	await page.goto(`/persons/${a}`);
 	await expect(page.getByRole('link', { name: /See all their family trees/ })).toBeVisible();
 	await c.close();
