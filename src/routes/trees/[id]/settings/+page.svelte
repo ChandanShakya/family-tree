@@ -69,6 +69,7 @@
 </div>
 
 <div class="flex flex-col gap-6">
+	{#if !data.canManage}<p class="muted">Only editors and the owner can change tree settings.</p>{:else}
 	<section class="section">
 		<h2>General</h2>
 		<form onsubmit={save} class="grid max-w-2xl gap-4">
@@ -84,6 +85,7 @@
 		{#if data.tree.coverImage}<img src={data.tree.coverImage} alt="Tree cover" class="mb-3 h-40 w-full max-w-xl rounded-xl object-cover" />{/if}
 		<UploadButton label="Upload cover" onfile={uploadCover} />
 	</section>
+	{/if}
 
 	{#if data.familyCode}
 		<section class="section">
@@ -102,6 +104,7 @@
 		</section>
 	{/if}
 
+	{#if data.isOwner}
 	<section class="section border-destructive/40">
 		<h2 class="text-destructive">Delete tree</h2>
 		<p class="muted text-sm">Permanently deletes the tree, its people and photos. This cannot be undone.</p>
@@ -110,4 +113,5 @@
 			<button type="submit" class="danger" disabled={confirmName !== data.tree.name}>Delete tree</button>
 		</form>
 	</section>
+	{/if}
 </div>

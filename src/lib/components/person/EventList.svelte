@@ -13,7 +13,13 @@
 		place: string | null;
 		description: string | null;
 	}
-	let { personId, treeId, events, pref }: { personId: string; treeId: string; events: Ev[]; pref: DateDisplayPref } = $props();
+	let {
+		personId,
+		treeId,
+		events,
+		pref,
+		readonly = false
+	}: { personId: string; treeId: string; events: Ev[]; pref: DateDisplayPref; readonly?: boolean } = $props();
 
 	const blank = { type: '', date: '', place: '', description: '' };
 	let draft = $state({ ...blank });
@@ -60,8 +66,8 @@
 	{#each events as ev (ev.id)}
 		<li class="rounded-lg border px-3 py-2 text-sm">
 			{ev.type}{ev.date ? ` · ${fmtDate(ev.date, ev.dateCal, pref)}` : ''}{ev.place ? ` · ${ev.place}` : ''}{ev.description ? ` — ${ev.description}` : ''}
-			<button type="button" class="link" onclick={() => startEdit(ev)} aria-label="Edit event {ev.type}">Edit</button>
-			<button type="button" class="link" onclick={() => del(ev)} aria-label="Delete event {ev.type}">×</button>
+			{#if !readonly}<button type="button" class="link" onclick={() => startEdit(ev)} aria-label="Edit event {ev.type}">Edit</button>
+			<button type="button" class="link" onclick={() => del(ev)} aria-label="Delete event {ev.type}">×</button>{/if}
 			{#if editing === ev.id}
 				<form onsubmit={save} class="mt-3 grid gap-2 sm:grid-cols-2">
 					<input bind:value={edit.type} required aria-label="Edited event type" />
@@ -75,10 +81,10 @@
 		</li>
 	{/each}
 </ul>
-<form onsubmit={add} class="grid gap-2 rounded-lg border border-dashed p-3 sm:grid-cols-2" aria-label="Add an event">
+{#if !readonly}<form onsubmit={add} class="grid gap-2 rounded-lg border border-dashed p-3 sm:grid-cols-2" aria-label="Add an event">
 	<input bind:value={draft.type} placeholder="Type (e.g. residence)" required aria-label="Event type" />
 	<input bind:value={draft.date} placeholder="Date" aria-label="Event date" />
 	<input bind:value={draft.place} placeholder="Place" aria-label="Event place" />
 	<input bind:value={draft.description} placeholder="Notes" aria-label="Event notes" />
 	<button type="submit">Add event</button>
-</form>
+</form>{/if}

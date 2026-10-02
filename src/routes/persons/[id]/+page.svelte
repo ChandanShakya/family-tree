@@ -89,7 +89,7 @@
 			{#if extra.isLiving === 0}<Badge variant="outline">Deceased</Badge>{:else if extra.isLiving === 1}<Badge variant="outline">Living</Badge>{/if}
 		</div>
 	</div>
-	{#if !data.publicView}
+	{#if !data.publicView && data.canDelete}
 		<div class="w-full sm:w-auto"><Button variant="destructive" onclick={remove}><Trash2 /> Delete person</Button></div>
 	{/if}
 </header>
@@ -141,18 +141,18 @@
 		<div class="flex min-w-0 flex-col gap-6">
 			<section class="section">
 				<h2>Details</h2>
-				<PersonForm bind:draft onsubmit={save} />
+				<PersonForm bind:draft onsubmit={save} readonly={!data.canEdit} />
 			</section>
 			<section class="section">
 				<h2>Events</h2>
-				<EventList personId={person.id} treeId={person.treeId} events={person.events} {pref} />
+				<EventList personId={person.id} treeId={person.treeId} events={person.events} {pref} readonly={!data.canEdit} />
 			</section>
 			<section class="section">
 				<div class="flex flex-wrap items-center justify-between gap-2">
 					<h2 class="my-0">Photos</h2>
-					<UploadButton label="Add photo" onfile={uploadPhoto} />
+					{#if data.canEdit}<UploadButton label="Add photo" onfile={uploadPhoto} />{/if}
 				</div>
-				<div class="mt-4"><Gallery items={person.media} canPrimary onchange={invalidateAll} /></div>
+				<div class="mt-4"><Gallery items={person.media} canPrimary readonly={!data.canEdit} onchange={invalidateAll} /></div>
 			</section>
 			<section class="section">
 				<h2>History</h2>

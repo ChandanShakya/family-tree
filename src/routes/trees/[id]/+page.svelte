@@ -58,7 +58,7 @@
 			{#if data.publicView}· Public tree — living people are shown as “Living”.{/if}
 		</p>
 	</div>
-	{#if !data.publicView}
+	{#if data.canEdit}
 		<Button onclick={() => (adding = true)}><UserPlus /> Add person</Button>
 	{/if}
 </div>
@@ -67,7 +67,7 @@
 	{#if view.persons.length === 0}
 		<div class="section mb-4 flex flex-col items-center gap-2 py-10 text-center">
 			<p class="text-base font-semibold">This tree is empty</p>
-			<p class="muted">Add the first person — perhaps yourself.</p>
+			{#if data.canEdit}<p class="muted">Add the first person — perhaps yourself.</p>{/if}
 		</div>
 	{/if}
 {/if}
@@ -79,7 +79,7 @@
 		Selected: <strong>{personName(selected)}</strong>
 		<span class="flex-1"></span>
 		<Button size="sm" variant="outline" href={resolve(`/persons/${selected.id}` as '/')}>Open</Button>
-		{#if !data.publicView}<Button size="sm" onclick={() => (adding = true)}>Add relative</Button>{/if}
+		{#if data.canEdit}<Button size="sm" onclick={() => (adding = true)}>Add relative</Button>{/if}
 	</div>
 {/if}
 {#if Canvas}
@@ -99,12 +99,12 @@
 	<SurnamePanel {treeId} onsearch={(q) => (searchSeed = q)} />
 	<DuplicatesPanel {treeId} />
 </div>
-<AddPersonSheet
+{#if data.canEdit}<AddPersonSheet
 	{treeId}
 	anchor={selected ? { id: selected.id, name: personName(selected) } : null}
 	bind:open={adding}
 	oncreated={(id) => {
 		highlight = id;
 	}}
-/>
+/>{/if}
 {/if}

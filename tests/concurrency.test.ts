@@ -93,10 +93,11 @@ beforeAll(async () => {
 	);
 }, 90_000);
 
-afterAll(() => {
-	for (const p of procs) p.kill();
+afterAll(async () => {
+	// Wait for the servers to exit before removing their database directory.
+	await Promise.all(procs.map((p) => (p.exitCode === null ? new Promise((r) => (p.once('exit', r), p.kill())) : null)));
 	raw?.close();
-	rmSync(DIR, { force: true, recursive: true });
+	rmSync(DIR, { force: true, recursive: true, maxRetries: 5 });
 });
 
 const count = (sql: string, ...args: unknown[]) => (raw.prepare(sql).get(...args) as { c: number }).c;

@@ -69,6 +69,7 @@ export const load: PageServerLoad = ({ locals, params, url }) =>
 			photos,
 			links: links.filter((l) => names[l.person1Id === params.id ? l.person2Id : l.person1Id]),
 			canEdit: canDo(role, 'add'),
+			canDelete: canDo(role, 'delete'),
 			publicView: false as const,
 			history: personHistory(c, params.id).data,
 			role,

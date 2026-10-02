@@ -10,7 +10,8 @@
 		submitLabel = 'Save',
 		onsubmit,
 		oncancel,
-		extra
+		extra,
+		readonly = false
 	}: {
 		draft: PersonDraft;
 		submitLabel?: string;
@@ -19,6 +20,8 @@
 		oncancel?: () => void;
 		/** Extra fields rendered at the end of the details (e.g. a photo picker). */
 		extra?: Snippet;
+		/** Viewers see the fields but cannot change or save them. */
+		readonly?: boolean;
 	} = $props();
 	let more = $state(false);
 	const CAL_HINT = 'AD or BS (Bikram Sambat). Partial BS dates sort approximately and a BS year alone can show as the previous Gregorian year.';
@@ -52,7 +55,7 @@
 	oninvalidcapture={invalid}
 	class="grid gap-4"
 >
-	<div class="grid gap-4 sm:grid-cols-2">
+	<fieldset disabled={readonly} class="contents"><div class="grid gap-4 sm:grid-cols-2">
 		<label>First name <input bind:value={draft.firstName} required maxlength="100" autocomplete="off" /></label>
 		<label>Middle name <input bind:value={draft.middleName} maxlength="100" autocomplete="off" /></label>
 		<label>Last name <input bind:value={draft.lastName} maxlength="100" autocomplete="off" /></label>
@@ -61,14 +64,14 @@
 				<option value="">—</option><option value="M">Male</option><option value="F">Female</option><option value="X">Other</option><option value="U">Unknown</option>
 			</select>
 		</label>
-	</div>
+	</div></fieldset>
 	<div>
 		<button type="button" class="secondary" onclick={() => (more = !more)} aria-expanded={more}>
 			<ChevronDown size={16} class="transition-transform {more ? 'rotate-180' : ''}" />{more ? 'Fewer details' : 'More details'}
 		</button>
 	</div>
 	{#if more}
-		<div class="grid grid-cols-[1fr_auto] gap-3">
+		<fieldset disabled={readonly} class="contents"><div class="grid grid-cols-[1fr_auto] gap-3">
 			<label>
 				<span class="inline-flex items-center gap-1.5">Birth date <span class="help" title={DATE_HELP} aria-label={DATE_HELP} role="img"><CircleHelp size={15} /></span></span>
 				<input bind:value={draft.birthDate} placeholder="1950, 1950-03, 12 Mar 1950" title={DATE_HELP} use:dateValidity={() => draft.birthDateCal} />
@@ -99,12 +102,13 @@
 			<label>Death place <input bind:value={draft.deathPlace} maxlength="200" /></label>
 		{/if}
 		<label>Biography <textarea bind:value={draft.bio} maxlength="5000" rows="4"></textarea></label>
+		</fieldset>
 	{/if}
 	{#if extra}{@render extra()}{/if}
-	<div class="flex justify-end gap-2">
+	{#if !readonly}<div class="flex justify-end gap-2">
 		{#if oncancel}<button type="button" class="secondary" onclick={oncancel}>Cancel</button>{/if}
 		<button type="submit">{submitLabel}</button>
-	</div>
+	</div>{/if}
 </form>
 
 <style>
