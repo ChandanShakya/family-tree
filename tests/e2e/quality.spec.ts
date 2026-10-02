@@ -161,6 +161,8 @@ for (const scheme of ['light', 'dark'] as const) {
 
 async function axeOpenDialog(page: Page, label: string) {
 	await expect(page.getByRole('dialog')).toBeVisible();
+	// axe samples colours mid fade-in otherwise (flaky colour-contrast on slow runners).
+	await page.waitForFunction(() => document.getAnimations().every((a) => a.playState !== 'running'));
 	const results = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
 	const bad = results.violations.map((v) => `${v.id} (${v.impact}): ${v.nodes.slice(0, 3).map((n) => n.target.join(' ')).join(' | ')}`);
 	expect.soft(bad, `axe with ${label} open`).toEqual([]);
