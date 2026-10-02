@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { describeRows } from './activity.js';
 import { and, eq } from 'drizzle-orm';
 import { events, media, persons } from '$lib/db/schema.js';
 import type { HistoryEntry } from '$lib/types.js';
@@ -300,7 +301,7 @@ export function personHistory(h: Handles, personId: string, cursor?: string, lim
 	const page = rows.slice(0, limit);
 	const last = page[page.length - 1];
 	return {
-		data: page,
+		data: describeRows(h.raw, page),
 		nextCursor:
 			rows.length > limit && last ? encodeCursor(last.changedAt as string, last.id as string) : null
 	};

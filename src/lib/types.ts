@@ -12,4 +12,10 @@ export interface HistoryEntry {
 	changedBy: string | null;
 	changedByName: string | null;
 	isReverted: number;
+	/** Who or what the change was about, in words (server-filled). */
+	subject?: string | null;
+	/** Person to link to, when there is one. */
+	subjectId?: string | null;
+	/** Extra noun, e.g. the event type. */
+	detail?: string | null;
 }

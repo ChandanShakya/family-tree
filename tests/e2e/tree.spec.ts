@@ -289,6 +289,28 @@ test('focus view fills the screen, keeps the actions, and Esc leaves it; cards s
 	await c.close();
 });
 
+test('activity reads as sentences with names, field labels and readable values', async ({ browser }) => {
+	const c = await ctx(browser);
+	const treeId = (await (await c.request.post('/api/trees', { data: { name: 'Story' } })).json()).data.tree.id as string;
+	const add = async (firstName: string) => (await (await c.request.post('/api/persons', { data: { treeId, firstName, lastName: 'Rai' } })).json()).data.id as string;
+	const ram = await add('Ram');
+	const sita = await add('Sita');
+	await c.request.post('/api/relationships', { data: { treeId, person1Id: ram, person2Id: sita, type: 'spouse' } });
+	await c.request.put(`/api/persons/${sita}`, { data: { birthPlace: 'Patan', isLiving: true, version: 1 } });
+	const page = await c.newPage();
+	await page.goto(`/trees/${treeId}/activity`);
+	const list = page.locator('section ol');
+	await expect(list.getByText(/added\s+Ram Rai/)).toBeVisible();
+	await expect(list.getByText(/linked\s+(Ram Rai and Sita Rai|Sita Rai and Ram Rai) as spouses/)).toBeVisible();
+	await expect(list.getByText(/edited\s+Sita Rai/)).toBeVisible();
+	await expect(list.getByText('birth place:')).toBeVisible();
+	await expect(list.getByText('Patan')).toBeVisible();
+	await expect(list.getByText('Living', { exact: true })).toBeVisible();
+	await expect(list.getByText(/created the tree\s+Story/)).toBeVisible();
+	if (process.env.SHOT) await page.screenshot({ path: process.env.SHOT, fullPage: true });
+	await c.close();
+});
+
 test('members, activity, media and settings pages load', async ({ browser }) => {
 	const { treeId } = await seedTree(browser, 3);
 	const page = await (await ctx(browser)).newPage();

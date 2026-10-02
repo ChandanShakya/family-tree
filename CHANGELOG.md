@@ -8,11 +8,14 @@ All notable changes to this project are documented here. The format follows [Kee
 
 - **Focus view** on the tree page: the chart, search, selection actions (Add relative, Link with…) and Add person fill the screen; Esc or ✕ leaves it.
 - Tree cards show gender with a coloured bar and ♂/♀/⚧ mark.
+- Activity and person history read as sentences with names ("Maya added Hari Shakya", "linked Ram and Sita as spouses"), readable field names and values, action icons and relative times.
 
 ### Fixed
 
 - Parents are centred over their children; the chart opens centred across the generations in both orientations.
 - Toasts show above the focus view.
+- History API responses no longer include raw snapshots.
+- `npm test` runs the import load test on its own, so its latency check is not skewed by the other test servers.
 
 ## [0.2.0] - 2026-10-02
 

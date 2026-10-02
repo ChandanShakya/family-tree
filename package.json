@@ -7,7 +7,7 @@
 		"dev": "vite dev",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:ci": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json && tsc --noEmit -p tsconfig.tsc.json",
-		"test": "vitest run",
+		"test": "vitest run --exclude tests/import-load.test.ts && vitest run tests/import-load.test.ts",
 		"test:e2e": "playwright test --reporter=line",
 		"test:e2e:setup": "playwright install --with-deps chromium",
 		"lint": "eslint .",

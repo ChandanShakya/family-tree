@@ -5,6 +5,7 @@ import { joinCodes, relationships, treeMembers, trees } from '$lib/db/schema.js'
 import { FAMILY_CODE_DEFAULT_MAX_USES, TREE_FOCUS_MODE_THRESHOLD, DEFAULT_FOCUS_DEPTH, MAX_TRAVERSAL_DEPTH, MAX_TRAVERSAL_NODES } from '$lib/config.js';
 import type { HistoryEntry } from '$lib/types.js';
 import { writeHistory } from './audit.js';
+import { describeRows } from './activity.js';
 import { ancestors, cached, chainRoots, descendants, generationDepth } from './graph.js';
 import type { PersonRow } from './persons.js';
 import { commitThenDelete } from './storage.js';
@@ -350,5 +351,5 @@ export function treeActivity(
 	const last = page[page.length - 1];
 	const nextCursor =
 		rows.length > limit && last ? encodeCursor(last.changedAt as string, last.id as string) : null;
-	return { data: page, nextCursor };
+	return { data: describeRows(raw, page), nextCursor };
 }
