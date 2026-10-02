@@ -9,7 +9,7 @@
 
 	const WORKER_THRESHOLD = 200;
 
-	type P = { id: string; firstName: string; middleName?: string | null; lastName?: string | null; birthDateNorm?: string | null };
+	type P = { id: string; firstName: string; middleName?: string | null; lastName?: string | null; birthDateNorm?: string | null; gender?: string | null };
 	type R = { person1Id: string; person2Id: string; type: string; startDate?: string | null };
 
 	let {
@@ -19,7 +19,8 @@
 		depth,
 		ondepth,
 		onselect,
-		colorOf
+		colorOf,
+		zen = $bindable()
 	}: {
 		persons: P[];
 		relationships: R[];
@@ -29,6 +30,8 @@
 		onselect: (id: string) => void;
 		/** Side-bar colour per person (combined view: which tree they come from). */
 		colorOf?: (id: string) => string[] | undefined;
+		/** Bound by pages that offer a focus view; the chart then fills its container. */
+		zen?: boolean;
 	} = $props();
 	let orientation = $state<Orientation>('TB');
 
@@ -108,8 +111,21 @@
 		const { width, height } = svg.getBoundingClientRect();
 		// Narrow screens: fit the width but never shrink below 0.45, so names stay readable; pan for the rest.
 		const k = Math.max(width < 640 ? 0.45 : 0.1, Math.min(1, (width - 48) / (x1 - x0), (height - 48) / (y1 - y0)));
-		select(svg).call(zb.transform, zoomIdentity.translate((width - (x1 - x0) * k) / 2 - x0 * k, 24 - y0 * k).scale(k));
+		// Across the generations the tree is always centred (the oldest couple sits over the middle); along them it is
+		// centred when it fits, otherwise the oldest generation shows first (top in TB, left in LR).
+		const lr = orientation === 'LR';
+		const fitsX = (x1 - x0) * k + 48 <= width;
+		const fitsY = (y1 - y0) * k + 48 <= height;
+		const tx = !lr || fitsX ? (width - (x1 - x0) * k) / 2 - x0 * k : 24 - x0 * k;
+		const ty = lr || fitsY ? (height - (y1 - y0) * k) / 2 - y0 * k : 24 - y0 * k;
+		select(svg).call(zb.transform, zoomIdentity.translate(tx, ty).scale(k));
 	}
+
+	// Entering or leaving the focus view resizes the chart: fit it again.
+	$effect(() => {
+		void zen;
+		void tick().then(() => requestAnimationFrame(() => reset()));
+	});
 
 	// A new layout (data or orientation) is fitted to the view unless a search hit is being centred.
 	$effect(() => {
@@ -117,13 +133,13 @@
 	});
 </script>
 
-<div class="mb-3"><TreeControls onzoomin={() => zoomBy(1.3)} onzoomout={() => zoomBy(1 / 1.3)} onreset={reset} bind:orientation {depth} {ondepth} /></div>
+<div class="mb-3"><TreeControls onzoomin={() => zoomBy(1.3)} onzoomout={() => zoomBy(1 / 1.3)} onreset={reset} bind:orientation {depth} {ondepth} bind:zen /></div>
 {#if result?.layoutWarning}
 	<p role="alert" class="mb-3 rounded-lg border border-warning/40 bg-warning/10 p-3 text-sm">
 		This tree contains a marriage cycle, so generations could not be aligned exactly. The layout is approximate.
 	</p>
 {/if}
-<svg bind:this={svg} class="canvas h-[70vh] min-h-[420px] w-full touch-none rounded-xl border shadow-xs" role="application" aria-label="Family tree">
+<svg bind:this={svg} class="canvas w-full touch-none rounded-xl border shadow-xs {zen ? 'min-h-0 flex-1' : 'h-[70vh] min-h-[420px]'}" role="application" aria-label="Family tree">
 	<g bind:this={g}>
 		{#if result}
 			{#each result.edges as e, i (i)}
@@ -144,6 +160,7 @@
 						years={years(p)}
 						highlighted={id === highlightId}
 						colors={colorOf?.(id)}
+						gender={p.gender}
 						onselect={() => onselect(id)}
 					/>
 				{/if}

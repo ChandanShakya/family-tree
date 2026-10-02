@@ -14,7 +14,7 @@
 	import { toast } from '$lib/toast.svelte.js';
 	import { impliedLinks, linkLabel, type Link, type RelKind } from '$lib/utils/family-links.js';
 	import { Button } from '$lib/components/ui/button/index.js';
-	import { UserPlus } from '@lucide/svelte';
+	import { UserPlus, X } from '@lucide/svelte';
 
 	let { data } = $props();
 	// Lazy chunk keeps d3 + layout out of the initial bundle (R-PERF-1).
@@ -22,6 +22,21 @@
 	let highlight = $state<string | null>(null);
 	let adding = $state(false);
 	// A new object per surname click, so clicking the same surname again re-runs the search.
+	// Focus view: the chart and its actions fill the screen; Esc or the close button leaves it.
+	let zen = $state(false);
+	$effect(() => {
+		if (!zen) return;
+		const prev = document.body.style.overflow;
+		document.body.style.overflow = 'hidden';
+		const onkey = (e: KeyboardEvent) => {
+			if (e.key === 'Escape' && !document.querySelector('dialog[open]')) zen = false;
+		};
+		window.addEventListener('keydown', onkey);
+		return () => {
+			document.body.style.overflow = prev;
+			window.removeEventListener('keydown', onkey);
+		};
+	});
 	let searchSeed = $state<{ q: string } | null>(null);
 	// Linking two people already in the tree: pick a second person, choose how they relate.
 	let linking = $state(false);
@@ -101,8 +116,17 @@
 		<Button onclick={() => (adding = true)}><UserPlus /> Add person</Button>
 	{/if}
 </div>
+<div class={zen ? 'zen' : ''} role={zen ? 'dialog' : undefined} aria-modal={zen ? 'true' : undefined} aria-label={zen ? `${view.tree.name}, focus view` : undefined}>
+{#if zen}
+	<div class="mb-2 flex flex-wrap items-center gap-2">
+		<strong class="mr-2 truncate text-base">{view.tree.name}</strong>
+		<span class="flex-1"></span>
+		{#if data.canEdit}<Button size="sm" onclick={() => (adding = true)}><UserPlus /> <span class="hidden sm:inline">Add person</span></Button>{/if}
+		<Button size="sm" variant="outline" onclick={() => (zen = false)} aria-label="Exit focus view"><X /></Button>
+	</div>
+{/if}
 {#if !data.publicView}
-	<div class="mb-4 max-w-xl"><SearchBar {treeId} onpick={pick} seed={searchSeed} /></div>
+	<div class="{zen ? 'mb-2' : 'mb-4'} max-w-xl"><SearchBar {treeId} onpick={pick} seed={searchSeed} /></div>
 	{#if view.persons.length === 0}
 		<div class="section mb-4 flex flex-col items-center gap-2 py-10 text-center">
 			<p class="text-base font-semibold">This tree is empty</p>
@@ -161,10 +185,12 @@
 		depth={view.truncated ? depth : undefined}
 		ondepth={(d: number) => refocus(highlight, d)}
 		onselect={(id: string) => (view.truncated && !linking ? refocus(id).then(() => choose(id)) : choose(id))}
+		bind:zen
 	/>
 {:else}
 	<div class="flex flex-col gap-2" role="status" aria-label="Loading tree"><Skeleton /><Skeleton /><Skeleton /></div>
 {/if}
+</div>
 {#if !data.publicView}
 <div class="mt-6 grid gap-4 md:grid-cols-2">
 	<SurnamePanel {treeId} onsearch={(q) => (searchSeed = { q })} />
@@ -181,3 +207,16 @@
 	}}
 />{/if}
 {/if}
+
+<style>
+	.zen {
+		position: fixed;
+		inset: 0;
+		z-index: 50;
+		display: flex;
+		flex-direction: column;
+		padding: max(12px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+		background: var(--background);
+		overflow: hidden;
+	}
+</style>

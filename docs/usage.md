@@ -40,6 +40,10 @@ On a person's page you can:
 
 Every change shows an **Undo** button for 10 seconds.
 
+### Focus view
+
+**Focus view** (next to Reset on the chart) fills the screen with the tree, keeping search, **Add person** and the selected person's actions (**Open**, **Link with…**, **Add relative**). Press Esc or ✕ to leave. Cards show gender with a coloured side bar and a ♂, ♀ or ⚧ mark.
+
 ### Linking relatives quickly
 
 - **Add relative** (select a person on the chart first) offers the links that follow from the one you chose, already ticked under **Also link**: add a child to a father and his spouse is offered as the other parent; add a spouse to someone with children and the new spouse is offered as their parent; a new sibling gets the same parents; a second parent is offered as the first parent's spouse. Untick any that do not apply.

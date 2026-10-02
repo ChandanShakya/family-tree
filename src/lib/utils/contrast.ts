@@ -47,6 +47,13 @@ export const TOKEN_PAIRS: TokenPair[] = [
 	{ name: 'dark-accent-text/dark-accent', fg: '#D1FAE5', bg: '#064E3B' },
 	{ name: 'dark-primary/dark-accent', fg: '#34D399', bg: '#064E3B', large: true },
 	{ name: 'dark-error/dark-surface', fg: '#F87171', bg: '#1E293B' },
+	// Gender marks on tree cards (src/app.css --male/--female/--other)
+	{ name: 'male/surface', fg: '#1D4ED8', bg: '#FFFFFF' },
+	{ name: 'female/surface', fg: '#BE185D', bg: '#FFFFFF' },
+	{ name: 'other/surface', fg: '#6D28D9', bg: '#FFFFFF' },
+	{ name: 'dark-male/dark-surface', fg: '#93C5FD', bg: '#1E293B' },
+	{ name: 'dark-female/dark-surface', fg: '#F9A8D4', bg: '#1E293B' },
+	{ name: 'dark-other/dark-surface', fg: '#C4B5FD', bg: '#1E293B' },
 	{ name: 'input-border/surface (UI)', fg: '#858D99', bg: '#FFFFFF', large: true },
 	{ name: 'dark-input-border/dark-surface (UI)', fg: '#7A889C', bg: '#1E293B', large: true }
 ];

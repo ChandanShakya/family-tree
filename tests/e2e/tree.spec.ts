@@ -263,6 +263,32 @@ test('surname chips fill and focus the search box, also when clicked again', asy
 	await expect(page.getByRole('list', { name: 'Search results' })).toBeVisible();
 });
 
+test('focus view fills the screen, keeps the actions, and Esc leaves it; cards show gender', async ({ browser }) => {
+	const c = await ctx(browser);
+	const treeId = (await (await c.request.post('/api/trees', { data: { name: 'Zen' } })).json()).data.tree.id as string;
+	await c.request.post('/api/persons', { data: { treeId, firstName: 'Ram', gender: 'M' } });
+	await c.request.post('/api/persons', { data: { treeId, firstName: 'Sita', gender: 'F' } });
+	const page = await c.newPage();
+	await page.setViewportSize({ width: 1280, height: 800 });
+	await page.goto(`/trees/${treeId}`);
+	await expect(page.locator('svg g[role=button][aria-label="Ram"] .mark.male')).toHaveText('♂');
+	await expect(page.locator('svg g[role=button][aria-label="Sita"] .mark.female')).toHaveText('♀');
+	await page.getByRole('button', { name: 'Focus view' }).click();
+	const zen = page.getByRole('dialog', { name: 'Zen, focus view' });
+	await expect(zen).toBeVisible();
+	const box = await page.locator('svg.canvas').boundingBox();
+	expect(box!.height).toBeGreaterThan(560);
+	await zen.locator('svg g[role=button][aria-label="Ram"]').click();
+	await zen.getByRole('button', { name: 'Add relative' }).click();
+	await expect(page.getByRole('dialog', { name: /Add person/ })).toBeVisible();
+	await page.keyboard.press('Escape');
+	await expect(page.getByRole('dialog', { name: /Add person/ })).toBeHidden();
+	await expect(zen).toBeVisible();
+	await page.keyboard.press('Escape');
+	await expect(zen).toBeHidden();
+	await c.close();
+});
+
 test('members, activity, media and settings pages load', async ({ browser }) => {
 	const { treeId } = await seedTree(browser, 3);
 	const page = await (await ctx(browser)).newPage();

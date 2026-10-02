@@ -4,6 +4,16 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- **Focus view** on the tree page: the chart, search, selection actions (Add relative, Link with…) and Add person fill the screen; Esc or ✕ leaves it.
+- Tree cards show gender with a coloured bar and ♂/♀/⚧ mark.
+
+### Fixed
+
+- Parents are centred over their children; the chart opens centred across the generations in both orientations.
+- Toasts show above the focus view.
+
 ## [0.2.0] - 2026-10-02
 
 ### Added

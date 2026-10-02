@@ -36,6 +36,9 @@
 	--ring: #047857;
 	--warning: #b45309;
 	--brand-2: #6d28d9;
+	--male: #1d4ed8;
+	--female: #be185d;
+	--other: #6d28d9;
 
 	/* Older names still used by a few components and by the canvas. */
 	--bg: var(--background);
@@ -68,6 +71,9 @@
 	--ring: #34d399;
 	--warning: #fbbf24;
 	--primary-hover: #6ee7b7;
+	--male: #93c5fd;
+	--female: #f9a8d4;
+	--other: #c4b5fd;
 }
 
 @theme inline {
