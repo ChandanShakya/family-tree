@@ -1,0 +1,14 @@
+# Raspberry Pi 4 (1–4 GB) tuning. Use as an override:
+#   docker compose -f docker-compose.yml -f docker-compose.pi.yml up -d --build
+# The V8 heap cap keeps the resident set well under the container limit: Node's own heap is only part of RSS
+# (sharp, SQLite page cache and mmap, worker threads and the image pipeline sit on top).
+services:
+  familytree:
+    mem_limit: 640m
+    memswap_limit: 640m # no swap thrash inside the container: it is restarted instead
+    cpus: 3.0 # leave one core for the OS and cloudflared
+    environment:
+      NODE_OPTIONS: --max-old-space-size=256
+      UV_THREADPOOL_SIZE: '4'
+  cloudflared:
+    mem_limit: 128m

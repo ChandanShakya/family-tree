@@ -1,0 +1,57 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: App bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Build (not pushed)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: family-tree:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Smoke test the image
+        run: |
+          docker run -d --name ft -p 3000:3000 \
+            -e ORIGIN=http://localhost:3000 \
+            -e SESSION_SECRET="$(openssl rand -hex 24)" \
+            -e VERIFICATION_PEPPER="$(openssl rand -hex 24)" \
+            family-tree:ci
+          for i in $(seq 30); do curl -fs http://localhost:3000/api/health && break; sleep 2; done
+          test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:3000/login)" = 200
+          ! docker logs ft 2>&1 | grep -q 'Error \['
+      - name: Container log
+        if: always()
+        run: docker logs ft || true

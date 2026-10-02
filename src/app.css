@@ -1,0 +1,263 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn-svelte/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@font-face {
+	font-family: 'Inter';
+	src: url('/fonts/inter-latin.woff2') format('woff2');
+	font-weight: 100 900;
+	font-display: swap;
+}
+
+/*
+ * Design tokens (§7.1), shadcn-svelte names. Hex values so scripts/contrast.ts can check every
+ * text/background pair (src/lib/utils/contrast.ts). Brand: emerald.
+ */
+:root {
+	--background: #fafafa;
+	--foreground: #111827;
+	--card: #ffffff;
+	--card-foreground: #111827;
+	--popover: #ffffff;
+	--popover-foreground: #111827;
+	--primary: #047857;
+	--primary-foreground: #ffffff;
+	--secondary: #f3f4f6;
+	--secondary-foreground: #111827;
+	--muted: #f3f4f6;
+	--muted-foreground: #4b5563;
+	--accent: #ecfdf5;
+	--accent-foreground: #065f46;
+	--destructive: #b91c1c;
+	--border: #e5e7eb;
+	--input: #858d99;
+	--ring: #047857;
+	--warning: #b45309;
+	--brand-2: #6d28d9;
+
+	/* Older names still used by a few components and by the canvas. */
+	--bg: var(--background);
+	--surface: var(--card);
+	--text: var(--foreground);
+	--text-2: var(--muted-foreground);
+	--primary-hover: #065f46;
+	--on-primary: var(--primary-foreground);
+	--error: var(--destructive);
+}
+
+.dark {
+	--background: #0f172a;
+	--foreground: #f1f5f9;
+	--card: #1e293b;
+	--card-foreground: #f1f5f9;
+	--popover: #1e293b;
+	--popover-foreground: #f1f5f9;
+	--primary: #34d399;
+	--primary-foreground: #0f172a;
+	--secondary: #273449;
+	--secondary-foreground: #f1f5f9;
+	--muted: #273449;
+	--muted-foreground: #94a3b8;
+	--accent: #064e3b;
+	--accent-foreground: #d1fae5;
+	--destructive: #f87171;
+	--border: #334155;
+	--input: #7a889c;
+	--ring: #34d399;
+	--warning: #fbbf24;
+	--primary-hover: #6ee7b7;
+}
+
+@theme inline {
+	--font-sans: 'Inter', system-ui, sans-serif;
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-warning: var(--warning);
+	/* §7.1 radii: inputs 10, buttons 12, cards 16, modals 20. */
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 12px;
+	--radius-xl: 16px;
+	--radius-2xl: 20px;
+}
+
+/*
+ * Base layer: element defaults stay below utilities, so shadcn components and Tailwind classes win.
+ * Plain <button>/<input> elements still get a consistent, accessible look.
+ */
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	html {
+		font-family: var(--font-sans);
+		-webkit-font-smoothing: antialiased;
+	}
+	body {
+		@apply bg-background text-foreground;
+		font-size: 15px;
+		line-height: 1.5;
+		padding-bottom: env(safe-area-inset-bottom);
+	}
+	/* §7.1 typography: H1 24/36 800, H2 20/28 700, H3 18/22 600, body 15. */
+	h1 {
+		@apply tracking-tight;
+		font-size: 24px;
+		line-height: 36px;
+		font-weight: 800;
+	}
+	h2 {
+		@apply mt-8 mb-3 tracking-tight;
+		font-size: 20px;
+		line-height: 28px;
+		font-weight: 700;
+	}
+	h3 {
+		@apply mt-4 mb-2;
+		font-size: 18px;
+		line-height: 22px;
+		font-weight: 600;
+	}
+	a {
+		@apply text-primary underline-offset-4 hover:underline;
+	}
+	/* Links inside running text are underlined, not told apart by colour alone (WCAG 1.4.1). */
+	p > a {
+		@apply underline;
+	}
+	p {
+		@apply leading-relaxed;
+	}
+
+	button:not([data-slot]) {
+		@apply inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-primary px-4 font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50;
+		font-size: 15px;
+		min-height: 44px;
+		min-width: 44px;
+	}
+	button.link:not([data-slot]) {
+		@apply bg-transparent px-2 text-primary shadow-none hover:bg-transparent hover:underline;
+	}
+	button.secondary:not([data-slot]) {
+		@apply border border-input bg-card text-foreground hover:bg-muted;
+	}
+	button.danger:not([data-slot]) {
+		@apply border border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive/20;
+	}
+
+	input:not([type='checkbox']):not([type='radio']):not([type='file']):not([data-slot]),
+	select:not([data-slot]),
+	textarea:not([data-slot]) {
+		@apply w-full rounded-md border border-input bg-card px-3 py-2 text-foreground shadow-xs transition-[color,box-shadow] placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 focus-visible:outline-none disabled:opacity-50;
+		font-size: 16px; /* never below 16px: avoids iOS zoom */
+		min-height: 44px;
+	}
+	input[type='checkbox'],
+	input[type='radio'] {
+		@apply size-4 accent-primary;
+	}
+	label {
+		@apply text-sm font-medium;
+	}
+	/* A label wrapping its control stacks: caption above, full-width control below. */
+	label:has(> input:not([type='checkbox']):not([type='radio']), > select, > textarea) {
+		@apply flex flex-col gap-1.5;
+	}
+	fieldset {
+		@apply rounded-lg border p-4;
+	}
+	legend {
+		@apply px-1 text-sm font-semibold;
+	}
+	table {
+		@apply w-full text-sm;
+	}
+	th {
+		@apply border-b px-3 py-2 text-left font-medium text-muted-foreground;
+	}
+	td {
+		@apply border-b px-3 py-2;
+	}
+
+	dialog {
+		@apply m-auto w-full rounded-2xl border bg-card p-6 text-card-foreground shadow-2xl;
+		max-width: min(32rem, calc(100vw - 2rem));
+	}
+	dialog::backdrop {
+		background: rgb(2 6 23 / 0.55);
+		backdrop-filter: blur(2px);
+	}
+	dialog[open] {
+		animation: dialog-in 140ms ease-out;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--ring);
+		outline-offset: 2px;
+	}
+}
+
+@layer components {
+	.card {
+		@apply rounded-xl border bg-card text-card-foreground shadow-xs;
+	}
+	.muted {
+		@apply text-muted-foreground;
+	}
+	/* A labelled form field: label above control, helper text below. */
+	.field {
+		@apply flex flex-col gap-1.5;
+	}
+	.page-header {
+		@apply mb-6 flex flex-wrap items-end justify-between gap-3;
+	}
+	.page-header p {
+		@apply text-sm text-muted-foreground;
+	}
+	.section {
+		@apply rounded-xl border bg-card p-5 text-card-foreground shadow-xs;
+	}
+	.panel-toggle {
+		@apply flex w-full items-center justify-between bg-transparent px-0 text-base font-semibold text-foreground shadow-none hover:bg-transparent;
+	}
+	.chip {
+		@apply rounded-full border bg-card px-3 text-sm font-medium text-foreground shadow-none hover:bg-muted;
+		min-height: 36px;
+	}
+	.section > h2:first-child,
+	.section > h3:first-child {
+		@apply mt-0;
+	}
+}
+
+@keyframes dialog-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px) scale(0.98);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation: none !important;
+		transition: none !important;
+	}
+}

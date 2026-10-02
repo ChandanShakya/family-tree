@@ -1,0 +1,53 @@
+# Production stack: the app (never published on a host port) and cloudflared, the only way in.
+services:
+  familytree:
+    build: .
+    image: family-tree:latest
+    init: true # reaps worker processes and forwards SIGTERM
+    expose:
+      - '3000'
+    volumes:
+      - family-db:/data/db
+      - family-photos:/data/photos
+    environment:
+      ORIGIN: ${ORIGIN:?set ORIGIN to the public https URL}
+      DATABASE_PATH: /data/db/family.db
+      PHOTO_PATH: /data/photos
+      SESSION_SECRET: ${SESSION_SECRET:?set SESSION_SECRET (32+ characters)}
+      VERIFICATION_PEPPER: ${VERIFICATION_PEPPER:?set VERIFICATION_PEPPER (32+ characters)}
+      ADDRESS_HEADER: CF-Connecting-IP
+      MIGRATIONS_PATH: /app/migrations
+      WORKERS_PATH: /app/lib/server/workers
+      BODY_SIZE_LIMIT: 12M
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+    restart: unless-stopped
+    stop_grace_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:?set CLOUDFLARE_TUNNEL_TOKEN}
+    restart: unless-stopped
+    depends_on:
+      familytree:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+volumes:
+  family-db:
+  family-photos:

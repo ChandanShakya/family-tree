@@ -1,0 +1,10 @@
+# Local development override: publishes the port and ignores the proxy header (no Cloudflare in front).
+# docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+services:
+  familytree:
+    ports:
+      - '3000:3000'
+    environment:
+      ADDRESS_HEADER: ''
+  cloudflared:
+    profiles: ['tunnel'] # not started unless asked for

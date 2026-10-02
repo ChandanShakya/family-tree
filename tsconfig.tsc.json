@@ -1,0 +1,9 @@
+{
+	"//": "Plain tsc pass for check:ci. svelte-check already type-checks .svelte files; the shadcn-svelte index.ts files re-export from .svelte modules, which plain tsc cannot read.",
+	"extends": "./tsconfig.json",
+	"exclude": [
+		"node_modules/**",
+		"src/service-worker.ts",
+		"src/lib/components/ui/**"
+	]
+}

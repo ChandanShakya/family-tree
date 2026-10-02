@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    # Versions are pinned exactly; keep them pinned.
+    versioning-strategy: increase
+    labels: [dependencies]
+    groups:
+      svelte:
+        patterns: ['svelte', 'svelte-check', '@sveltejs/*', 'bits-ui', 'eslint-plugin-svelte']
+      lint-and-types:
+        patterns: ['eslint', '@eslint/*', 'typescript', 'typescript-eslint', '@types/*', 'globals']
+      tests:
+        patterns: ['vitest', '@playwright/test', '@axe-core/*']
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    labels: [dependencies]
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    labels: [dependencies]
