@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { confirmState } from '$lib/confirm.svelte.js';
+	import { confirmState } from '#lib/confirm.svelte.js';
 	let dialog: HTMLDialogElement;
 
 	$effect(() => {

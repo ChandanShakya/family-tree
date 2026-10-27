@@ -1,9 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { openDb } from '$lib/db/index.js';
-import { env } from '$env/dynamic/private';
-import { googleCallback, googleConfigured } from '$lib/server/oauth.js';
-import { setSessionCookie } from '$lib/server/api.js';
+import { openDb } from '#lib/db/index.js';
+import * as env from '$app/env/private';
+import { googleCallback, googleConfigured } from '#lib/server/oauth.js';
+import { setSessionCookie } from '#lib/server/api.js';
 
 export const GET: RequestHandler = async (event) => {
 	if (!googleConfigured(env)) {

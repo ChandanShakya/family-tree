@@ -1,8 +1,8 @@
 <script lang="ts">
-	import SearchBar from '$lib/components/tree/SearchBar.svelte';
-	import { api } from '$lib/api.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import { fullName } from '$lib/utils/format.js';
+	import SearchBar from '#lib/components/tree/SearchBar.svelte';
+	import { api } from '#lib/api.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import { fullName } from '#lib/utils/format.js';
 
 	interface Step {
 		from: string;

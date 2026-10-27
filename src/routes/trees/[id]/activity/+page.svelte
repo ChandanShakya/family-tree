@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import ChangeHistory from '$lib/components/history/ChangeHistory.svelte';
-	import TreeNav from '$lib/components/tree/TreeNav.svelte';
+	import ChangeHistory from '#lib/components/history/ChangeHistory.svelte';
+	import TreeNav from '#lib/components/tree/TreeNav.svelte';
 
 	let { data } = $props();
 </script>

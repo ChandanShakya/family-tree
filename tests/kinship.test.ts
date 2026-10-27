@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { kinshipLabel, type Link } from '$lib/server/kinship.js';
+import { kinshipLabel, type Link } from '#lib/server/kinship.js';
 
 const L = (s: string): Link[] =>
 	s.split('').map((c) => ({ u: 'parent', d: 'child', s: 'spouse', b: 'sibling' })[c] as Link);

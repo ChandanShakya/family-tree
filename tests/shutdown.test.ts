@@ -5,12 +5,12 @@ import { existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import * as schema from '$lib/db/schema.js';
-import { users } from '$lib/db/schema.js';
-import { applyPragmas } from '$lib/db/index.js';
-import { createSession } from '$lib/server/auth.js';
-import { createTree } from '$lib/server/trees.js';
-import { createPerson, deletePerson } from '$lib/server/persons.js';
+import * as schema from '#lib/db/schema.js';
+import { users } from '#lib/db/schema.js';
+import { applyPragmas } from '#lib/db/index.js';
+import { createSession } from '#lib/server/auth.js';
+import { createTree } from '#lib/server/trees.js';
+import { createPerson, deletePerson } from '#lib/server/persons.js';
 
 // §3 graceful shutdown, §6.12 startup maintenance, §11 production refusal, §11 backup scripts as run by an operator.
 

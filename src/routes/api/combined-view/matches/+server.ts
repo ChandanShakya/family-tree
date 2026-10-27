@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import { z } from 'zod';
 import type { RequestHandler } from './$types';
-import { setMatch } from '$lib/server/combined.js';
-import { badInput, openGate } from '$lib/server/tree-route.js';
+import { setMatch } from '#lib/server/combined.js';
+import { badInput, openGate } from '#lib/server/tree-route.js';
 
 const Schema = z.object({ personAId: z.string().uuid(), personBId: z.string().uuid(), same: z.boolean() });
 

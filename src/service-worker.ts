@@ -2,7 +2,11 @@
 /// <reference no-default-lib="true"/>
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
-import { build, files, version } from '$service-worker';
+import { immutable, assets } from '$app/manifest';
+import { version } from '$app/env';
+
+const build = immutable.map((a) => `/${a.path}`);
+const files = assets.map((a) => `/${a.path}`);
 
 // §7.4: precache the static shell (build assets + static files) and an offline page, nothing else.
 // /api/*, /photos/* and every HTML page go to the network and are never stored, so a shared device

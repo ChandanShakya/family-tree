@@ -5,21 +5,21 @@ import { mkdirSync, rmSync } from 'node:fs';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import * as schema from '$lib/db/schema.js';
-import { treeMembers, users } from '$lib/db/schema.js';
-import { applyPragmas } from '$lib/db/index.js';
-import { createSession } from '$lib/server/auth.js';
-import { createTree } from '$lib/server/trees.js';
-import { createPerson } from '$lib/server/persons.js';
-import { createLink } from '$lib/server/relations.js';
-import { createEvent } from '$lib/server/events.js';
-import { addMedia } from '$lib/server/media.js';
-import { canDo, type Role } from '$lib/server/permissions.js';
-import { ROUTE_POLICIES, type ProbeContext } from '$lib/server/route-policies.js';
-import { createDirectCode, redeemCode } from '$lib/server/codes.js';
-import { getFamilyCode } from '$lib/server/join-codes.js';
-import { submitClaim } from '$lib/server/claims.js';
-import { updatePerson } from '$lib/server/persons.js';
+import * as schema from '#lib/db/schema.js';
+import { treeMembers, users } from '#lib/db/schema.js';
+import { applyPragmas } from '#lib/db/index.js';
+import { createSession } from '#lib/server/auth.js';
+import { createTree } from '#lib/server/trees.js';
+import { createPerson } from '#lib/server/persons.js';
+import { createLink } from '#lib/server/relations.js';
+import { createEvent } from '#lib/server/events.js';
+import { addMedia } from '#lib/server/media.js';
+import { canDo, type Role } from '#lib/server/permissions.js';
+import { ROUTE_POLICIES, type ProbeContext } from '#lib/server/route-policies.js';
+import { createDirectCode, redeemCode } from '#lib/server/codes.js';
+import { getFamilyCode } from '#lib/server/join-codes.js';
+import { submitClaim } from '#lib/server/claims.js';
+import { updatePerson } from '#lib/server/persons.js';
 
 // Live-server probe of every `tree`-access route, auto-generated from the
 // route policy registry (§8): no session → 401, non-member → 404,

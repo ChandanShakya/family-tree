@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { z } from 'zod';
-import { transferOwnership } from '$lib/server/members.js';
-import { badInput, gateTree, openGate } from '$lib/server/tree-route.js';
+import { transferOwnership } from '#lib/server/members.js';
+import { badInput, gateTree, openGate } from '#lib/server/tree-route.js';
 
 const Body = z.object({ userId: z.uuid({ error: 'Valid userId is required' }) });
 

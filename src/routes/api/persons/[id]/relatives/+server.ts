@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { relatives } from '$lib/server/graph.js';
-import { openOptionalGate, readEntity } from '$lib/server/tree-route.js';
+import { relatives } from '#lib/server/graph.js';
+import { openOptionalGate, readEntity } from '#lib/server/tree-route.js';
 
 // allowPublic: ids only, so the structure of a public tree is visible while living people stay "Living".
 export const GET: RequestHandler = async (event) => {

@@ -1,10 +1,10 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { eq } from 'drizzle-orm';
-import { joinCodes } from '$lib/db/schema.js';
-import { apiError } from '$lib/server/api.js';
-import { deactivateCode, roleRank } from '$lib/server/codes.js';
-import { gateEntity, openGate } from '$lib/server/tree-route.js';
+import { joinCodes } from '#lib/db/schema.js';
+import { apiError } from '#lib/server/api.js';
+import { deactivateCode, roleRank } from '#lib/server/codes.js';
+import { gateEntity, openGate } from '#lib/server/tree-route.js';
 
 // The creator, an owner or an editor may deactivate a code (§9).
 export const DELETE: RequestHandler = async (event) => {

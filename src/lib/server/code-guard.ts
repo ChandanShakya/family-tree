@@ -1,4 +1,4 @@
-import { LOCKOUT_TIERS, RATE_LIMITS } from '$lib/config.js';
+import { LOCKOUT_TIERS, RATE_LIMITS } from '#lib/config.js';
 import { checkRateLimit, isBlocked, recordFailure } from './rate-limit.js';
 
 // Code endpoints (§8): 10/min/IP, plus failure lockout tiers per IP + endpoint.

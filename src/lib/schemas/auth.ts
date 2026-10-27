@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PASSWORD_MIN_LENGTH } from '$lib/config.js';
+import { PASSWORD_MIN_LENGTH } from '#lib/config.js';
 
 const Email = z.email({ error: 'Valid email is required' }).max(254);
 const DisplayName = z.string({ error: 'Display name is required' }).trim().min(1).max(100);

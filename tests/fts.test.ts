@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach, afterEach } from 'vitest';
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import Database from 'better-sqlite3';
-import { applyPragmas, ftsConsistencyCheck, rebuildFts } from '$lib/db/index.js';
+import { applyPragmas, ftsConsistencyCheck, rebuildFts } from '#lib/db/index.js';
 
 const DIR = './.test-tmp-fts';
 const DB = `${DIR}/fts-smoke.db`;

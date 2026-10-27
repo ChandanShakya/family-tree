@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import TreeNav from '$lib/components/tree/TreeNav.svelte';
-	import Gallery from '$lib/components/media/Gallery.svelte';
-	import UploadButton from '$lib/components/media/UploadButton.svelte';
-	import { api } from '$lib/api.js';
-	import { toast } from '$lib/toast.svelte.js';
+	import TreeNav from '#lib/components/tree/TreeNav.svelte';
+	import Gallery from '#lib/components/media/Gallery.svelte';
+	import UploadButton from '#lib/components/media/UploadButton.svelte';
+	import { api } from '#lib/api.js';
+	import { toast } from '#lib/toast.svelte.js';
 
 	let { data } = $props();
 

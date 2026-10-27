@@ -1,8 +1,8 @@
 import { createHash, createHmac, randomBytes, randomUUID } from 'node:crypto';
 import { and, eq } from 'drizzle-orm';
 import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import type * as schema from '$lib/db/schema.js';
-import { oauthAccounts, sessions, users } from '$lib/db/schema.js';
+import type * as schema from '#lib/db/schema.js';
+import { oauthAccounts, sessions, users } from '#lib/db/schema.js';
 import { createSession, hashToken } from './auth.js';
 import type { Result } from './accounts.js';
 

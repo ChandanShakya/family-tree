@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import TreeNav from '$lib/components/tree/TreeNav.svelte';
-	import { api } from '$lib/api.js';
-	import { confirmDialog } from '$lib/confirm.svelte.js';
-	import { toast } from '$lib/toast.svelte.js';
+	import TreeNav from '#lib/components/tree/TreeNav.svelte';
+	import { api } from '#lib/api.js';
+	import { confirmDialog } from '#lib/confirm.svelte.js';
+	import { toast } from '#lib/toast.svelte.js';
 
 	let { data } = $props();
 	const treeId = $derived(data.treeId);

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { api } from '$lib/api.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import { offerUndo } from '$lib/undo.js';
+	import { api } from '#lib/api.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import { offerUndo } from '#lib/undo.js';
 	import PersonForm from './PersonForm.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { X } from '@lucide/svelte';
 	import { draftToBody, emptyDraft, type PersonDraft } from './draft.js';
-	import { impliedLinks, linkLabel, type Link } from '$lib/utils/family-links.js';
+	import { impliedLinks, linkLabel, type Link } from '#lib/utils/family-links.js';
 
 	type Rel = 'parent' | 'child' | 'spouse' | 'sibling' | 'none';
 	let {

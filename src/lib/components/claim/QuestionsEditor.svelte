@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { api } from '$lib/api.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import { MIN_VERIFICATION_QUESTIONS } from '$lib/config.js';
+	import { api } from '#lib/api.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import { MIN_VERIFICATION_QUESTIONS } from '#lib/config.js';
 
 	let { personId }: { personId: string } = $props();
 	let rows = $state(Array.from({ length: MIN_VERIFICATION_QUESTIONS }, () => ({ question: '', answer: '' })));

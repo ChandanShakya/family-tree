@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Orientation } from '$lib/tree/layout.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import type { Orientation } from '#lib/tree/layout.js';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { ArrowDownUp, ArrowRightLeft, Expand, Maximize2, Minus, Plus, Shrink } from '@lucide/svelte';
 
 	let {

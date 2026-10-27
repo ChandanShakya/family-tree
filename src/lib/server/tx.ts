@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import type Database from 'better-sqlite3';
 import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import type * as schema from '$lib/db/schema.js';
+import type * as schema from '#lib/db/schema.js';
 
 export type Db = BetterSQLite3Database<typeof schema>;
 

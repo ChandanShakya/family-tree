@@ -1,10 +1,10 @@
 import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 import { and, desc, eq, ne, sql } from 'drizzle-orm';
-import { fullName } from '$lib/utils/format.js';
-import { DEFAULT_JOIN_ROLE, MATCH_WEIGHTS, MIN_VERIFICATION_QUESTIONS, VERIFY_MAX_ATTEMPTS_PER_24H } from '$lib/config.js';
-import { claimAttempts, persons, profileClaims, treeMembers, users, verificationQuestions } from '$lib/db/schema.js';
-import { parseDate } from '$lib/utils/dates.js';
-import { damerauLevenshtein, normalizeText } from '$lib/utils/fuzzy.js';
+import { fullName } from '#lib/utils/format.js';
+import { DEFAULT_JOIN_ROLE, MATCH_WEIGHTS, MIN_VERIFICATION_QUESTIONS, VERIFY_MAX_ATTEMPTS_PER_24H } from '#lib/config.js';
+import { claimAttempts, persons, profileClaims, treeMembers, users, verificationQuestions } from '#lib/db/schema.js';
+import { parseDate } from '#lib/utils/dates.js';
+import { damerauLevenshtein, normalizeText } from '#lib/utils/fuzzy.js';
 import { writeHistory } from './audit.js';
 import { findCode, isUsable } from './codes.js';
 import { notify, notifyReviewers } from './notifications.js';

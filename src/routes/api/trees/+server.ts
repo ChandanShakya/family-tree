@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { TreeCreateSchema } from '$lib/schemas/trees.js';
-import { createTree, getTreeRow, listUserTrees } from '$lib/server/trees.js';
-import { listMembers } from '$lib/server/members.js';
-import { badInput, openGate } from '$lib/server/tree-route.js';
+import { TreeCreateSchema } from '#lib/schemas/trees.js';
+import { createTree, getTreeRow, listUserTrees } from '#lib/server/trees.js';
+import { listMembers } from '#lib/server/members.js';
+import { badInput, openGate } from '#lib/server/tree-route.js';
 
 export const GET: RequestHandler = async (event) => {
 	const gate = openGate(event);

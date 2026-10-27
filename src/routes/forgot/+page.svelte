@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AuthCard from '$lib/components/shared/AuthCard.svelte';
+	import AuthCard from '#lib/components/shared/AuthCard.svelte';
 	import { resolve } from '$app/paths';
 	let email = $state('');
 	let error = $state('');

@@ -1,10 +1,10 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { env } from '$env/dynamic/private';
-import { openDb } from '$lib/db/index.js';
-import { clientIp } from '$lib/server/api.js';
-import { codeFailed, guardCode } from '$lib/server/code-guard.js';
-import { previewCode } from '$lib/server/codes.js';
+import * as env from '$app/env/private';
+import { openDb } from '#lib/db/index.js';
+import { clientIp } from '#lib/server/api.js';
+import { codeFailed, guardCode } from '#lib/server/code-guard.js';
+import { previewCode } from '#lib/server/codes.js';
 
 // A valid code with no session sends the visitor through login and back (§6.4). An unavailable code
 // shows the same message to everyone, signed in or not (same limiter and lockout as the API).

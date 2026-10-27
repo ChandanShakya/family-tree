@@ -9,10 +9,10 @@
 </script>
 
 <script lang="ts">
-	import { api } from '$lib/api.js';
-	import { confirmDialog } from '$lib/confirm.svelte.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import { offerUndo } from '$lib/undo.js';
+	import { api } from '#lib/api.js';
+	import { confirmDialog } from '#lib/confirm.svelte.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import { offerUndo } from '#lib/undo.js';
 
 	let {
 		items,

@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { MemberReviewSchema } from '$lib/schemas/collab.js';
-import { apiError } from '$lib/server/api.js';
-import { reviewMember } from '$lib/server/codes.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import { MemberReviewSchema } from '#lib/schemas/collab.js';
+import { apiError } from '#lib/server/api.js';
+import { reviewMember } from '#lib/server/codes.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 export const POST: RequestHandler = async (event) => {
 	const gate = openGate(event);

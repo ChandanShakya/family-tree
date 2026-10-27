@@ -1,9 +1,9 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { getFamilyCode } from '$lib/server/join-codes.js';
-import { canDo, type Role } from '$lib/server/permissions.js';
-import { getTreeRow } from '$lib/server/trees.js';
-import { withTree } from '$lib/server/page-load.js';
+import { getFamilyCode } from '#lib/server/join-codes.js';
+import { canDo, type Role } from '#lib/server/permissions.js';
+import { getTreeRow } from '#lib/server/trees.js';
+import { withTree } from '#lib/server/page-load.js';
 
 export const load: PageServerLoad = ({ locals, params }) => {
 	const { tree, code, canManage, isOwner } = withTree(locals, params.id, 'view', (c, role) => ({

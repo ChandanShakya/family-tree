@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { and, desc, eq, inArray, lt, or, sql } from 'drizzle-orm';
-import { EDIT_NOTIFY_COALESCE_MINUTES } from '$lib/config.js';
-import { notifications, persons, treeMembers, users } from '$lib/db/schema.js';
+import { EDIT_NOTIFY_COALESCE_MINUTES } from '#lib/config.js';
+import { notifications, persons, treeMembers, users } from '#lib/db/schema.js';
 import type { Db } from './tx.js';
 
 export type NotificationType = 'join' | 'join_approval' | 'claim' | 'claim_review' | 'edit' | 'share';

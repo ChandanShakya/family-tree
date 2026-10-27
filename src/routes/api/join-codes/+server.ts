@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { JoinCodeCreateSchema } from '$lib/schemas/collab.js';
-import { apiError } from '$lib/server/api.js';
-import { isEmailVerified } from '$lib/server/accounts.js';
-import { createDirectCode } from '$lib/server/codes.js';
-import { regenerateFamilyCode } from '$lib/server/join-codes.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import { JoinCodeCreateSchema } from '#lib/schemas/collab.js';
+import { apiError } from '#lib/server/api.js';
+import { isEmailVerified } from '#lib/server/accounts.js';
+import { createDirectCode } from '#lib/server/codes.js';
+import { regenerateFamilyCode } from '#lib/server/join-codes.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 // Direct code (any non-viewer, capped at the creator's role) or family-code regeneration (owner/editor).
 export const POST: RequestHandler = async (event) => {

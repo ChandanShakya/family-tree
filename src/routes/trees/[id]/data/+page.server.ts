@@ -1,6 +1,6 @@
 import type { PageServerLoad } from "./$types";
-import { canDo, type Role } from "$lib/server/permissions.js";
-import { withTree } from "$lib/server/page-load.js";
+import { canDo, type Role } from "#lib/server/permissions.js";
+import { withTree } from "#lib/server/page-load.js";
 
 export const load: PageServerLoad = ({ locals, params }) =>
 	withTree(locals, params.id, "privacyExport", (_c, role) => ({

@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { eq } from 'drizzle-orm';
-import { changeHistory } from '$lib/db/schema.js';
-import { RevertSchema } from '$lib/schemas/collab.js';
-import { apiError } from '$lib/server/api.js';
-import { revertHistory } from '$lib/server/history.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import { changeHistory } from '#lib/db/schema.js';
+import { RevertSchema } from '#lib/schemas/collab.js';
+import { apiError } from '#lib/server/api.js';
+import { revertHistory } from '#lib/server/history.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 const STATUS = { NOT_FOUND: 404, FORBIDDEN: 403, STALE_REVERT: 409, REVERT_CONFLICT: 409, NOT_REVERTIBLE: 409, PURGED: 410 } as const;
 

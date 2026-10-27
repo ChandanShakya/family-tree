@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { UPLOAD_MAX_BYTES } from '$lib/config.js';
+import { UPLOAD_MAX_BYTES } from '#lib/config.js';
 import type { MediaError } from './media.js';
 
 // multipart envelope overhead allowance on top of the file cap

@@ -1,13 +1,13 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { RATE_LIMITS } from '$lib/config.js';
-import { openDb } from '$lib/db/index.js';
-import { ClaimCreateSchema } from '$lib/schemas/collab.js';
-import { apiError } from '$lib/server/api.js';
-import { claimAudience, listClaims, submitClaim } from '$lib/server/claims.js';
-import { checkRateLimit } from '$lib/server/rate-limit.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import * as env from '$app/env/private';
+import { RATE_LIMITS } from '#lib/config.js';
+import { openDb } from '#lib/db/index.js';
+import { ClaimCreateSchema } from '#lib/schemas/collab.js';
+import { apiError } from '#lib/server/api.js';
+import { claimAudience, listClaims, submitClaim } from '#lib/server/claims.js';
+import { checkRateLimit } from '#lib/server/rate-limit.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 // Pending claims of a tree (owner/editor review queue).
 export const GET: RequestHandler = async (event) => {

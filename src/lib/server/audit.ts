@@ -1,8 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { eq } from 'drizzle-orm';
 import { or } from 'drizzle-orm';
-import { events, media, persons, relationships } from '$lib/db/schema.js';
-import { changeHistory } from '$lib/db/schema.js';
+import { events, media, persons, relationships } from '#lib/db/schema.js';
+import { changeHistory } from '#lib/db/schema.js';
 import { newBatchId, type Db } from './tx.js';
 
 export type EntityType = 'person' | 'relationship' | 'event' | 'media' | 'tree';

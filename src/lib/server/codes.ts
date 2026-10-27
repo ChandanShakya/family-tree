@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { and, eq, sql } from 'drizzle-orm';
-import { DEFAULT_JOIN_ROLE } from '$lib/config.js';
-import { joinCodes, persons, treeMembers, trees, users } from '$lib/db/schema.js';
+import { DEFAULT_JOIN_ROLE } from '#lib/config.js';
+import { joinCodes, persons, treeMembers, trees, users } from '#lib/db/schema.js';
 import { makeJoinCode, slugify } from './trees.js';
 import { createPerson, type PersonInput } from './persons.js';
 import { createLink, type LinkType } from './relations.js';

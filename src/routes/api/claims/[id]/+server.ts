@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { ClaimReviewSchema } from '$lib/schemas/collab.js';
-import { apiError } from '$lib/server/api.js';
-import { reviewClaim } from '$lib/server/claims.js';
-import { gateEntity, openGate } from '$lib/server/tree-route.js';
+import { ClaimReviewSchema } from '#lib/schemas/collab.js';
+import { apiError } from '#lib/server/api.js';
+import { reviewClaim } from '#lib/server/claims.js';
+import { gateEntity, openGate } from '#lib/server/tree-route.js';
 
 export const PUT: RequestHandler = async (event) => {
 	const gate = openGate(event);

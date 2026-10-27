@@ -1,12 +1,12 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { openDb } from '$lib/db/index.js';
-import { env } from '$env/dynamic/private';
-import { AccountUpdateSchema } from '$lib/schemas/auth.js';
-import { deleteAccount, updateAccount } from '$lib/server/accounts.js';
-import { clearSessionCookie, errorJson } from '$lib/server/api.js';
+import { openDb } from '#lib/db/index.js';
+import * as env from '$app/env/private';
+import { AccountUpdateSchema } from '#lib/schemas/auth.js';
+import { deleteAccount, updateAccount } from '#lib/server/accounts.js';
+import { clearSessionCookie, errorJson } from '#lib/server/api.js';
 import { eq } from 'drizzle-orm';
-import { users } from '$lib/db/schema.js';
+import { users } from '#lib/db/schema.js';
 
 export const PUT: RequestHandler = async (event) => {
 	const user = event.locals.user;

@@ -1,16 +1,16 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
-import { profileClaims } from '$lib/db/schema.js';
-import { getQuestions } from '$lib/server/claims.js';
-import { listDirectCodes } from '$lib/server/codes.js';
-import { relatives } from '$lib/server/graph.js';
-import { canDo } from '$lib/server/permissions.js';
-import { canOpen, profilesOf } from '$lib/server/combined.js';
-import { getPerson, personHistory } from '$lib/server/persons.js';
-import { publicPerson } from '$lib/server/public-access.js';
-import { withPublicEntity } from '$lib/server/page-load.js';
-import { fullName } from '$lib/utils/format.js';
+import { profileClaims } from '#lib/db/schema.js';
+import { getQuestions } from '#lib/server/claims.js';
+import { listDirectCodes } from '#lib/server/codes.js';
+import { relatives } from '#lib/server/graph.js';
+import { canDo } from '#lib/server/permissions.js';
+import { canOpen, profilesOf } from '#lib/server/combined.js';
+import { getPerson, personHistory } from '#lib/server/persons.js';
+import { publicPerson } from '#lib/server/public-access.js';
+import { withPublicEntity } from '#lib/server/page-load.js';
+import { fullName } from '#lib/utils/format.js';
 
 export const load: PageServerLoad = ({ locals, params, url }) =>
 	withPublicEntity(locals, 'person', params.id, url.pathname, (c, treeId, mode, role) => {

@@ -1,12 +1,12 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { LOCKOUT_TIERS, RATE_LIMITS } from '$lib/config.js';
-import { openDb } from '$lib/db/index.js';
-import { VerifySchema } from '$lib/schemas/collab.js';
-import { apiError, clientIp } from '$lib/server/api.js';
-import { claimAudience, verifyAnswers } from '$lib/server/claims.js';
-import { checkRateLimit, isBlocked, recordFailure } from '$lib/server/rate-limit.js';
+import * as env from '$app/env/private';
+import { LOCKOUT_TIERS, RATE_LIMITS } from '#lib/config.js';
+import { openDb } from '#lib/db/index.js';
+import { VerifySchema } from '#lib/schemas/collab.js';
+import { apiError, clientIp } from '#lib/server/api.js';
+import { claimAudience, verifyAnswers } from '#lib/server/claims.js';
+import { checkRateLimit, isBlocked, recordFailure } from '#lib/server/rate-limit.js';
 
 // Answers are limited per (user, person) in claimAttempts (5/24 h), 20/hour/IP, and by lockout tiers per IP.
 export const PUT: RequestHandler = async (event) => {

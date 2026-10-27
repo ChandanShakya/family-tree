@@ -5,15 +5,15 @@ import { spawn, type ChildProcess } from 'node:child_process';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import * as schema from '$lib/db/schema.js';
-import { joinCodes, treeMembers, users } from '$lib/db/schema.js';
-import { applyPragmas } from '$lib/db/index.js';
-import { createSession } from '$lib/server/auth.js';
-import { createTree } from '$lib/server/trees.js';
-import { createPerson } from '$lib/server/persons.js';
-import { createDirectCode, redeemCode } from '$lib/server/codes.js';
-import { getFamilyCode, regenerateFamilyCode } from '$lib/server/join-codes.js';
-import { getQuestions, setQuestions } from '$lib/server/claims.js';
+import * as schema from '#lib/db/schema.js';
+import { joinCodes, treeMembers, users } from '#lib/db/schema.js';
+import { applyPragmas } from '#lib/db/index.js';
+import { createSession } from '#lib/server/auth.js';
+import { createTree } from '#lib/server/trees.js';
+import { createPerson } from '#lib/server/persons.js';
+import { createDirectCode, redeemCode } from '#lib/server/codes.js';
+import { getFamilyCode, regenerateFamilyCode } from '#lib/server/join-codes.js';
+import { getQuestions, setQuestions } from '#lib/server/claims.js';
 
 // Real contention: SERVERS separate Node processes, each with its own better-sqlite3
 // connection per request, all writing one database file. `BEGIN IMMEDIATE` collisions

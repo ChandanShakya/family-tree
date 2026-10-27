@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { toast } from '$lib/toast.svelte.js';
+	import { toast } from '#lib/toast.svelte.js';
 
 	let { code }: { code: string } = $props();
 

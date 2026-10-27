@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { buildCombined, getSettings, profilesOf, relateInView, settingsLog, shareCandidates } from '$lib/server/combined.js';
-import { withUser } from '$lib/server/page-load.js';
+import { buildCombined, getSettings, profilesOf, relateInView, settingsLog, shareCandidates } from '#lib/server/combined.js';
+import { withUser } from '#lib/server/page-load.js';
 
 export const load: PageServerLoad = ({ locals, params, url }) =>
 	withUser(locals, (c) => {

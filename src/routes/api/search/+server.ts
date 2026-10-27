@@ -1,13 +1,13 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { SearchQuerySchema } from '$lib/schemas/search.js';
-import { RATE_LIMITS } from '$lib/config.js';
-import { checkRateLimit } from '$lib/server/rate-limit.js';
-import { filterHits, ftsSearch } from '$lib/server/search.js';
-import { fuzzySearchWorker } from '$lib/server/fuzzy-host.js';
-import { badInput, gateTree, openGate } from '$lib/server/tree-route.js';
-import { clientIp } from '$lib/server/api.js';
+import * as env from '$app/env/private';
+import { SearchQuerySchema } from '#lib/schemas/search.js';
+import { RATE_LIMITS } from '#lib/config.js';
+import { checkRateLimit } from '#lib/server/rate-limit.js';
+import { filterHits, ftsSearch } from '#lib/server/search.js';
+import { fuzzySearchWorker } from '#lib/server/fuzzy-host.js';
+import { badInput, gateTree, openGate } from '#lib/server/tree-route.js';
+import { clientIp } from '#lib/server/api.js';
 
 export const GET: RequestHandler = async (event) => {
 	const gate = openGate(event);

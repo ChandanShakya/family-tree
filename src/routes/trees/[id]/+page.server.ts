@@ -1,9 +1,9 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
-import { publicTreeView } from '$lib/server/public-access.js';
-import { getTreeView } from '$lib/server/trees.js';
-import { withPublicRead } from '$lib/server/page-load.js';
-import { canDo } from '$lib/server/permissions.js';
+import { publicTreeView } from '#lib/server/public-access.js';
+import { getTreeView } from '#lib/server/trees.js';
+import { withPublicRead } from '#lib/server/page-load.js';
+import { canDo } from '#lib/server/permissions.js';
 
 // Members get the full (bounded) view; anyone else gets a public tree through the privacy filter.
 export const load: PageServerLoad = ({ locals, params, url }) => {

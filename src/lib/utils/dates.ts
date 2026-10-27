@@ -4,7 +4,7 @@ import NepaliDateModule from 'nepali-date-converter';
 // exports object, while Vite/Vitest unwrap it to the class.
 const NepaliDate: typeof NepaliDateModule =
 	(NepaliDateModule as unknown as { default?: typeof NepaliDateModule }).default ?? NepaliDateModule;
-import { pad, parseAdDate } from '$lib/shared/dates-ad.mjs';
+import { pad, parseAdDate } from '#lib/shared/dates-ad.mjs';
 
 export type DateCal = 'AD' | 'BS';
 

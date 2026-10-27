@@ -1,9 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
+import * as env from '$app/env/private';
 import { randomBytes } from 'node:crypto';
-import { googleAuthUrl, googleConfigured, issueOAuthState } from '$lib/server/oauth.js';
-import { isSecure } from '$lib/server/api.js';
+import { googleAuthUrl, googleConfigured, issueOAuthState } from '#lib/server/oauth.js';
+import { isSecure } from '#lib/server/api.js';
 
 export const GET: RequestHandler = async (event) => {
 	if (!googleConfigured(env)) {

@@ -1,6 +1,6 @@
 import { error, redirect } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
-import { openDb } from '$lib/db/index.js';
+import * as env from '$app/env/private';
+import { openDb } from '#lib/db/index.js';
 import { requireTreeAccess, resolveTreeId, type Action, type EntityType, type Role } from './permissions.js';
 import { readAccess } from './public-access.js';
 import type { Handles } from './tx.js';

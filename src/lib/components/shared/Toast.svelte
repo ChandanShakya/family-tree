@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dismiss, toasts } from '$lib/toast.svelte.js';
+	import { dismiss, toasts } from '#lib/toast.svelte.js';
 </script>
 
 <div class="fixed right-4 bottom-20 z-[60] flex w-[min(24rem,calc(100vw-2rem))] flex-col gap-2 sm:bottom-4" aria-live="polite" role="status">

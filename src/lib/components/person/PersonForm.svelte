@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { PersonDraft } from './draft.js';
-	import { parseDate } from '$lib/utils/dates.js';
+	import { parseDate } from '#lib/utils/dates.js';
 	import { ChevronDown, CircleHelp } from '@lucide/svelte';
 
 	// Progressive disclosure: names and gender always; dates, places and the rest behind "More details".

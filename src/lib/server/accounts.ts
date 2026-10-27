@@ -1,7 +1,7 @@
 import { randomBytes, randomUUID } from 'node:crypto';
 import { and, eq, isNull } from 'drizzle-orm';
 import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import type * as schema from '$lib/db/schema.js';
+import type * as schema from '#lib/db/schema.js';
 import {
 	emailVerificationTokens,
 	oauthAccounts,
@@ -11,8 +11,8 @@ import {
 	treeMembers,
 	trees,
 	users
-} from '$lib/db/schema.js';
-import { RATE_LIMITS } from '$lib/config.js';
+} from '#lib/db/schema.js';
+import { RATE_LIMITS } from '#lib/config.js';
 import { checkRateLimit } from './rate-limit.js';
 import { comparePassword, dummyCompare, hashPassword } from './passwords.js';
 import { createSession, deleteSession as deleteSessionByToken, hashToken } from './auth.js';

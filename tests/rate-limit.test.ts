@@ -5,8 +5,8 @@ import {
 	getClientIp,
 	isBlocked,
 	recordFailure
-} from '$lib/server/rate-limit.js';
-import { LOCKOUT_TIERS, RATE_LIMITS } from '$lib/config.js';
+} from '#lib/server/rate-limit.js';
+import { LOCKOUT_TIERS, RATE_LIMITS } from '#lib/config.js';
 
 function reqWith(headers: Record<string, string>): Request {
 	return new Request('http://localhost/api/join/ABC', { headers });

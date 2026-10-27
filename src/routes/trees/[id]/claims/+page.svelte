@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import TreeNav from '$lib/components/tree/TreeNav.svelte';
-	import { api, personName } from '$lib/api.js';
-	import { toast } from '$lib/toast.svelte.js';
+	import TreeNav from '#lib/components/tree/TreeNav.svelte';
+	import { api, personName } from '#lib/api.js';
+	import { toast } from '#lib/toast.svelte.js';
 
 	let { data } = $props();
 	let relation = $state<Record<string, string>>({});

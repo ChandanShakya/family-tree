@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import SearchBar from '$lib/components/tree/SearchBar.svelte';
-	import { api } from '$lib/api.js';
-	import { confirmDialog } from '$lib/confirm.svelte.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import { offerUndo } from '$lib/undo.js';
+	import SearchBar from '#lib/components/tree/SearchBar.svelte';
+	import { api } from '#lib/api.js';
+	import { confirmDialog } from '#lib/confirm.svelte.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import { offerUndo } from '#lib/undo.js';
 
 	interface Link {
 		id: string;

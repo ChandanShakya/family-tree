@@ -1,5 +1,5 @@
 import { and, eq } from 'drizzle-orm';
-import { persons, treeMembers, trees, users } from '$lib/db/schema.js';
+import { persons, treeMembers, trees, users } from '#lib/db/schema.js';
 import { writeTx, type Db } from './tx.js';
 import type { Role } from './permissions.js';
 

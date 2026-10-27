@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 import { execSync } from 'node:child_process';
-import { TOKEN_PAIRS, TEXT_MIN, UI_MIN, contrastRatio } from '$lib/utils/contrast.js';
+import { TOKEN_PAIRS, TEXT_MIN, UI_MIN, contrastRatio } from '#lib/utils/contrast.js';
 
 describe('AT-28: contrast', () => {
 	test('AT-28: every text pair is >= 4.5:1', () => {

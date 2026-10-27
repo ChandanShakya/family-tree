@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { MediaCreateFieldsSchema } from '$lib/schemas/media.js';
-import { addMedia } from '$lib/server/media.js';
-import { badInput, gateTree, openGate } from '$lib/server/tree-route.js';
-import { mediaErrorJson, readUpload } from '$lib/server/upload.js';
+import { MediaCreateFieldsSchema } from '#lib/schemas/media.js';
+import { addMedia } from '#lib/server/media.js';
+import { badInput, gateTree, openGate } from '#lib/server/tree-route.js';
+import { mediaErrorJson, readUpload } from '#lib/server/upload.js';
 
 export const POST: RequestHandler = async (event) => {
 	const gate = openGate(event);

@@ -2,10 +2,10 @@
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import { api } from '$lib/api.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import OnboardingTour from '$lib/components/shared/OnboardingTour.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { api } from '#lib/api.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import OnboardingTour from '#lib/components/shared/OnboardingTour.svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { Check, Plus, Server, ShieldCheck, TreePine, Users } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 

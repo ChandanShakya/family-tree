@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { MemberRoleSchema } from '$lib/schemas/trees.js';
-import { changeMemberRole, removeMember } from '$lib/server/members.js';
-import { badInput, gateTree, openGate } from '$lib/server/tree-route.js';
+import { MemberRoleSchema } from '#lib/schemas/trees.js';
+import { changeMemberRole, removeMember } from '#lib/server/members.js';
+import { badInput, gateTree, openGate } from '#lib/server/tree-route.js';
 
 export const PUT: RequestHandler = async (event) => {
 	const gate = openGate(event);

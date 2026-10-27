@@ -1,6 +1,6 @@
 import { Worker } from 'node:worker_threads';
 import { resolve as resolvePath } from 'node:path';
-import { env } from '$env/dynamic/private';
+import * as env from '$app/env/private';
 
 // Persistent fuzzy-search worker (§3): created on demand, stays alive across
 // requests, owns its own DB connection with the same pragmas. Resolved from

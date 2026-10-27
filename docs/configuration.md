@@ -6,7 +6,7 @@ Configuration comes from environment variables. With Docker, put them in `.env` 
 
 | Variable | Meaning |
 |---|---|
-| `ORIGIN` | Public URL, for example `https://tree.example.com`, with no trailing slash. Used for links in emails, the OAuth redirect and the cross-site request check. |
+| `ORIGIN` | Public URL, for example `https://tree.example.com`, with no trailing slash. Used for links in emails, the OAuth redirect and the JSON origin check. SvelteKit's own cross-site check no longer reads it: it uses the `Host` header and `https`, or the scheme from the header named in `PROTOCOL_HEADER` (see [deployment](deployment.md#9-local-development-with-docker)). |
 | `SESSION_SECRET` | At least 32 random characters. Signs the OAuth state cookie. Generate with `openssl rand -base64 48`. |
 | `VERIFICATION_PEPPER` | At least 32 random characters, different from the session secret. Answers to verification questions are hashed with it: **never change it** after people have set questions. |
 | `CLOUDFLARE_TUNNEL_TOKEN` | Token of your Cloudflare Tunnel (Docker deployment). |
