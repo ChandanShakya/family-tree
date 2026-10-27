@@ -30,7 +30,6 @@
 	transform="translate({x},{y})"
 	role="button"
 	tabindex="0"
-	aria-label={name}
 	class="node"
 	class:highlighted
 	onclick={onselect}
