@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { and, desc, eq, lt, or } from 'drizzle-orm';
-import { IMAGE_MAX_PIXELS, UPLOAD_MAX_BYTES } from '$lib/config.js';
-import { media, persons, trees, users } from '$lib/db/schema.js';
+import { IMAGE_MAX_PIXELS, UPLOAD_MAX_BYTES } from '#lib/config.js';
+import { media, persons, trees, users } from '#lib/db/schema.js';
 import { writeHistory } from './audit.js';
 import {
 	commitThenDelete,

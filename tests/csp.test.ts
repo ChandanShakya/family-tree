@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from 'node:fs';
 
 describe('AT-47: CSP nonce, no unsafe-inline in script-src', () => {
 	test('AT-47: kit csp uses nonce mode and script-src has no unsafe-inline', () => {
-		const config = readFileSync('./svelte.config.js', 'utf8');
+		const config = readFileSync('./vite.config.ts', 'utf8');
 		expect(config).toContain("mode: 'nonce'");
 		const scriptSrc = /'script-src':\s*\[(.*?)\]/s.exec(config)?.[1] ?? '';
 		expect(scriptSrc).not.toContain('unsafe-inline');

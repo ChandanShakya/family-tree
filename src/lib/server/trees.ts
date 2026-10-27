@@ -1,9 +1,9 @@
 import { randomUUID, randomInt } from 'node:crypto';
 import type Database from 'better-sqlite3';
 import { and, eq } from 'drizzle-orm';
-import { joinCodes, relationships, treeMembers, trees } from '$lib/db/schema.js';
-import { FAMILY_CODE_DEFAULT_MAX_USES, TREE_FOCUS_MODE_THRESHOLD, DEFAULT_FOCUS_DEPTH, MAX_TRAVERSAL_DEPTH, MAX_TRAVERSAL_NODES } from '$lib/config.js';
-import type { HistoryEntry } from '$lib/types.js';
+import { joinCodes, relationships, treeMembers, trees } from '#lib/db/schema.js';
+import { FAMILY_CODE_DEFAULT_MAX_USES, TREE_FOCUS_MODE_THRESHOLD, DEFAULT_FOCUS_DEPTH, MAX_TRAVERSAL_DEPTH, MAX_TRAVERSAL_NODES } from '#lib/config.js';
+import type { HistoryEntry } from '#lib/types.js';
 import { writeHistory } from './audit.js';
 import { describeRows } from './activity.js';
 import { ancestors, cached, chainRoots, descendants, generationDepth } from './graph.js';

@@ -2,10 +2,10 @@
 	import { onMount, tick, untrack } from 'svelte';
 	import { select } from 'd3-selection';
 	import { zoom, zoomIdentity, type ZoomBehavior } from 'd3-zoom';
-	import { NODE_H, NODE_W, layoutTree, type LayoutResult, type Orientation } from '$lib/tree/layout.js';
+	import { NODE_H, NODE_W, layoutTree, type LayoutResult, type Orientation } from '#lib/tree/layout.js';
 	import PersonNode from './PersonNode.svelte';
 	import TreeControls from './TreeControls.svelte';
-	import { fullName } from '$lib/utils/format.js';
+	import { fullName } from '#lib/utils/format.js';
 
 	const WORKER_THRESHOLD = 200;
 

@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { impliedLinks } from '$lib/utils/family-links.js';
+import { impliedLinks } from '#lib/utils/family-links.js';
 
 const rels = [
 	{ person1Id: 'dad', person2Id: 'kid', type: 'parent' },

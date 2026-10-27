@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { listDirectCodes } from '$lib/server/codes.js';
-import { getFamilyCode } from '$lib/server/join-codes.js';
-import { canDo, type Role } from '$lib/server/permissions.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import { listDirectCodes } from '#lib/server/codes.js';
+import { getFamilyCode } from '#lib/server/join-codes.js';
+import { canDo, type Role } from '#lib/server/permissions.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 // The family code (owner/editor only) and the caller's own direct codes.
 export const GET: RequestHandler = async (event) => {

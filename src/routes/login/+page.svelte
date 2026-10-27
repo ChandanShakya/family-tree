@@ -1,9 +1,9 @@
 <script lang="ts">
-	import AuthCard from '$lib/components/shared/AuthCard.svelte';
+	import AuthCard from '#lib/components/shared/AuthCard.svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import { safeNext } from '$lib/utils/next.js';
+	import { safeNext } from '#lib/utils/next.js';
 
 	let { data } = $props();
 

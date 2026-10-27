@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fullName } from '$lib/utils/format.js';
+	import { fullName } from '#lib/utils/format.js';
 	import { SlidersHorizontal } from '@lucide/svelte';
 	interface Hit {
 		id: string;

@@ -1,7 +1,7 @@
 import { eq } from 'drizzle-orm';
-import { LIVING_ASSUMPTION_YEARS } from '$lib/config.js';
-import { trees } from '$lib/db/schema.js';
-import { anonymisePerson, filterPeople, isLiving } from '$lib/shared/privacy.mjs';
+import { LIVING_ASSUMPTION_YEARS } from '#lib/config.js';
+import { trees } from '#lib/db/schema.js';
+import { anonymisePerson, filterPeople, isLiving } from '#lib/shared/privacy.mjs';
 import { requireTreeAccess, type Role } from './permissions.js';
 import { getPerson, type PersonRow } from './persons.js';
 import type { TreeView } from './trees.js';

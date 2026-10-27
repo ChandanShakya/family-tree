@@ -3,17 +3,17 @@
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
-	import { api, personName } from '$lib/api.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import Skeleton from '$lib/components/shared/Skeleton.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { api, personName } from '#lib/api.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import Skeleton from '#lib/components/shared/Skeleton.svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { Lock } from '@lucide/svelte';
 
 	let { data } = $props();
-	let Canvas = $state<typeof import('$lib/components/tree/TreeCanvas.svelte').default | null>(null);
+	let Canvas = $state<typeof import('#lib/components/tree/TreeCanvas.svelte').default | null>(null);
 	let highlight = $state<string | null>(null);
 	onMount(async () => {
-		Canvas = (await import('$lib/components/tree/TreeCanvas.svelte')).default;
+		Canvas = (await import('#lib/components/tree/TreeCanvas.svelte')).default;
 	});
 
 	// One colour per tree, in profile order (readable on light and dark cards).
@@ -25,7 +25,7 @@
 
 	function setDepth(v: string) {
 		const q = v ? `?depth=${v}` : '';
-		void goto(resolve(`/families/${page.params.userId}${q}` as '/'), { keepFocus: true, noScroll: true });
+		void goto(resolve(`/families/${page.params.userId}${q}` as '/'), { reset: false });
 	}
 
 	// Owner settings drafts, resynced after save.
@@ -52,7 +52,7 @@
 		e.preventDefault();
 		const depth = page.url.searchParams.get('depth');
 		const q = `from=${from}&to=${to}${depth ? `&depth=${depth}` : ''}`;
-		void goto(resolve(`/families/${page.params.userId}?${q}` as '/'), { keepFocus: true, noScroll: true });
+		void goto(resolve(`/families/${page.params.userId}?${q}` as '/'), { reset: false });
 	}
 	async function save(e: SubmitEvent) {
 		e.preventDefault();

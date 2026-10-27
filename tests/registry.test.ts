@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest';
 import { readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { ROUTE_POLICIES } from '$lib/server/route-policies.js';
+import { ROUTE_POLICIES } from '#lib/server/route-policies.js';
 
 function collectServers(dir: string, out: string[] = []): string[] {
 	if (!existsSync(dir)) return out;

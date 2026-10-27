@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
-import { openDb } from '$lib/db/index.js';
-import { env } from '$env/dynamic/private';
+import { openDb } from '#lib/db/index.js';
+import * as env from '$app/env/private';
 import {
 	requireTreeAccess,
 	resolveTreeId,

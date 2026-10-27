@@ -1,8 +1,8 @@
 import { existsSync } from 'node:fs';
 import { and, asc, eq, or } from 'drizzle-orm';
-import { CONTRIBUTOR_REVERT_OWN_ONLY } from '$lib/config.js';
-import { changeHistory, events, media, persons, relationships } from '$lib/db/schema.js';
-import { parseDate } from '$lib/utils/dates.js';
+import { CONTRIBUTOR_REVERT_OWN_ONLY } from '#lib/config.js';
+import { changeHistory, events, media, persons, relationships } from '#lib/db/schema.js';
+import { parseDate } from '#lib/utils/dates.js';
 import { newBatchId, writeTx, type Db, type Handles } from './tx.js';
 import { writeHistory } from './audit.js';
 import { wouldCreateCycle, wouldExceedDepth } from './graph.js';

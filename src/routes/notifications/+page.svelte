@@ -2,7 +2,7 @@
 	import { CheckCheck } from '@lucide/svelte';
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { api } from '$lib/api.js';
+	import { api } from '#lib/api.js';
 
 	let { data } = $props();
 

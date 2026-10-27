@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { openDb } from '$lib/db/index.js';
-import { JoinRedeemSchema } from '$lib/schemas/collab.js';
-import { apiError, clientIp } from '$lib/server/api.js';
-import { JOIN_UNAVAILABLE, previewCode, redeemCode } from '$lib/server/codes.js';
-import { codeFailed, guardCode } from '$lib/server/code-guard.js';
+import * as env from '$app/env/private';
+import { openDb } from '#lib/db/index.js';
+import { JoinRedeemSchema } from '#lib/schemas/collab.js';
+import { apiError, clientIp } from '#lib/server/api.js';
+import { JOIN_UNAVAILABLE, previewCode, redeemCode } from '#lib/server/codes.js';
+import { codeFailed, guardCode } from '#lib/server/code-guard.js';
 
 // "Not found" is a failure (lockout tiers, code-guard.ts); every unavailable code looks the same.
 const unavailable = (): Response => apiError(404, JOIN_UNAVAILABLE, 'This code is not available');

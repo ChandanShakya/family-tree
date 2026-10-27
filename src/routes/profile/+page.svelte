@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import Avatar from '$lib/components/media/Avatar.svelte';
-	import UploadButton from '$lib/components/media/UploadButton.svelte';
-	import { api } from '$lib/api.js';
-	import { confirmDialog } from '$lib/confirm.svelte.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import { applyTheme, type ThemePref } from '$lib/theme.js';
+	import Avatar from '#lib/components/media/Avatar.svelte';
+	import UploadButton from '#lib/components/media/UploadButton.svelte';
+	import { api } from '#lib/api.js';
+	import { confirmDialog } from '#lib/confirm.svelte.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import { applyTheme, type ThemePref } from '#lib/theme.js';
 
 	const NOTIFY_TYPES = [
 		['join', 'Someone joins a tree I own or edit'],

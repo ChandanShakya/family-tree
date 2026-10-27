@@ -1,9 +1,9 @@
 import { describe, expect, test, beforeEach, afterAll } from 'vitest';
-import { createTree, getTreeView } from '$lib/server/trees.js';
-import { createPerson } from '$lib/server/persons.js';
-import { createLink } from '$lib/server/relations.js';
-import { duplicateFinder, filterHits, ftsSearch, fuzzySearchInline, surnameExplorer } from '$lib/server/search.js';
-import { TREE_FOCUS_MODE_THRESHOLD, MAX_TRAVERSAL_NODES } from '$lib/config.js';
+import { createTree, getTreeView } from '#lib/server/trees.js';
+import { createPerson } from '#lib/server/persons.js';
+import { createLink } from '#lib/server/relations.js';
+import { duplicateFinder, filterHits, ftsSearch, fuzzySearchInline, surnameExplorer } from '#lib/server/search.js';
+import { TREE_FOCUS_MODE_THRESHOLD, MAX_TRAVERSAL_NODES } from '#lib/config.js';
 import { closeAllHandles, freshHandles, makeUser, type TestHandles } from './helpers.js';
 
 let h: TestHandles;

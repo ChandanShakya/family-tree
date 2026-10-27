@@ -2,16 +2,16 @@
 	import '../app.css';
 	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import Toast from '$lib/components/shared/Toast.svelte';
-	import ConfirmDialog from '$lib/components/shared/ConfirmDialog.svelte';
-	import AppNav from '$lib/components/shared/AppNav.svelte';
-	import Bell from '$lib/components/notifications/Bell.svelte';
-	import Avatar from '$lib/components/media/Avatar.svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import Toast from '#lib/components/shared/Toast.svelte';
+	import ConfirmDialog from '#lib/components/shared/ConfirmDialog.svelte';
+	import AppNav from '#lib/components/shared/AppNav.svelte';
+	import Bell from '#lib/components/notifications/Bell.svelte';
+	import Avatar from '#lib/components/media/Avatar.svelte';
+	import { Button } from '#lib/components/ui/button/index.js';
+	import * as DropdownMenu from '#lib/components/ui/dropdown-menu/index.js';
 	import { Bell as BellIcon, LogOut, Moon, Network, Sun, TreePine, UserRound } from '@lucide/svelte';
-	import { api } from '$lib/api.js';
-	import { applyTheme } from '$lib/theme.js';
+	import { api } from '#lib/api.js';
+	import { applyTheme } from '#lib/theme.js';
 
 	let { children, data } = $props();
 

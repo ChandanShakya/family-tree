@@ -1,5 +1,5 @@
 import type Database from 'better-sqlite3';
-import type { HistoryEntry } from '$lib/types.js';
+import type { HistoryEntry } from '#lib/types.js';
 
 // Names for history rows, so the activity reads "Maya added Hari Shakya" instead of raw ids.
 // Deleted people keep their name (the row stays until the purge, and snapshots carry it after).

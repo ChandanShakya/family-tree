@@ -6,12 +6,12 @@ import { spawn, type ChildProcess } from 'node:child_process';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import * as schema from '$lib/db/schema.js';
-import { treeMembers, users } from '$lib/db/schema.js';
-import { applyPragmas } from '$lib/db/index.js';
-import { createSession } from '$lib/server/auth.js';
-import { createTree } from '$lib/server/trees.js';
-import { IMPORT_MAX_PERSONS, IMPORT_MAX_RELATIONSHIPS } from '$lib/config.js';
+import * as schema from '#lib/db/schema.js';
+import { treeMembers, users } from '#lib/db/schema.js';
+import { applyPragmas } from '#lib/db/index.js';
+import { createSession } from '#lib/server/auth.js';
+import { createTree } from '#lib/server/trees.js';
+import { IMPORT_MAX_PERSONS, IMPORT_MAX_RELATIONSHIPS } from '#lib/config.js';
 
 const DIR = './.test-tmp-load';
 const DB = `${DIR}/l.db`;

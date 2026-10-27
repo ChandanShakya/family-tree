@@ -82,7 +82,7 @@
 family-tree/
 ├── Dockerfile, docker-compose.yml, docker-compose.dev.yml
 ├── package.json (exact versions), package-lock.json
-├── drizzle.config.ts, svelte.config.js, vite.config.ts, tsconfig.json
+├── drizzle.config.ts, vite.config.ts, vite.config.ts, tsconfig.json
 ├── README.md, SPECS.md, DECISIONS.md, BENCHMARKS.md
 ├── scripts/  backup.sh restore.sh sweep-orphans.ts rebuild-fts.ts backup.ts migrate.ts seed.ts bench.ts contrast.ts check-traceability.mjs
 ├── tests/    (unit, api, e2e)

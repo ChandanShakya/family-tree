@@ -1,9 +1,9 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { eq } from 'drizzle-orm';
-import { SESSION_DAYS } from '$lib/config.js';
-import { sessions } from '$lib/db/schema.js';
+import { SESSION_DAYS } from '#lib/config.js';
+import { sessions } from '#lib/db/schema.js';
 import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import type * as schema from '$lib/db/schema.js';
+import type * as schema from '#lib/db/schema.js';
 
 type Db = BetterSQLite3Database<typeof schema>;
 

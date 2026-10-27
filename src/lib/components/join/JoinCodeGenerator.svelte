@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { api } from '$lib/api.js';
-	import { confirmDialog } from '$lib/confirm.svelte.js';
-	import { toast } from '$lib/toast.svelte.js';
+	import { api } from '#lib/api.js';
+	import { confirmDialog } from '#lib/confirm.svelte.js';
+	import { toast } from '#lib/toast.svelte.js';
 	import ShareButtons from './ShareButtons.svelte';
 
 	interface Code {

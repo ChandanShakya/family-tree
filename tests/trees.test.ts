@@ -1,17 +1,17 @@
 import { describe, expect, test, beforeEach, afterAll } from 'vitest';
 import { eq } from 'drizzle-orm';
-import { changeHistory, treeMembers } from '$lib/db/schema.js';
-import { createTree } from '$lib/server/trees.js';
-import { getFamilyCode, regenerateFamilyCode } from '$lib/server/join-codes.js';
-import { createPerson, deletePerson, updatePerson } from '$lib/server/persons.js';
-import { createLink, deleteLink } from '$lib/server/relations.js';
-import { ancestors, chainRoots, descendants, generationDepth, relationPath } from '$lib/server/graph.js';
-import { createEvent, deleteEvent, updateEvent } from '$lib/server/events.js';
-import { requireTreeAccess } from '$lib/server/permissions.js';
-import { changeMemberRole, removeMember, transferOwnership } from '$lib/server/members.js';
-import { deleteAccount, findUserByEmail, register } from '$lib/server/accounts.js';
-import { clearAllRateLimits } from '$lib/server/rate-limit.js';
-import { _clearAccountFailures } from '$lib/server/accounts.js';
+import { changeHistory, treeMembers } from '#lib/db/schema.js';
+import { createTree } from '#lib/server/trees.js';
+import { getFamilyCode, regenerateFamilyCode } from '#lib/server/join-codes.js';
+import { createPerson, deletePerson, updatePerson } from '#lib/server/persons.js';
+import { createLink, deleteLink } from '#lib/server/relations.js';
+import { ancestors, chainRoots, descendants, generationDepth, relationPath } from '#lib/server/graph.js';
+import { createEvent, deleteEvent, updateEvent } from '#lib/server/events.js';
+import { requireTreeAccess } from '#lib/server/permissions.js';
+import { changeMemberRole, removeMember, transferOwnership } from '#lib/server/members.js';
+import { deleteAccount, findUserByEmail, register } from '#lib/server/accounts.js';
+import { clearAllRateLimits } from '#lib/server/rate-limit.js';
+import { _clearAccountFailures } from '#lib/server/accounts.js';
 import { closeAllHandles, freshHandles, makeUser, type TestHandles } from './helpers.js';
 
 let h: TestHandles;
@@ -393,10 +393,10 @@ describe('generation depth', () => {
 
 describe('middle name', () => {
 	test('is stored, edited, searchable, part of the display name and exports, and hidden for living people', async () => {
-		const { ftsSearch } = await import('$lib/server/search.js');
+		const { ftsSearch } = await import('#lib/server/search.js');
 		const { anonymisePerson } = await import('../src/lib/shared/privacy.mjs');
 		const { buildGedcom } = await import('../src/lib/shared/gedcom.mjs');
-		const { fullName } = await import('$lib/utils/format.js');
+		const { fullName } = await import('#lib/utils/format.js');
 		const owner = makeUser(h.db);
 		const t = makeTree(owner.id);
 		const id = createPerson(h, owner.id, t, { firstName: 'Ram', middleName: 'Bahadur', lastName: 'Thapa' }).id;

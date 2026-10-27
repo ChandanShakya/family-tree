@@ -1,5 +1,5 @@
 import type Database from 'better-sqlite3';
-import { MAX_TRAVERSAL_DEPTH, MAX_TRAVERSAL_NODES } from '$lib/config.js';
+import { MAX_TRAVERSAL_DEPTH, MAX_TRAVERSAL_NODES } from '#lib/config.js';
 import { kinshipLabel } from './kinship.js';
 
 export interface BoundedResult {

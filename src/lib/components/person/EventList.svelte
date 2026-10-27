@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { api } from '$lib/api.js';
-	import { offerUndo } from '$lib/undo.js';
-	import { fmtDate } from '$lib/utils/format.js';
-	import type { DateDisplayPref } from '$lib/utils/dates.js';
+	import { api } from '#lib/api.js';
+	import { offerUndo } from '#lib/undo.js';
+	import { fmtDate } from '#lib/utils/format.js';
+	import type { DateDisplayPref } from '#lib/utils/dates.js';
 
 	interface Ev {
 		id: string;

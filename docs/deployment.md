@@ -156,6 +156,8 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
 
 This publishes `http://localhost:3000`, clears `ADDRESS_HEADER` and does not start `cloudflared` (it is behind the `tunnel` profile). `ORIGIN`, the two secrets and a (dummy) tunnel token must still be set in `.env`.
 
+> **Plain http:** `@sveltejs/adapter-node` 6 no longer reads `ORIGIN`. It derives the request origin from the `Host` header and assumes `https` unless `PROTOCOL_HEADER` names a header that carries the scheme (for example `PROTOCOL_HEADER=x-forwarded-proto`, set by most proxies). Behind the Cloudflare tunnel or any HTTPS proxy this just works. Opening the dev override directly at `http://localhost:3000` sends form posts with an `http` origin and SvelteKit's cross-site check refuses them; use `npm run dev` for local work, or put a proxy in front that sets the header.
+
 ## 10. Troubleshooting
 
 See [troubleshooting.md](troubleshooting.md).

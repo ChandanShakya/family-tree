@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { openDb } from '$lib/db/index.js';
-import { QuestionsSetSchema } from '$lib/schemas/collab.js';
-import { apiError } from '$lib/server/api.js';
-import { claimAudience, getQuestions, setQuestions } from '$lib/server/claims.js';
-import { gateEntity, openGate } from '$lib/server/tree-route.js';
+import * as env from '$app/env/private';
+import { openDb } from '#lib/db/index.js';
+import { QuestionsSetSchema } from '#lib/schemas/collab.js';
+import { apiError } from '#lib/server/api.js';
+import { claimAudience, getQuestions, setQuestions } from '#lib/server/claims.js';
+import { gateEntity, openGate } from '#lib/server/tree-route.js';
 
 // Question texts only; same audience as claim search. Claimed people have no claim path left.
 export const GET: RequestHandler = async (event) => {

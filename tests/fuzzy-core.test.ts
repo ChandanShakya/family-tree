@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { damerauLevenshtein, fuzzyMatch } from '$lib/utils/fuzzy.js';
+import { damerauLevenshtein, fuzzyMatch } from '#lib/utils/fuzzy.js';
 import { dlBounded, matchNames } from '../src/lib/shared/fuzzy-core.mjs';
 
 const cps = (s: string) => [...s];

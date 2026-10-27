@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import Confetti from '$lib/components/join/Confetti.svelte';
-	import PersonForm from '$lib/components/person/PersonForm.svelte';
-	import { draftToBody, emptyDraft, type PersonDraft } from '$lib/components/person/draft.js';
-	import { api } from '$lib/api.js';
+	import Confetti from '#lib/components/join/Confetti.svelte';
+	import PersonForm from '#lib/components/person/PersonForm.svelte';
+	import { draftToBody, emptyDraft, type PersonDraft } from '#lib/components/person/draft.js';
+	import { api } from '#lib/api.js';
 
 	let { data } = $props();
 	let draft = $state<PersonDraft>(emptyDraft());

@@ -1,12 +1,12 @@
 import { readFile } from 'node:fs/promises';
 import { eq, or } from 'drizzle-orm';
 import type { RequestHandler } from './$types';
-import { openDb } from '$lib/db/index.js';
-import { env } from '$env/dynamic/private';
-import { media, trees, users } from '$lib/db/schema.js';
-import { personVisibleToPublic } from '$lib/server/public-access.js';
-import { requireTreeAccess } from '$lib/server/permissions.js';
-import { absPath, parsePhotoPath, photoUrl } from '$lib/server/storage.js';
+import { openDb } from '#lib/db/index.js';
+import * as env from '$app/env/private';
+import { media, trees, users } from '#lib/db/schema.js';
+import { personVisibleToPublic } from '#lib/server/public-access.js';
+import { requireTreeAccess } from '#lib/server/permissions.js';
+import { absPath, parsePhotoPath, photoUrl } from '#lib/server/storage.js';
 
 const TYPES: Record<string, string> = {
 	jpg: 'image/jpeg',

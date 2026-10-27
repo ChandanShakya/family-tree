@@ -1,14 +1,14 @@
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
-import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
+import type { Handle, HandleServerError, ServerInit } from '@sveltejs/kit/hooks';
+import * as env from '$app/env/private';
 import Database from 'better-sqlite3';
-import { migrateAndCheck, openDb } from '$lib/db/index.js';
-import { validateSession } from '$lib/server/auth.js';
-import { RATE_LIMITS } from '$lib/config.js';
-import { startMaintenance } from '$lib/server/maintenance.js';
-import { checkRateLimit } from '$lib/server/rate-limit.js';
-import { parseDate } from '$lib/utils/dates.js';
+import { migrateAndCheck, openDb } from '#lib/db/index.js';
+import { validateSession } from '#lib/server/auth.js';
+import { RATE_LIMITS } from '#lib/config.js';
+import { startMaintenance } from '#lib/server/maintenance.js';
+import { checkRateLimit } from '#lib/server/rate-limit.js';
+import { parseDate } from '#lib/utils/dates.js';
 
 function clientIp(request: Request): string {
 	const header = env.ADDRESS_HEADER;

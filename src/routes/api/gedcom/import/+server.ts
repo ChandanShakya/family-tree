@@ -1,10 +1,10 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { IMPORT_MAX_BYTES, IMPORT_MAX_PERSONS, IMPORT_MAX_RELATIONSHIPS, MAX_TRAVERSAL_DEPTH } from '$lib/config.js';
-import { apiError } from '$lib/server/api.js';
-import { runWorker } from '$lib/server/run-worker.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import * as env from '$app/env/private';
+import { IMPORT_MAX_BYTES, IMPORT_MAX_PERSONS, IMPORT_MAX_RELATIONSHIPS, MAX_TRAVERSAL_DEPTH } from '#lib/config.js';
+import { apiError } from '#lib/server/api.js';
+import { runWorker } from '#lib/server/run-worker.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 interface ImportResult {
 	counts?: { persons: number; relationships: number; warnings: string[]; unknownTags: number };

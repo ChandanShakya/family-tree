@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { api } from '$lib/api.js';
-	import { fullName } from '$lib/utils/format.js';
+	import { api } from '#lib/api.js';
+	import { fullName } from '#lib/utils/format.js';
 	import { ChevronDown } from '@lucide/svelte';
 
 	type Hit = { id: string; firstName: string; middleName?: string | null; lastName: string | null; birthDateNorm: string | null };

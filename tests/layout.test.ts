@@ -12,7 +12,7 @@ import {
 	type LayoutLink,
 	type LayoutPerson,
 	type LayoutResult
-} from '$lib/tree/layout.js';
+} from '#lib/tree/layout.js';
 
 function p(id: string, birth: string | null = null, name = id): LayoutPerson {
 	return { id, birthDateNorm: birth, name };

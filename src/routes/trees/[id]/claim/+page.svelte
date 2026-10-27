@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import TreeNav from '$lib/components/tree/TreeNav.svelte';
+	import TreeNav from '#lib/components/tree/TreeNav.svelte';
 
 	let { data } = $props();
 	let q = $state('');

@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { and, eq } from 'drizzle-orm';
-import { FAMILY_CODE_DEFAULT_MAX_USES } from '$lib/config.js';
-import { joinCodes, trees } from '$lib/db/schema.js';
+import { FAMILY_CODE_DEFAULT_MAX_USES } from '#lib/config.js';
+import { joinCodes, trees } from '#lib/db/schema.js';
 import { makeJoinCode, slugify } from './trees.js';
 import { writeTx, type Db } from './tx.js';
 

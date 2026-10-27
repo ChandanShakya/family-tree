@@ -1,5 +1,5 @@
-import { env } from '$env/dynamic/private';
-import { MAINTENANCE_INTERVAL_HOURS, SOFT_DELETE_PURGE_DAYS } from '$lib/config.js';
+import * as env from '$app/env/private';
+import { MAINTENANCE_INTERVAL_HOURS, SOFT_DELETE_PURGE_DAYS } from '#lib/config.js';
 import { runWorker } from './run-worker.js';
 import { photoRoot } from './storage.js';
 

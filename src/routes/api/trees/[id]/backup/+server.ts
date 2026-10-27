@@ -3,11 +3,11 @@ import { join } from 'node:path';
 import { Readable } from 'node:stream';
 import tar from 'tar-stream';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { apiError } from '$lib/server/api.js';
-import { runWorker } from '$lib/server/run-worker.js';
-import { photoRoot } from '$lib/server/storage.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import * as env from '$app/env/private';
+import { apiError } from '#lib/server/api.js';
+import { runWorker } from '#lib/server/run-worker.js';
+import { photoRoot } from '#lib/server/storage.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 // Tree backup (owner/editor): the full JSON export plus that tree's photos, streamed as a tar.
 // Whole-instance snapshots are an operator job (scripts/backup.ts); a tree owner never receives other trees' data.

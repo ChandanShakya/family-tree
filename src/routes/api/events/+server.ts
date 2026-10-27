@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { EventCreateSchema } from '$lib/schemas/events.js';
-import { createEvent } from '$lib/server/events.js';
-import { badInput, gateTree, openGate } from '$lib/server/tree-route.js';
+import { EventCreateSchema } from '#lib/schemas/events.js';
+import { createEvent } from '#lib/server/events.js';
+import { badInput, gateTree, openGate } from '#lib/server/tree-route.js';
 
 export const POST: RequestHandler = async (event) => {
 	const gate = openGate(event);

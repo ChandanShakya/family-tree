@@ -1,8 +1,8 @@
 import type { PageServerLoad } from './$types';
-import { openDb } from '$lib/db/index.js';
-import { env } from '$env/dynamic/private';
+import { openDb } from '#lib/db/index.js';
+import * as env from '$app/env/private';
 import { eq } from 'drizzle-orm';
-import { users } from '$lib/db/schema.js';
+import { users } from '#lib/db/schema.js';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) return { profile: null };

@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { and, eq } from 'drizzle-orm';
-import { relationships } from '$lib/db/schema.js';
+import { relationships } from '#lib/db/schema.js';
 import { writeHistory } from './audit.js';
 import { wouldCreateCycle, wouldExceedDepth } from './graph.js';
 import { notifyEdit } from './notifications.js';

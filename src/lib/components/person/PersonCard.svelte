@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import Avatar from '$lib/components/media/Avatar.svelte';
+	import Avatar from '#lib/components/media/Avatar.svelte';
 
 	// Compact person link: avatar, name and an optional line (relation or life span).
 	let { id, name, photoUrl = null, sub = '' }: { id: string; name: string; photoUrl?: string | null; sub?: string } = $props();

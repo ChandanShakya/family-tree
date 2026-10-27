@@ -4,11 +4,11 @@ import { join } from 'node:path';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import * as schema from '$lib/db/schema.js';
-import { applyPragmas } from '$lib/db/index.js';
-import { createTree } from '$lib/server/trees.js';
-import { createPerson } from '$lib/server/persons.js';
-import { ftsSearch } from '$lib/server/search.js';
+import * as schema from '#lib/db/schema.js';
+import { applyPragmas } from '#lib/db/index.js';
+import { createTree } from '#lib/server/trees.js';
+import { createPerson } from '#lib/server/persons.js';
+import { ftsSearch } from '#lib/server/search.js';
 import { backupDatabase, restoreDatabase, tarPhotos, untarPhotos } from '../scripts/lib/backup.js';
 import { makeUser } from './helpers.js';
 

@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
-import { MAX_TRAVERSAL_DEPTH } from '$lib/config.js';
+import { MAX_TRAVERSAL_DEPTH } from '#lib/config.js';
 import { notify } from './notifications.js';
-import { normalizeText } from '$lib/utils/fuzzy.js';
+import { normalizeText } from '#lib/utils/fuzzy.js';
 import { requireTreeAccess } from './permissions.js';
 import { getTreeView, type TreeView } from './trees.js';
 import { describePath, type RelationStep } from './graph.js';

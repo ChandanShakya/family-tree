@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
-import { env } from '$env/dynamic/private';
-import { SESSION_DAYS } from '$lib/config.js';
+import * as env from '$app/env/private';
+import { SESSION_DAYS } from '#lib/config.js';
 import { getClientIp } from './rate-limit.js';
 import type { ServiceError } from './accounts.js';
 

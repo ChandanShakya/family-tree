@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { withTree } from '$lib/server/page-load.js';
+import { withTree } from '#lib/server/page-load.js';
 
 export const load: PageServerLoad = ({ locals, params }) => ({
 	treeId: params.id,

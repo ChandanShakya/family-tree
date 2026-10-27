@@ -5,11 +5,11 @@ import { mkdirSync, rmSync } from 'node:fs';
 import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
-import * as schema from '$lib/db/schema.js';
-import { users } from '$lib/db/schema.js';
-import { applyPragmas } from '$lib/db/index.js';
-import { createSession } from '$lib/server/auth.js';
-import { RATE_LIMITS } from '$lib/config.js';
+import * as schema from '#lib/db/schema.js';
+import { users } from '#lib/db/schema.js';
+import { applyPragmas } from '#lib/db/index.js';
+import { createSession } from '#lib/server/auth.js';
+import { RATE_LIMITS } from '#lib/config.js';
 
 // Live server with default limits (no RATE_LIMIT_API_MAX override).
 const DIR = './.test-tmp-hardening';

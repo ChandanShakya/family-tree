@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
-	import { api } from '$lib/api.js';
-	import Confetti from '$lib/components/join/Confetti.svelte';
-	import { toast } from '$lib/toast.svelte.js';
+	import { api } from '#lib/api.js';
+	import Confetti from '#lib/components/join/Confetti.svelte';
+	import { toast } from '#lib/toast.svelte.js';
 
 	let {
 		treeId,

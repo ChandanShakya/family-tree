@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { relationPath } from '$lib/server/graph.js';
-import { badInput, openOptionalGate, readEntity } from '$lib/server/tree-route.js';
-import { resolveTreeId } from '$lib/server/permissions.js';
+import { relationPath } from '#lib/server/graph.js';
+import { badInput, openOptionalGate, readEntity } from '#lib/server/tree-route.js';
+import { resolveTreeId } from '#lib/server/permissions.js';
 
 export const GET: RequestHandler = async (event) => {
 	const gate = openOptionalGate(event);

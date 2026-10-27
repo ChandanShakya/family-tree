@@ -1,6 +1,6 @@
 import { Worker } from 'node:worker_threads';
 import { resolve as resolvePath } from 'node:path';
-import { env } from '$env/dynamic/private';
+import * as env from '$app/env/private';
 
 // Heavy work (export, GEDCOM import) runs in a worker thread with its own DB connection (§3).
 // Workers are created per job and exit when done; WORKERS_PATH keeps production off bundle internals.

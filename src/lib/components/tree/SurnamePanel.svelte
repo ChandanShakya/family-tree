@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ChevronDown } from '@lucide/svelte';
-	import { api } from '$lib/api.js';
+	import { api } from '#lib/api.js';
 
 	let { treeId, onsearch }: { treeId: string; onsearch: (surname: string) => void } = $props();
 	let rows = $state<Array<{ lastName: string; count: number }> | null>(null);

@@ -1,5 +1,5 @@
-import { DUPLICATE_MAX_PAIRS } from '$lib/config.js';
-import { fuzzyMatch, normalizeText } from '$lib/utils/fuzzy.js';
+import { DUPLICATE_MAX_PAIRS } from '#lib/config.js';
+import { fuzzyMatch, normalizeText } from '#lib/utils/fuzzy.js';
 import type { Handles } from './tx.js';
 
 export interface SearchHit {

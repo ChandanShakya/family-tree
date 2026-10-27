@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { listMembers } from '$lib/server/members.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import { listMembers } from '#lib/server/members.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 export const GET: RequestHandler = async (event) => {
 	const gate = openGate(event);

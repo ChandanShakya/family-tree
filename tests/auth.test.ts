@@ -4,8 +4,8 @@ import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { eq } from 'drizzle-orm';
-import * as schema from '$lib/db/schema.js';
-import { applyPragmas } from '$lib/db/index.js';
+import * as schema from '#lib/db/schema.js';
+import { applyPragmas } from '#lib/db/index.js';
 import {
 	_clearAccountFailures,
 	accountLockRemainingMs,
@@ -13,13 +13,13 @@ import {
 	login,
 	register,
 	resetPassword
-} from '$lib/server/accounts.js';
-import * as passwords from '$lib/server/passwords.js';
-import { hashToken } from '$lib/server/auth.js';
-import { clearAllRateLimits } from '$lib/server/rate-limit.js';
-import { oauthAccounts, passwordResetTokens, sessions, users } from '$lib/db/schema.js';
-import { googleCallback, issueOAuthState } from '$lib/server/oauth.js';
-import { setSessionCookie, isSecure } from '$lib/server/api.js';
+} from '#lib/server/accounts.js';
+import * as passwords from '#lib/server/passwords.js';
+import { hashToken } from '#lib/server/auth.js';
+import { clearAllRateLimits } from '#lib/server/rate-limit.js';
+import { oauthAccounts, passwordResetTokens, sessions, users } from '#lib/db/schema.js';
+import { googleCallback, issueOAuthState } from '#lib/server/oauth.js';
+import { setSessionCookie, isSecure } from '#lib/server/api.js';
 
 const DIR = './.test-tmp-auth';
 const MIGRATIONS = './src/lib/db/migrations';

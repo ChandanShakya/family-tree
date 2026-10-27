@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
-import { listClaims } from '$lib/server/claims.js';
-import { withTree } from '$lib/server/page-load.js';
+import { listClaims } from '#lib/server/claims.js';
+import { withTree } from '#lib/server/page-load.js';
 
 // Owner/editor review queue; the same access rule as GET /api/claims (action `review`).
 export const load: PageServerLoad = ({ locals, params }) => ({

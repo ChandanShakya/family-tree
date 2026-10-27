@@ -1,10 +1,10 @@
 import type { LayoutServerLoad } from './$types';
 import { eq } from 'drizzle-orm';
-import { openDb } from '$lib/db/index.js';
-import { env } from '$env/dynamic/private';
-import { notifications, users } from '$lib/db/schema.js';
+import { openDb } from '#lib/db/index.js';
+import * as env from '$app/env/private';
+import { notifications, users } from '#lib/db/schema.js';
 import { and, sql } from 'drizzle-orm';
-import type { ThemePref } from '$lib/theme.js';
+import type { ThemePref } from '#lib/theme.js';
 
 export const load: LayoutServerLoad = async ({ locals }) => {
 	if (!locals.user) return { me: null, unread: 0 };

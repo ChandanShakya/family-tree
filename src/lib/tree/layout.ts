@@ -1,7 +1,7 @@
 // Custom tree layout engine (§7.6). Pure functions, no DOM access, so they
 // are unit-testable and can run in a Web Worker. No d3-dag, no d3-hierarchy.
 
-import { MAX_TRAVERSAL_DEPTH } from '$lib/config.js';
+import { MAX_TRAVERSAL_DEPTH } from '#lib/config.js';
 
 export const NODE_W = 160;
 export const NODE_H = 72;

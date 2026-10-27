@@ -3,22 +3,22 @@
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import { onMount } from 'svelte';
-	import { DEFAULT_FOCUS_DEPTH } from '$lib/config.js';
-	import SearchBar from '$lib/components/tree/SearchBar.svelte';
-	import Skeleton from '$lib/components/shared/Skeleton.svelte';
-	import TreeNav from '$lib/components/tree/TreeNav.svelte';
-	import SurnamePanel from '$lib/components/tree/SurnamePanel.svelte';
-	import DuplicatesPanel from '$lib/components/tree/DuplicatesPanel.svelte';
-	import AddPersonSheet from '$lib/components/person/AddPersonSheet.svelte';
-	import { api, personName } from '$lib/api.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import { impliedLinks, linkLabel, type Link, type RelKind } from '$lib/utils/family-links.js';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { DEFAULT_FOCUS_DEPTH } from '#lib/config.js';
+	import SearchBar from '#lib/components/tree/SearchBar.svelte';
+	import Skeleton from '#lib/components/shared/Skeleton.svelte';
+	import TreeNav from '#lib/components/tree/TreeNav.svelte';
+	import SurnamePanel from '#lib/components/tree/SurnamePanel.svelte';
+	import DuplicatesPanel from '#lib/components/tree/DuplicatesPanel.svelte';
+	import AddPersonSheet from '#lib/components/person/AddPersonSheet.svelte';
+	import { api, personName } from '#lib/api.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import { impliedLinks, linkLabel, type Link, type RelKind } from '#lib/utils/family-links.js';
+	import { Button } from '#lib/components/ui/button/index.js';
 	import { UserPlus, X } from '@lucide/svelte';
 
 	let { data } = $props();
 	// Lazy chunk keeps d3 + layout out of the initial bundle (R-PERF-1).
-	let Canvas = $state<typeof import('$lib/components/tree/TreeCanvas.svelte').default | null>(null);
+	let Canvas = $state<typeof import('#lib/components/tree/TreeCanvas.svelte').default | null>(null);
 	let highlight = $state<string | null>(null);
 	let adding = $state(false);
 	// A new object per surname click, so clicking the same surname again re-runs the search.
@@ -81,14 +81,14 @@
 	const depth = $derived(Number(page.url.searchParams.get('depth')) || DEFAULT_FOCUS_DEPTH);
 
 	onMount(async () => {
-		Canvas = (await import('$lib/components/tree/TreeCanvas.svelte')).default;
+		Canvas = (await import('#lib/components/tree/TreeCanvas.svelte')).default;
 		if (page.url.searchParams.get('new') === '1' && view.persons.length === 0) adding = true;
 	});
 
 	/** Focus mode: a new focus/depth is a new load (the load calls the same bounded service). */
 	function refocus(focus: string | null, d = depth) {
 		const q = [focus ? `focus=${focus}` : '', view.truncated ? `depth=${d}` : ''].filter(Boolean).join('&');
-		return goto(resolve(`/trees/${treeId}${q ? `?${q}` : ''}` as '/'), { keepFocus: true, noScroll: true });
+		return goto(resolve(`/trees/${treeId}${q ? `?${q}` : ''}` as '/'), { reset: false });
 	}
 
 	async function pick(id: string) {

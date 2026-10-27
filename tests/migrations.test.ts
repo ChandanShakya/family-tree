@@ -3,7 +3,7 @@ import { mkdirSync, rmSync, readFileSync, readdirSync } from 'node:fs';
 import Database from 'better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
-import { applyPragmas, ftsConsistencyCheck, rebuildFts } from '$lib/db/index.js';
+import { applyPragmas, ftsConsistencyCheck, rebuildFts } from '#lib/db/index.js';
 
 const DIR = './.test-tmp-mig';
 const MIGRATIONS = './src/lib/db/migrations';

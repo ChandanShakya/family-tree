@@ -1,10 +1,10 @@
 import { randomUUID } from 'node:crypto';
 import { describeRows } from './activity.js';
 import { and, eq } from 'drizzle-orm';
-import { events, media, persons } from '$lib/db/schema.js';
-import type { HistoryEntry } from '$lib/types.js';
+import { events, media, persons } from '#lib/db/schema.js';
+import type { HistoryEntry } from '#lib/types.js';
 import { personDeleteSnapshot, writeHistory } from './audit.js';
-import { parseDate } from '$lib/utils/dates.js';
+import { parseDate } from '#lib/utils/dates.js';
 import { notifyEdit } from './notifications.js';
 import { writeTx, type Handles } from './tx.js';
 

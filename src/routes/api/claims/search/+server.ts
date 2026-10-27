@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { openDb } from '$lib/db/index.js';
-import { apiError } from '$lib/server/api.js';
-import { claimAudience, claimSearch } from '$lib/server/claims.js';
+import * as env from '$app/env/private';
+import { openDb } from '#lib/db/index.js';
+import { apiError } from '#lib/server/api.js';
+import { claimAudience, claimSearch } from '#lib/server/claims.js';
 
 // "Find yourself": members, or holders of a valid code for that tree (§6.5).
 export const GET: RequestHandler = async (event) => {

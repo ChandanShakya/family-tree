@@ -1,10 +1,10 @@
 import type { RequestHandler } from './$types';
-import { env } from '$env/dynamic/private';
-import { LIVING_ASSUMPTION_YEARS } from '$lib/config.js';
-import { apiError } from '$lib/server/api.js';
-import { canDo, type Role } from '$lib/server/permissions.js';
-import { runWorker } from '$lib/server/run-worker.js';
-import { gateTree, openGate } from '$lib/server/tree-route.js';
+import * as env from '$app/env/private';
+import { LIVING_ASSUMPTION_YEARS } from '#lib/config.js';
+import { apiError } from '#lib/server/api.js';
+import { canDo, type Role } from '#lib/server/permissions.js';
+import { runWorker } from '#lib/server/run-worker.js';
+import { gateTree, openGate } from '#lib/server/tree-route.js';
 
 const FORMATS = ['gedcom', 'json', 'csv'];
 

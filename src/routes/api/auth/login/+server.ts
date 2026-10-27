@@ -1,10 +1,10 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { openDb } from '$lib/db/index.js';
-import { env } from '$env/dynamic/private';
-import { LoginSchema } from '$lib/schemas/auth.js';
-import { login } from '$lib/server/accounts.js';
-import { clientIp, errorJson, setSessionCookie } from '$lib/server/api.js';
+import { openDb } from '#lib/db/index.js';
+import * as env from '$app/env/private';
+import { LoginSchema } from '#lib/schemas/auth.js';
+import { login } from '#lib/server/accounts.js';
+import { clientIp, errorJson, setSessionCookie } from '#lib/server/api.js';
 
 export const POST: RequestHandler = async (event) => {
 	const body = await event.request.json().catch(() => null);

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { parseDate, displayDate, BS_MIN_YEAR, BS_MAX_YEAR } from '$lib/utils/dates.js';
+import { parseDate, displayDate, BS_MIN_YEAR, BS_MAX_YEAR } from '#lib/utils/dates.js';
 
 // BS↔AD fixtures cross-checked against nepali-date-converter@3.4.0's embedded
 // official month-length table (dateConfigMap, BS 2000–2090) and against the

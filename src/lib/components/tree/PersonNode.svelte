@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { NODE_H, NODE_W } from '$lib/tree/layout.js';
+	import { NODE_H, NODE_W } from '#lib/tree/layout.js';
 
 	let {
 		x,

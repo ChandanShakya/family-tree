@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { api } from '$lib/api.js';
-	import { confirmDialog } from '$lib/confirm.svelte.js';
-	import { toast } from '$lib/toast.svelte.js';
-	import type { HistoryEntry as HistoryRow } from '$lib/types.js';
+	import { api } from '#lib/api.js';
+	import { confirmDialog } from '#lib/confirm.svelte.js';
+	import { toast } from '#lib/toast.svelte.js';
+	import type { HistoryEntry as HistoryRow } from '#lib/types.js';
 	import { Calendar, Image, Link2, Pencil, Plus, RotateCcw, Settings, ShieldCheck, Trash2, Unlink } from '@lucide/svelte';
 
 	let { rows }: { rows: HistoryRow[] } = $props();

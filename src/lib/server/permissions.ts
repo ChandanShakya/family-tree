@@ -1,6 +1,6 @@
 import { and, eq } from 'drizzle-orm';
 import type { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import type * as schema from '$lib/db/schema.js';
+import type * as schema from '#lib/db/schema.js';
 import {
 	changeHistory,
 	events,
@@ -10,7 +10,7 @@ import {
 	profileClaims,
 	relationships,
 	treeMembers
-} from '$lib/db/schema.js';
+} from '#lib/db/schema.js';
 
 type Db = BetterSQLite3Database<typeof schema>;
 

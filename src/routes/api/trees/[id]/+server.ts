@@ -1,10 +1,10 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { TreeDeleteSchema, TreeUpdateSchema } from '$lib/schemas/trees.js';
-import { deleteTree, getTreeRow, getTreeView, updateTree } from '$lib/server/trees.js';
-import { isEmailVerified } from '$lib/server/accounts.js';
-import { publicTreeView, readAccess } from '$lib/server/public-access.js';
-import { anonymousDenied, badInput, gateTree, openGate, openOptionalGate } from '$lib/server/tree-route.js';
+import { TreeDeleteSchema, TreeUpdateSchema } from '#lib/schemas/trees.js';
+import { deleteTree, getTreeRow, getTreeView, updateTree } from '#lib/server/trees.js';
+import { isEmailVerified } from '#lib/server/accounts.js';
+import { publicTreeView, readAccess } from '#lib/server/public-access.js';
+import { anonymousDenied, badInput, gateTree, openGate, openOptionalGate } from '#lib/server/tree-route.js';
 
 export const GET: RequestHandler = async (event) => {
 	const gate = openOptionalGate(event);

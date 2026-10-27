@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { openDb } from '$lib/db/index.js';
-import { env } from '$env/dynamic/private';
-import { RATE_LIMITS } from '$lib/config.js';
-import { checkRateLimit } from '$lib/server/rate-limit.js';
-import { logout } from '$lib/server/accounts.js';
-import { clearSessionCookie, clientIp } from '$lib/server/api.js';
+import { openDb } from '#lib/db/index.js';
+import * as env from '$app/env/private';
+import { RATE_LIMITS } from '#lib/config.js';
+import { checkRateLimit } from '#lib/server/rate-limit.js';
+import { logout } from '#lib/server/accounts.js';
+import { clearSessionCookie, clientIp } from '#lib/server/api.js';
 
 export const POST: RequestHandler = async (event) => {
 	const ip = clientIp(event);

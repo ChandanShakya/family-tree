@@ -1,5 +1,5 @@
 import { compare, hash } from 'bcryptjs';
-import { PASSWORD_HASH_CONCURRENCY } from '$lib/config.js';
+import { PASSWORD_HASH_CONCURRENCY } from '#lib/config.js';
 
 // bcrypt cost factor per §8.
 const COST = 12;

@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit';
 import { z } from 'zod';
 import type { RequestHandler } from './$types';
-import { MAX_TRAVERSAL_DEPTH } from '$lib/config.js';
-import { saveSettings } from '$lib/server/combined.js';
-import { badInput, openGate } from '$lib/server/tree-route.js';
+import { MAX_TRAVERSAL_DEPTH } from '#lib/config.js';
+import { saveSettings } from '#lib/server/combined.js';
+import { badInput, openGate } from '#lib/server/tree-route.js';
 
 const Schema = z.object({
 	share: z.enum(['me', 'chosen', 'members']),
