@@ -74,7 +74,7 @@ test('tree renders, Ctrl+K search highlights a person, Escape clears', async ({ 
 	await page.keyboard.type('Person5');
 	const hit = page.locator('li button', { hasText: 'Person5 Fam5' });
 	await hit.click();
-	await expect(page.locator('svg g[role=button][aria-label="Person5 Fam5"] rect')).toHaveAttribute('stroke-width', '3');
+	await expect(page.locator('svg g[role=button]:has(text.name:text-is("Person5 Fam5")) rect')).toHaveAttribute('stroke-width', '3');
 	await page.getByLabel('Search people').focus();
 	await page.keyboard.type('x');
 	await page.keyboard.press('Escape');
@@ -129,7 +129,7 @@ test('person flow: add, edit, event, photo upload, delete', async ({ browser }) 
 	await dlg.getByLabel('First name').fill('Sita');
 	await dlg.getByLabel('Last name').fill('Rai');
 	await dlg.getByRole('button', { name: 'Add', exact: true }).click();
-	await expect(page.locator('svg g[role=button][aria-label="Sita Rai"]')).toBeVisible();
+	await expect(page.locator('svg g[role=button]:has(text.name:text-is("Sita Rai"))')).toBeVisible();
 	await page.getByRole('link', { name: 'Open' }).click();
 	await expect(page.getByRole('heading', { name: 'Sita Rai' })).toBeVisible();
 	// The "Is this you?" claim form shares labels; the details form is the one with "More details".
@@ -164,7 +164,7 @@ test('relationship mapping: implied links and linking two people', async ({ brow
 	const treeId = (await created.json()).data.tree.id as string;
 	const page = await c.newPage();
 	await page.goto(`/trees/${treeId}`);
-	const node = (n: string) => page.locator(`svg g[role=button][aria-label="${n}"]`);
+	const node = (n: string) => page.locator(`svg g[role=button]:has(text.name:text-is("${n}"))`);
 	const select = async (n: string) => {
 		await node(n).click();
 		await expect(page.getByText(`Selected: ${n}`)).toBeVisible();
@@ -233,7 +233,7 @@ test('combined family view joins two trees at the claimed person (D-035)', async
 	await expect(page.getByRole('heading', { name: 'My families' })).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Shakya Family' })).toBeVisible();
 	await expect(page.getByRole('link', { name: 'Tuladhar Family' })).toBeVisible();
-	for (const n of ['Maya', 'Husband Shakya', 'Father Tuladhar']) await expect(page.locator(`svg g[role=button][aria-label="${n}"]`)).toHaveCount(1);
+	for (const n of ['Maya', 'Husband Shakya', 'Father Tuladhar']) await expect(page.locator(`svg g[role=button]:has(text.name:text-is("${n}"))`)).toHaveCount(1);
 	if (process.env.SHOT) await page.screenshot({ path: process.env.SHOT, fullPage: true });
 	await page.getByLabel('People I choose').check();
 	await page.getByRole('button', { name: 'Save', exact: true }).click();
@@ -271,14 +271,14 @@ test('focus view fills the screen, keeps the actions, and Esc leaves it; cards s
 	const page = await c.newPage();
 	await page.setViewportSize({ width: 1280, height: 800 });
 	await page.goto(`/trees/${treeId}`);
-	await expect(page.locator('svg g[role=button][aria-label="Ram"] .mark.male')).toHaveText('♂');
-	await expect(page.locator('svg g[role=button][aria-label="Sita"] .mark.female')).toHaveText('♀');
+	await expect(page.locator('svg g[role=button]:has(text.name:text-is("Ram")) .mark.male')).toHaveText('♂');
+	await expect(page.locator('svg g[role=button]:has(text.name:text-is("Sita")) .mark.female')).toHaveText('♀');
 	await page.getByRole('button', { name: 'Focus view' }).click();
 	const zen = page.getByRole('dialog', { name: 'Zen, focus view' });
 	await expect(zen).toBeVisible();
 	const box = await page.locator('svg.canvas').boundingBox();
 	expect(box!.height).toBeGreaterThan(560);
-	await zen.locator('svg g[role=button][aria-label="Ram"]').click();
+	await zen.locator('svg g[role=button]:has(text.name:text-is("Ram"))').click();
 	await zen.getByRole('button', { name: 'Add relative' }).click();
 	await expect(page.getByRole('dialog', { name: /Add person/ })).toBeVisible();
 	await page.keyboard.press('Escape');
@@ -363,7 +363,7 @@ test('collaboration: invite by direct code, join, notification, claim review and
 	await op.goto('/notifications');
 	await expect(op.getByText('Young Rai joined your tree')).toBeVisible();
 	await op.goto(`/trees/${treeId}`);
-	await expect(op.locator('svg g[role=button][aria-label="Young Rai"]')).toBeVisible();
+	await expect(op.locator('svg g[role=button]:has(text.name:text-is("Young Rai"))')).toBeVisible();
 
 	// Edit with undo: the toast offers Undo for 10 s and reverts through the history endpoint.
 	await op.goto(`/persons/${elderId}`);

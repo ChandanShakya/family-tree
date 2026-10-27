@@ -1,37 +1,40 @@
 version: 2
 updates:
+  # Versions are pinned exactly; keep them pinned. Majors are bumped by hand
+  # (e.g. SvelteKit 3 needs a migration); security updates still arrive on their own.
   - package-ecosystem: npm
     directory: /
     schedule:
-      interval: weekly
-    open-pull-requests-limit: 10
-    # Versions are pinned exactly; keep them pinned.
+      interval: monthly
+    open-pull-requests-limit: 3
     versioning-strategy: increase
+    cooldown:
+      default-days: 7
     labels: [dependencies]
     ignore:
-      # TypeScript majors wait for @sveltejs/kit peer support; @types/node follows the Node runtime (22).
-      - dependency-name: typescript
-        update-types: ['version-update:semver-major']
-      - dependency-name: '@types/node'
+      - dependency-name: '*'
         update-types: ['version-update:semver-major']
     groups:
-      svelte:
-        patterns: ['svelte', 'svelte-check', '@sveltejs/*', 'bits-ui', 'eslint-plugin-svelte']
-      lint-and-types:
-        patterns: ['eslint', '@eslint/*', 'typescript', 'typescript-eslint', '@types/*', 'globals']
-      tests:
-        patterns: ['vitest', '@playwright/test', '@axe-core/*']
+      minor-and-patch:
+        patterns: ['*']
+        update-types: ['minor', 'patch']
   - package-ecosystem: github-actions
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
     labels: [dependencies]
+    groups:
+      actions:
+        patterns: ['*']
   - package-ecosystem: docker
     directory: /
     schedule:
-      interval: weekly
+      interval: monthly
     labels: [dependencies]
     ignore:
       # Stay on the Node LTS line; move majors by hand together with @types/node and engines.
       - dependency-name: node
         update-types: ['version-update:semver-major']
+    groups:
+      docker:
+        patterns: ['*']

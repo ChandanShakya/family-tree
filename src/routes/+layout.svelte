@@ -49,8 +49,9 @@
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger>
 					{#snippet child({ props })}
-						<button {...props} type="button" class="user-trigger" aria-label="Account menu for {data.me?.displayName}">
+						<button {...props} type="button" class="user-trigger">
 							<Avatar src={data.me?.avatarUrl} name={data.me?.displayName ?? ''} size={34} decorative />
+							<span class="sr-only">Account menu for {data.me?.displayName}</span>
 						</button>
 					{/snippet}
 				</DropdownMenu.Trigger>
